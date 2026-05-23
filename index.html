@@ -861,34 +861,17 @@ function toggleCard(id) {
 async function addTag(id) {
   const input = document.getElementById('tinput-' + id);
   if (!input) return;
-
   const tag = input.value.trim().toLowerCase();
   if (!tag) return;
-
   if (!tagsState[id]) tagsState[id] = [];
-
-  if (tagsState[id].includes(tag)) {
-    input.value = '';
-    return;
-  }
-
+  if (tagsState[id].includes(tag)) { input.value = ''; return; }
   tagsState[id].push(tag);
   input.value = '';
-
   renderDocs();
   renderSidebarTags();
-
   try {
-    await fetch(SHEET_URL, {
-    method: 'POST',
-    mode: 'no-cors',
-    body: new URLSearchParams({
-      sheet: 'tags',
-      doc_id: id,
-      auteur: currentUser,
-      tags: tag
-  })
-});
+    const url = SHEET_URL + '?sheet=tags&doc_id=' + id + '&auteur=' + encodeURIComponent(currentUser) + '&tags=' + encodeURIComponent(tag);
+    await fetch(url, { method: 'GET' });
   } catch(e) {
     console.warn("Erreur envoi tag", e);
   }
@@ -897,28 +880,16 @@ async function addTag(id) {
 async function addAnnot(id) {
   const input = document.getElementById('ainput-' + id);
   if (!input) return;
-
   const text = input.value.trim();
   if (!text) return;
-
   if (!annotationsState[id]) annotationsState[id] = [];
-
   annotationsState[id].push({ author: currentUser, text });
   input.value = '';
   openCard = id;
-
   renderDocs();
-
   try {
-    await fetch(SHEET_URL, {
-    method: 'POST',
-    mode: 'no-cors',
-    body: new URLSearchParams({
-      doc_id: id,
-      auteur: currentUser,
-      texte: text
-  })
-});
+    const url = SHEET_URL + '?doc_id=' + id + '&auteur=' + encodeURIComponent(currentUser) + '&texte=' + encodeURIComponent(text);
+    await fetch(url, { method: 'GET' });
   } catch(e) {
     console.warn("Erreur envoi annotation", e);
   }
