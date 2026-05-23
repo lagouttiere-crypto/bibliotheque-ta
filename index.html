@@ -566,6 +566,7 @@
         <button class="filter-btn" onclick="setFilter('type','article',this)">Articles<span class="filter-count" id="cnt-type-article"></span></button>
         <button class="filter-btn" onclick="setFilter('type','livre',this)">Livres<span class="filter-count" id="cnt-type-livre"></span></button>
         <button class="filter-btn" onclick="setFilter('type','transcription',this)">Transcriptions<span class="filter-count" id="cnt-type-transcription"></span></button>
+        <button class="filter-btn" onclick="setFilter('type','revue',this)">Revues<span class="filter-count" id="cnt-type-revue"></span></button>
       </div>
 
       <div class="sidebar-section">
@@ -644,21 +645,21 @@ const docs = [
   { id:16, title:"Enkinaesthesia: The Essential Sensuous Background", author:"Susan Stuart", year:null, type:"article", lang:"en", themes:["phénoménologie","enaction"], driveUrl:"https://drive.google.com/file/d/1weSTw9xMgU3uk57jlv7kOBeLsXarKlhk/view?usp=drivesdk", annotations:[] },
   { id:17, title:"The Union of Two Nervous Systems (trad. fr)", author:"Susan Stuart", year:null, type:"article", lang:"fr", themes:["phénoménologie","enaction","neurosciences"], driveUrl:"https://drive.google.com/file/d/1tB_JhWCnhrmeSWZsQ_pHEEUoP2wpC2qm/view?usp=drivesdk", annotations:[] },
   { id:18, title:"The Union of Two Nervous Systems", author:"Susan Stuart", year:null, type:"article", lang:"en", themes:["phénoménologie","enaction","neurosciences"], driveUrl:"https://drive.google.com/file/d/1UGMPO2jZSSFCiPRjizdwtLsXGru2qGoZ/view?usp=drivesdk", annotations:[] },
-  { id:19, title:"Directions — Patrick Macdonald", author:"Patrick Macdonald", year:null, type:"article", lang:"en", themes:["fondements","2ème génération"], driveUrl:"https://drive.google.com/file/d/17xHAoQhWbnVv69VsGhQrNYTldz7BDvqR/view?usp=drivesdk", annotations:[] },
-  { id:20, title:"Directions — Sexuality", author:null, year:null, type:"article", lang:"en", themes:["fondements"], driveUrl:"https://drive.google.com/file/d/1-LaDqiF6N-PSD5PhWPIqVYcLmwfDtrik/view?usp=drivesdk", annotations:[] },
-  { id:21, title:"Directions — Voice", author:null, year:null, type:"article", lang:"en", themes:["arts","pédagogie"], driveUrl:"https://drive.google.com/file/d/1qrIlTgqFM8qMTTMByD99dGCDYQAL57Gx/view?usp=drivesdk", annotations:[] },
-  { id:22, title:"Directions — Equitation", author:null, year:null, type:"article", lang:"en", themes:["arts","corps & mouvement"], driveUrl:"https://drive.google.com/file/d/1nubreagvArScsRjAwVnEfuq9hJx5SIZ6/view?usp=drivesdk", annotations:[] },
-  { id:23, title:"Directions — Wilfred Barlow", author:"Wilfred Barlow", year:null, type:"article", lang:"en", themes:["fondements","2ème génération"], driveUrl:"https://drive.google.com/file/d/1CMS9VXQsEAuPid3jAG8Gw4bK0_Ut6RAQ/view?usp=drivesdk", annotations:[] },
-  { id:24, title:"Directions — Kids", author:null, year:null, type:"article", lang:"en", themes:["pédagogie"], driveUrl:"https://drive.google.com/file/d/1r9QzzdLQIZgybCPAAedOrq67o_R4onbH/view?usp=drivesdk", annotations:[] },
-  { id:25, title:"Directions — Dance", author:null, year:null, type:"article", lang:"en", themes:["arts","corps & mouvement"], driveUrl:"https://drive.google.com/file/d/1EpSZMg3IKiQUSGKol-b7nUacFq2tTRz3/view?usp=drivesdk", annotations:[] },
-  { id:26, title:"Directions — Feldenkrais", author:null, year:null, type:"article", lang:"en", themes:["pédagogie somatique","corps & mouvement"], driveUrl:"https://drive.google.com/file/d/1esusS7fE2u9tBd27Ud9FM0zx5Tl-qIO8/view?usp=drivesdk", annotations:[] },
-  { id:27, title:"Directions — Music", author:null, year:null, type:"article", lang:"en", themes:["arts","pédagogie"], driveUrl:"https://drive.google.com/file/d/1VwQrA0yJkuJ9Cgo-Lr3mOGsRZloBIp2d/view?usp=drivesdk", annotations:[] },
-  { id:28, title:"Directions — Emotion", author:null, year:null, type:"article", lang:"en", themes:["fondements","corps & mouvement"], driveUrl:"https://drive.google.com/file/d/1OcQOQ8xKSPFX4JaxDijH-ydpNCY6dzPO/view?usp=drivesdk", annotations:[] },
-  { id:29, title:"Directions — Congress", author:null, year:null, type:"article", lang:"en", themes:["fondements"], driveUrl:"https://drive.google.com/file/d/1bhhBmFnjVVaqhxw1xp6dVjO2w75FuzBl/view?usp=drivesdk", annotations:[] },
-  { id:30, title:"Directions — Walter Carrington Special", author:"Walter Carrington", year:null, type:"article", lang:"en", themes:["fondements","1ère génération"], driveUrl:"https://drive.google.com/file/d/1bMbS3w5qOwfuqxQCULP1HFAxOcdX73NyN/view?usp=drivesdk", annotations:[] },
-  { id:31, title:"Directions — Premier numéro", author:null, year:null, type:"article", lang:"en", themes:["fondements"], driveUrl:"https://drive.google.com/file/d/1LcWsg5AsxBedjH5K5-h0FAxOcdX73NyN/view?usp=drivesdk", annotations:[] },
-  { id:32, title:"Directions — Raymond Dart", author:"Raymond Dart", year:null, type:"article", lang:"en", themes:["fondements","physiologie"], driveUrl:"https://drive.google.com/file/d/1c4QTOYVIzC0kz4oUu0v0ieDirIlJSr_L/view?usp=drivesdk", annotations:[] },
-  { id:33, title:"Directions — Marjorie Barstow", author:"Marjorie Barstow", year:null, type:"article", lang:"en", themes:["fondements","1ère génération"], driveUrl:"https://drive.google.com/file/d/1yG-Daq5iRQE0GNDeebDViUqWAQs0YsZ2/view?usp=drivesdk", annotations:[] },
+  { id:19, title:"Direction — Vol.1 N°1", author:"Jeremy Chance (éd.)", year:1985, type:"revue", lang:"en", themes:["fondements"], description:"Editorial (J. Chance) · The Garlick Report (D. Garlick) · Chorus to Extension the Fifth (D. Woodcock) · Psychophysical Unity and the Critical Moment (R. MacLeod) · Jobs for the Boys (R. Chance) · Dearest Jim (Dr M. McIntyre)", driveUrl:"https://drive.google.com/file/d/1LcWsg5AsxBedjH5K5-h0FAxOcdX73NyN/view?usp=drivesdk", annotations:[] },
+  { id:20, title:"Direction — Vol.1 N°2", author:"Jeremy Chance (éd.)", year:1985, type:"revue", lang:"en", themes:["fondements","pédagogie"], description:"Editorial (J. Chance) · The Garlick Report (D. Garlick) · Words as Communications (J. Clark) · Peace & the Alexander Technique (M. Stenning)", driveUrl:"https://drive.google.com/file/d/1yG-Daq5iRQE0GNDeebDViUqWAQs0YsZ2/view?usp=drivesdk", annotations:[] },
+  { id:21, title:"Direction — Vol.1 N°3", author:"Jeremy Chance (éd.)", year:1985, type:"revue", lang:"en", themes:["fondements","arts"], description:"Editorial (J. Chance) · The Garlick Report (D. Garlick) · New Method of Vocal Respiratory Re-education (F.M. Alexander) · Friends of Alexander (M. Long) · Voice and the Alexander Technique (A. Hough) · Viewpoint (R.M. Rickover)", driveUrl:"https://drive.google.com/file/d/1c4QTOYVIzC0kz4oUu0v0ieDirIlJSr_L/view?usp=drivesdk", annotations:[] },
+  { id:22, title:"Direction — Vol.1 N°4", author:"Jeremy Chance (éd.)", year:1986, type:"revue", lang:"en", themes:["fondements","1ère génération"], description:"Editorial (J. Chance) · New Editorial (W. Carrington) · The Garlick Report (D. Garlick) · Head at the End of its Tether (J.M. Wynhausen) · Respiratory Re-Education (F.M. Alexander) · Viewpoint (R.M. Rickover)", driveUrl:"https://drive.google.com/file/d/1bMbS3w5qOwfuqxQCOVHdlbfgZdRVtqUF/view?usp=drivesdk", annotations:[] },
+  { id:23, title:"Direction — Vol.1 N°5", author:"Jeremy Chance (éd.)", year:1986, type:"revue", lang:"en", themes:["fondements","1ère génération"], description:"Editorial (J. Chance) · The Garlick Report (D. Garlick) · An Early History of Alexander (M. Rathbone) · Marjory Barlow in Action (E. Schopf) · Towards Unity (M. Frederick) · Viewpoint (R.M. Rickover)", driveUrl:"https://drive.google.com/file/d/1bhhBmFnjVVaqhxw1xp6dVjO2w75FuzBl/view?usp=drivesdk", annotations:[] },
+  { id:24, title:"Direction — Vol.1 N°6", author:"Jeremy Chance (éd.)", year:1986, type:"revue", lang:"en", themes:["fondements","physiologie"], description:"Editorial (J. Chance) · The Garlick Report (D. Garlick) · Man - The Tottering Biped: Posture & Locomotion in Higher Primates (P.V. Tobias) · F.M. Alexander and Evolution (J.M.O. Fischer) · Viewpoint (R. Rickover)", driveUrl:"https://drive.google.com/file/d/1r9QzzdLQIZgybCPAAedOrq67o_R4onbH/view?usp=drivesdk", annotations:[] },
+  { id:25, title:"Direction — Vol.1 N°7", author:"Jeremy Chance (éd.)", year:1987, type:"revue", lang:"en", themes:["fondements","physiologie"], description:"Editorial (J. Chance) · The Garlick Report (D. Garlick) · Man - The Tottering Biped Part II: Anatomy of Posture in Living Higher Primates (P.V. Tobias) · F.M. Alexander and Evolution (J.M.O. Fischer) · The Dream of Matthias The Borgomaster (F.M. Alexander) · Viewpoint (A. Crow)", driveUrl:"https://drive.google.com/file/d/1esusS7fE2u9tBd27Ud9FM0zx5Tl-qIO8/view?usp=drivesdk", annotations:[] },
+  { id:26, title:"Direction — Vol.1 N°8", author:"Jeremy Chance (éd.)", year:1987, type:"revue", lang:"en", themes:["fondements","physiologie"], description:"Editorial (J. Chance) · The Garlick Report (D. Garlick) · Blessed Helicity (T.H. Mathews) · Man - The Tottering Biped Part III: What the Fossils Tell Us (P.V. Tobias) · Viewpoint (R.M. Rickover)", driveUrl:"https://drive.google.com/file/d/1VwQrA0yJkuJ9Cgo-Jr3mOGsRZloBIp2d/view?usp=drivesdk", annotations:[] },
+  { id:27, title:"Direction — Vol.1 N°9", author:"Jeremy Chance (éd.)", year:1987, type:"revue", lang:"en", themes:["fondements","physiologie"], description:"Editorial (J. Chance) · The Garlick Report (D. Garlick) · Man: The Tottering Biped Part IV: Uprightness, Gravity and Balance (P.V. Tobias) · Friends of Alexander (M. Long) · Viewpoint (R. Rickover)", driveUrl:"https://drive.google.com/file/d/1OcQOQ8xKSPFX4JaxDijH-ydpNCY6dzPO/view?usp=drivesdk", annotations:[] },
+  { id:28, title:"Direction — Vol.1 N°10", author:"Jeremy Chance (éd.)", year:1988, type:"revue", lang:"en", themes:["fondements","physiologie"], description:"Editorial (J. Chance & M. McMann Paludan) · The Garlick Report (D. Garlick) · The Space Between: Stimulus & Response (P. Bondy) · The False Self (M. Arnold) · Man: The Tottering Biped Part V: The Skilled Use of the Body—Section A (P.V. Tobias) · Viewpoint (R. Rickover)", driveUrl:"https://drive.google.com/file/d/1EpSZMg3IKiQUSGKol-b7nUacFq2tTRz3/view?usp=drivesdk", annotations:[] },
+  { id:29, title:"Direction — Vol.2 N°1", author:"Jeremy Chance (éd.)", year:1988, type:"revue", lang:"en", themes:["fondements","pédagogie somatique","corps & mouvement"], description:"Editorial (J. Chance & W. Carrington) · The Garlick Report (D. Garlick) · Equitation/Alexander Glossary (L. Faraldi & J. Chance) · A Feldenkrais practitioner looks at the Alexander Technique (J. Heggie) · Balance and Gravity (T. Roberts) · Are You Sitting Comfortably? (J. Clark) · Man: The Tottering Biped Part V-B (P.V. Tobias)", driveUrl:"https://drive.google.com/file/d/1nubreagvArScsRjAwVnEfuq9hJx5SIZ6/view?usp=drivesdk", annotations:[] },
+  { id:30, title:"Direction — Vol.2 N°2", author:"Jeremy Chance (éd.)", year:1989, type:"revue", lang:"en", themes:["fondements","physiologie"], description:"Editorial (J. Chance) · The Garlick Report (D. Garlick) · Man: The Tottering Biped Part VI: The Role of the Nervous System (P.V. Tobias) · Viewpoint (R. Rickover)", driveUrl:"https://drive.google.com/file/d/1CMS9VXQsEAuPid3jAG8Gw4bK0_Ut6RAQ/view?usp=drivesdk", annotations:[] },
+  { id:31, title:"Direction — Vol.2 N°3", author:"Jeremy Chance (éd.)", year:1989, type:"revue", lang:"en", themes:["fondements","arts"], description:"Editorial (J. Chance) · The Garlick Report (D. Garlick) · The Use of the Ear (R. Joudry) · Viewpoint (R. Rickover)", driveUrl:"https://drive.google.com/file/d/1qrIlTgqFM8qMTTMByD99dGCDYQAL57Gx/view?usp=drivesdk", annotations:[] },
+  { id:32, title:"Direction — Vol.2 N°4", author:"Jeremy Chance (éd.)", year:1990, type:"revue", lang:"en", themes:["fondements","1ère génération"], description:"Editorial (J. Chance & R. Rickover) · The Garlick Report (D. Garlick) · Aphorisms of Marjorie Barstow (M. Miller & J. Chance) · FM Alexander & Samuel Butler (J. Staring) · There's More Between the Hips than Meets the Hands (K. Hannan) · Viewpoint (R. Rickover)", driveUrl:"https://drive.google.com/file/d/1-LaDqiF6N-PSD5PhWPIqVYcLmwfDtrik/view?usp=drivesdk", annotations:[] },
+  { id:33, title:"Direction — Vol.2 N°5", author:"Jeremy Chance (éd.)", year:1990, type:"revue", lang:"en", themes:["fondements","pédagogie"], description:"Editorial (J. Chance & J. Diamond) · The Garlick Report (D. Garlick) · On 'Feet Wide Apart' (S. Kaminitz) · Effects of Childhood Trauma (R. Mausner & J. Cohen) · Viewpoint (R. Rickover)", driveUrl:"https://drive.google.com/file/d/17xHAoQhWbnVv69VsGhQrNYTldz7BDvqR/view?usp=drivesdk", annotations:[] },
   { id:34, title:"Le geste et la perception — mouvement, corps, geste", author:"Hubert Godard", year:null, type:"article", lang:"fr", themes:["corps & mouvement","phénoménologie"], driveUrl:"https://drive.google.com/file/d/1PFywQ8wu6jIfvTH00gcjH0MHcrseSRW8/view?usp=drivesdk", annotations:[] },
   { id:35, title:"Trous noirs", author:"Hubert Godard", year:null, type:"article", lang:"fr", themes:["corps & mouvement","phénoménologie"], driveUrl:"https://drive.google.com/file/d/1j6VYgARDKsJ992VADinuBf0lHsf_np2w/view?usp=drivesdk", annotations:[] },
   { id:36, title:"Geste et perception", author:"Hubert Godard", year:null, type:"article", lang:"fr", themes:["corps & mouvement","phénoménologie"], driveUrl:"https://drive.google.com/file/d/15-LO7uWURR6aiX7RGz44kmEpDGgCEm-p/view?usp=drivesdk", annotations:[] },
@@ -681,7 +682,7 @@ docs.forEach(d => { annotationsState[d.id] = []; });
 // Charger annotations et tags depuis le Google Sheet
 async function loadAnnotations() {
   try {
-    const res = await fetch(SHEET_URL + '?sheet=annotations&v=' + Date.now());
+    const res = await fetch(SHEET_URL + '?sheet=annotations');
     const rows = await res.json();
     docs.forEach(d => { annotationsState[d.id] = []; });
     rows.forEach(row => {
@@ -693,15 +694,13 @@ async function loadAnnotations() {
     console.warn("Impossible de charger les annotations", e);
   }
   try {
-    const res2 = await fetch(SHEET_URL + '?sheet=tags&v=' + Date.now());
+    const res2 = await fetch(SHEET_URL + '?sheet=tags');
     const rows2 = await res2.json();
     docs.forEach(d => { tagsState[d.id] = []; });
     rows2.forEach(row => {
       const id = parseInt(row.doc_id);
-      const tag = String(row.tags || '').trim().toLowerCase();
-      if (!id || !tag) return;
       if (!tagsState[id]) tagsState[id] = [];
-      if (!tagsState[id].includes(tag)) tagsState[id].push(tag);
+      if (!tagsState[id].includes(row.tag)) tagsState[id].push(row.tag);
     });
   } catch(e) {
     console.warn("Impossible de charger les tags", e);
@@ -818,6 +817,7 @@ function renderDocs() {
         <div class="detail-inner">
           <div class="detail-title">${d.title}</div>
           <div class="detail-author">${d.author || 'Auteur inconnu'}${yearStr}</div>
+          ${d.description ? `<div style="font-size:13px;color:var(--ink-light);line-height:1.6;margin-bottom:1.25rem;padding:10px 14px;background:var(--white);border:1px solid var(--border)">${d.description}</div>` : ''}
           <div class="detail-section-label" style="margin-bottom:8px">Tags membres</div>
           <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:16px" id="tagslist-${d.id}">
             ${(tagsState[d.id]||[]).length === 0
@@ -870,8 +870,12 @@ async function addTag(id) {
   renderDocs();
   renderSidebarTags();
   try {
-    const url = SHEET_URL + '?sheet=tags&doc_id=' + id + '&auteur=' + encodeURIComponent(currentUser) + '&tags=' + encodeURIComponent(tag);
-    await fetch(url, { method: 'GET' });
+    await fetch(SHEET_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sheet: 'tags', doc_id: id, auteur: currentUser, tag })
+    });
   } catch(e) {
     console.warn("Erreur envoi tag", e);
   }
@@ -887,9 +891,14 @@ async function addAnnot(id) {
   input.value = '';
   openCard = id;
   renderDocs();
+  // Envoyer au Google Sheet
   try {
-    const url = SHEET_URL + '?doc_id=' + id + '&auteur=' + encodeURIComponent(currentUser) + '&texte=' + encodeURIComponent(text);
-    await fetch(url, { method: 'GET' });
+    await fetch(SHEET_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ doc_id: id, auteur: currentUser, texte: text })
+    });
   } catch(e) {
     console.warn("Erreur envoi annotation", e);
   }
