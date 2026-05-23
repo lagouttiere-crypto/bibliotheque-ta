@@ -880,15 +880,15 @@ async function addTag(id) {
 
   try {
     await fetch(SHEET_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        sheet: 'tags',
-        doc_id: id,
-        auteur: currentUser,
-        tags: tag
-      })
-    });
+    method: 'POST',
+    mode: 'no-cors',
+    body: JSON.stringify({
+      sheet: 'tags',
+      doc_id: id,
+      auteur: currentUser,
+      tags: tag
+  })
+});
   } catch(e) {
     console.warn("Erreur envoi tag", e);
   }
@@ -911,14 +911,14 @@ async function addAnnot(id) {
 
   try {
     await fetch(SHEET_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        doc_id: id,
-        auteur: currentUser,
-        texte: text
-      })
-    });
+    method: 'POST',
+    mode: 'no-cors',
+    body: JSON.stringify({
+      doc_id: id,
+      auteur: currentUser,
+      texte: text
+  })
+});
   } catch(e) {
     console.warn("Erreur envoi annotation", e);
   }
