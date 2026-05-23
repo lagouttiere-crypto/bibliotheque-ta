@@ -12,11 +12,13 @@
     --ink: #1C1A17;
     --ink-light: #6B6760;
     --ink-faint: #C4C0B8;
-    --accent: #8B6F47;
-    --accent-light: #F0E8DC;
+    --accent: #1B3A5C;
+    --accent-light: #DBE9F7;
     --border: #E2DDD4;
     --white: #FFFFFF;
-    --tag-bg: #EDE9E2;
+    --tag-bg: #DBE9F7;
+    --tag-color: #1B3A5C;
+    --tag-member-bg: #EEF5FB;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -292,7 +294,7 @@
     color: var(--ink-light);
     background: var(--cream);
   }
-  .badge-lang { color: var(--accent); border-color: var(--accent); background: var(--accent-light); }
+  .badge-lang { color: var(--accent); border-color: var(--accent); background: var(--accent-light); font-weight: 500; }
   .badge-transc { color: #6B7280; }
 
   .doc-title {
@@ -317,9 +319,56 @@
     font-size: 10px;
     padding: 2px 7px;
     background: var(--tag-bg);
-    color: var(--ink-light);
+    color: var(--tag-color);
     letter-spacing: 0.03em;
   }
+  .member-tag {
+    font-size: 10px;
+    padding: 2px 8px;
+    background: var(--tag-member-bg);
+    color: var(--tag-color);
+    border: 1px solid var(--accent-light);
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    transition: background 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .member-tag:hover { background: var(--accent-light); }
+  .member-tag.active { background: var(--accent); color: var(--white); border-color: var(--accent); }
+  .tag-form {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+  }
+  .tag-form input {
+    flex: 1;
+    border: 1px solid var(--border);
+    background: var(--white);
+    padding: 7px 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .tag-form input:focus { border-color: var(--accent); }
+  .tag-form input::placeholder { color: var(--ink-faint); }
+  .btn-tag {
+    background: var(--accent-light);
+    color: var(--accent);
+    border: 1px solid var(--accent-light);
+    padding: 7px 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-tag:hover { background: var(--accent); color: var(--white); }
+  .tags-sidebar { display: flex; flex-wrap: wrap; gap: 4px; }
   .doc-footer {
     display: flex;
     align-items: center;
@@ -547,6 +596,13 @@
         <button class="filter-btn" onclick="setFilter('theme','arts',this)">Arts</button>
         <button class="filter-btn" onclick="setFilter('theme','philosophie',this)">Philosophie</button>
       </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-label">Tags membres</div>
+        <div class="tags-sidebar" id="sidebarTags">
+          <span style="font-size:12px;color:var(--ink-faint);font-style:italic">Aucun tag pour l'instant</span>
+        </div>
+      </div>
     </aside>
 
     <div class="content">
@@ -565,6 +621,8 @@ const SHEET_URL = "https://script.google.com/macros/s/AKfycbw3KqB-9zc06Mhc7TBvIJ
 let currentUser = "";
 let filters = { type: "tous", lang: "tous", theme: "tous", gen: "tous" };
 let annotationsState = {};
+let tagsState = {};
+let activeTag = null;
 let openCard = null;
 
 const docs = [
@@ -620,10 +678,10 @@ const docs = [
 // Init annotations vides
 docs.forEach(d => { annotationsState[d.id] = []; });
 
-// Charger les annotations depuis le Google Sheet
+// Charger annotations et tags depuis le Google Sheet
 async function loadAnnotations() {
   try {
-    const res = await fetch(SHEET_URL);
+    const res = await fetch(SHEET_URL + '?sheet=annotations');
     const rows = await res.json();
     docs.forEach(d => { annotationsState[d.id] = []; });
     rows.forEach(row => {
@@ -631,10 +689,42 @@ async function loadAnnotations() {
       if (!annotationsState[id]) annotationsState[id] = [];
       annotationsState[id].push({ author: row.auteur, text: row.texte });
     });
-    renderDocs();
   } catch(e) {
     console.warn("Impossible de charger les annotations", e);
   }
+  try {
+    const res2 = await fetch(SHEET_URL + '?sheet=tags');
+    const rows2 = await res2.json();
+    docs.forEach(d => { tagsState[d.id] = []; });
+    rows2.forEach(row => {
+      const id = parseInt(row.doc_id);
+      if (!tagsState[id]) tagsState[id] = [];
+      if (!tagsState[id].includes(row.tag)) tagsState[id].push(row.tag);
+    });
+  } catch(e) {
+    console.warn("Impossible de charger les tags", e);
+  }
+  renderDocs();
+  renderSidebarTags();
+}
+
+function renderSidebarTags() {
+  const allTags = [...new Set(Object.values(tagsState).flat())].sort();
+  const container = document.getElementById('sidebarTags');
+  if (!container) return;
+  if (allTags.length === 0) {
+    container.innerHTML = '<span style="font-size:12px;color:var(--ink-faint);font-style:italic">Aucun tag pour l\'instant</span>';
+    return;
+  }
+  container.innerHTML = allTags.map(t =>
+    `<span class="member-tag ${activeTag === t ? 'active' : ''}" onclick="setActiveTag('${t}')">${t}</span>`
+  ).join('');
+}
+
+function setActiveTag(tag) {
+  activeTag = activeTag === tag ? null : tag;
+  renderDocs();
+  renderSidebarTags();
 }
 
 function showApp(nom) {
@@ -678,6 +768,7 @@ function getFiltered() {
     if (filters.lang !== 'tous' && d.lang !== filters.lang) return false;
     if (filters.theme !== 'tous' && !d.themes.includes(filters.theme)) return false;
     if (filters.gen !== 'tous' && !d.themes.includes(filters.gen)) return false;
+    if (activeTag && !(tagsState[d.id]||[]).includes(activeTag)) return false;
     if (q && !d.title.toLowerCase().includes(q) && !(d.author||'').toLowerCase().includes(q)) return false;
     return true;
   });
@@ -708,7 +799,10 @@ function renderDocs() {
         </div>
         <div class="doc-title">${d.title}</div>
         <div class="doc-author">${d.author || '—'}${yearStr}</div>
-        <div class="doc-themes">${d.themes.map(t => `<span class="theme-tag">${t}</span>`).join('')}</div>
+        <div class="doc-themes">
+          ${d.themes.map(t => `<span class="theme-tag">${t}</span>`).join('')}
+          ${(tagsState[d.id]||[]).map(t => `<span class="member-tag" onclick="event.stopPropagation();setActiveTag('${t}')">${t}</span>`).join('')}
+        </div>
         <div class="doc-footer">
           <span class="annot-pill ${hasAnnot ? 'has-annot' : ''}">
             ◆ ${annots.length} annotation${annots.length !== 1 ? 's' : ''}
@@ -722,6 +816,18 @@ function renderDocs() {
         <div class="detail-inner">
           <div class="detail-title">${d.title}</div>
           <div class="detail-author">${d.author || 'Auteur inconnu'}${yearStr}</div>
+          <div class="detail-section-label" style="margin-bottom:8px">Tags membres</div>
+          <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:16px" id="tagslist-${d.id}">
+            ${(tagsState[d.id]||[]).length === 0
+              ? '<span style="font-size:12px;color:var(--ink-faint);font-style:italic">Aucun tag.</span>'
+              : (tagsState[d.id]||[]).map(t => `<span class="member-tag" onclick="setActiveTag('${t}')">${t}</span>`).join('')
+            }
+          </div>
+          <div class="tag-form" onclick="event.stopPropagation()">
+            <input type="text" id="tinput-${d.id}" placeholder="Ajouter un tag…" onkeydown="if(event.key==='Enter') addTag(${d.id})" />
+            <button class="btn-tag" onclick="addTag(${d.id})">+ Tag</button>
+          </div>
+          <div style="height:1px;background:var(--border);margin:16px 0"></div>
           <div class="detail-section-label">Annotations des membres</div>
           <div class="annot-list" id="annotlist-${d.id}">
             ${annots.length === 0
@@ -747,6 +853,29 @@ function toggleCard(id) {
       const el = document.getElementById('detail-' + id);
       if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }, 50);
+  }
+}
+
+async function addTag(id) {
+  const input = document.getElementById('tinput-' + id);
+  if (!input) return;
+  const tag = input.value.trim().toLowerCase();
+  if (!tag) return;
+  if (!tagsState[id]) tagsState[id] = [];
+  if (tagsState[id].includes(tag)) { input.value = ''; return; }
+  tagsState[id].push(tag);
+  input.value = '';
+  renderDocs();
+  renderSidebarTags();
+  try {
+    await fetch(SHEET_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sheet: 'tags', doc_id: id, auteur: currentUser, tag })
+    });
+  } catch(e) {
+    console.warn("Erreur envoi tag", e);
   }
 }
 
