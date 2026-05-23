@@ -561,6 +561,7 @@
 
 <script>
 const PASSWORD = "_BibliothequeAlexander2026";
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbw3KqB-9zc06Mhc7TBvIJp9sFgmgpZbKOsxSH-Rhl2WqFvptZB7SplyzKq0YEV4_nrmlw/exec";
 let currentUser = "";
 let filters = { type: "tous", lang: "tous", theme: "tous", gen: "tous" };
 let annotationsState = {};
@@ -616,18 +617,27 @@ const docs = [
   { id:47, title:"Looking at Ourselves", author:"David Gorman", year:null, type:"article", lang:"en", themes:["fondements","corps & mouvement"], driveUrl:"https://drive.google.com/file/d/1-J_JVYLeeyIG0hph9cPWETET3yjF-q0s/view?usp=drivesdk", annotations:[] }
 ];
 
-// Init annotations from localStorage
-docs.forEach(d => {
-  const saved = localStorage.getItem('annots_' + d.id);
-  annotationsState[d.id] = saved ? JSON.parse(saved) : [...d.annotations];
-});
+// Init annotations vides
+docs.forEach(d => { annotationsState[d.id] = []; });
 
-function tryLogin() {
-  const pw = document.getElementById('inputPw').value;
-  const nom = document.getElementById('inputNom').value.trim();
-  const err = document.getElementById('loginErr');
-  if (!nom) { err.textContent = "Entrez votre prénom."; err.style.display = 'block'; return; }
-  if (pw !== PASSWORD) { err.textContent = "Mot de passe incorrect."; err.style.display = 'block'; return; }
+// Charger les annotations depuis le Google Sheet
+async function loadAnnotations() {
+  try {
+    const res = await fetch(SHEET_URL);
+    const rows = await res.json();
+    docs.forEach(d => { annotationsState[d.id] = []; });
+    rows.forEach(row => {
+      const id = parseInt(row.doc_id);
+      if (!annotationsState[id]) annotationsState[id] = [];
+      annotationsState[id].push({ author: row.auteur, text: row.texte });
+    });
+    renderDocs();
+  } catch(e) {
+    console.warn("Impossible de charger les annotations", e);
+  }
+}
+
+function showApp(nom) {
   currentUser = nom;
   localStorage.setItem('ta_user', nom);
   document.getElementById('lockScreen').style.display = 'none';
@@ -635,19 +645,22 @@ function tryLogin() {
   document.getElementById('userName').textContent = nom;
   document.getElementById('userAvatar').textContent = nom.charAt(0).toUpperCase();
   renderDocs();
+  loadAnnotations();
+}
+
+function tryLogin() {
+  const pw = document.getElementById('inputPw').value;
+  const nom = document.getElementById('inputNom').value.trim();
+  const err = document.getElementById('loginErr');
+  if (!nom) { err.textContent = "Entrez votre prénom."; err.style.display = 'block'; return; }
+  if (pw !== PASSWORD) { err.textContent = "Mot de passe incorrect."; err.style.display = 'block'; return; }
+  showApp(nom);
 }
 
 // Restore session
 window.addEventListener('DOMContentLoaded', () => {
   const saved = localStorage.getItem('ta_user');
-  if (saved) {
-    currentUser = saved;
-    document.getElementById('lockScreen').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-    document.getElementById('userName').textContent = saved;
-    document.getElementById('userAvatar').textContent = saved.charAt(0).toUpperCase();
-    renderDocs();
-  }
+  if (saved) showApp(saved);
 });
 
 function setFilter(key, val, el) {
@@ -737,17 +750,27 @@ function toggleCard(id) {
   }
 }
 
-function addAnnot(id) {
+async function addAnnot(id) {
   const input = document.getElementById('ainput-' + id);
   if (!input) return;
   const text = input.value.trim();
   if (!text) return;
   if (!annotationsState[id]) annotationsState[id] = [];
   annotationsState[id].push({ author: currentUser, text });
-  localStorage.setItem('annots_' + id, JSON.stringify(annotationsState[id]));
   input.value = '';
   openCard = id;
   renderDocs();
+  // Envoyer au Google Sheet
+  try {
+    await fetch(SHEET_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ doc_id: id, auteur: currentUser, texte: text })
+    });
+  } catch(e) {
+    console.warn("Erreur envoi annotation", e);
+  }
 }
 </script>
 </body>
