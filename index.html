@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bibliothèque — Technique Alexander</title>
+<title>Bibliothèque — ATI France</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -259,6 +259,87 @@
     font-size: 12px;
     color: var(--ink-light);
   }
+
+
+  /* ── ENTRÉE / SALLE DE LECTURE ── */
+  .library-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 210px;
+    gap: 1.5rem;
+    align-items: stretch;
+    background:
+      linear-gradient(135deg, rgba(27,58,92,0.08), rgba(255,255,255,0.72)),
+      var(--white);
+    border: 1px solid var(--border);
+    padding: 1.65rem 1.75rem;
+    margin-bottom: 1.25rem;
+  }
+  .hero-kicker {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.65rem;
+  }
+  .library-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 300;
+    line-height: 1.05;
+    max-width: 760px;
+    margin-bottom: 0.8rem;
+  }
+  .library-hero p {
+    color: var(--ink-light);
+    line-height: 1.65;
+    max-width: 680px;
+    font-size: 14px;
+  }
+  .hero-card {
+    border-left: 1px solid var(--border);
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: var(--ink-light);
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  .hero-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    line-height: 1;
+    color: var(--accent);
+  }
+  .hero-card small { margin-top: 0.5rem; color: var(--ink-faint); }
+
+  .shelf-toolbar {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.1rem;
+  }
+  .content-subtitle {
+    font-size: 12px;
+    color: var(--ink-light);
+    margin-top: 2px;
+  }
+  .toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  #sortSelect {
+    border: 1px solid var(--border);
+    background: var(--white);
+    padding: 8px 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--ink);
+    outline: none;
+  }
+  #sortSelect:focus { border-color: var(--accent); }
 
   /* ── DOC GRID ── */
   .doc-grid {
@@ -519,6 +600,10 @@
     }
     .content { padding: 1rem; }
     header { padding: 0 1rem; }
+    .library-hero { grid-template-columns: 1fr; padding: 1.25rem; }
+    .hero-card { border-left: none; border-top: 1px solid var(--border); padding: 1rem 0 0; }
+    .shelf-toolbar { align-items: flex-start; flex-direction: column; }
+    .toolbar-right { width: 100%; justify-content: space-between; }
   }
 </style>
 </head>
@@ -527,10 +612,10 @@
 <!-- LOCK SCREEN -->
 <div id="lockScreen">
   <div class="lock-box">
-    <div class="lock-logo">Association · Technique Alexander</div>
+    <div class="lock-logo">ATI France · Technique Alexander</div>
     <h1 class="lock-title">Bibliothèque<br><em>des membres</em></h1>
     <div class="lock-line"></div>
-    <p class="lock-sub">Entrez votre prénom et le mot de passe de l'association pour accéder à la bibliothèque.</p>
+    <p class="lock-sub">Entrez votre prénom et le mot de passe d’ATI France pour accéder à la bibliothèque.</p>
     <div class="lock-field">
       <input type="text" id="inputNom" placeholder="Votre prénom" autocomplete="off" />
       <input type="password" id="inputPw" placeholder="Mot de passe" />
@@ -545,7 +630,7 @@
   <header>
     <div class="header-brand">
       Bibliothèque TA
-      <span>Collection des membres</span>
+      <span>Collection ATI France</span>
     </div>
     <div class="header-user">
       <div class="avatar" id="userAvatar"></div>
@@ -607,10 +692,36 @@
     </aside>
 
     <div class="content">
-      <div class="content-header">
-        <div class="content-title" id="contentTitle">Tous les documents</div>
-        <div class="content-count" id="contentCount"></div>
+      <section class="library-hero">
+        <div>
+          <div class="hero-kicker">Bibliothèque privée · ATI France</div>
+          <h1>Une salle de lecture pour circuler entre les textes et la pratique.</h1>
+          <p>Commencez par une sélection d’entrée, puis explorez librement par auteur, thème, langue, type de document ou tags des membres.</p>
+        </div>
+        <div class="hero-card">
+          <span class="hero-number" id="heroCount">—</span>
+          <span>documents accessibles</span>
+          <small>PDF, articles, revues, transcriptions et ouvrages physiques</small>
+        </div>
+      </section>
+
+      <div class="shelf-toolbar">
+        <div>
+          <div class="content-title" id="contentTitle">Parcours d’entrée</div>
+          <div class="content-subtitle">Une première traversée curatée, avant le classement alphabétique.</div>
+        </div>
+        <div class="toolbar-right">
+          <div class="content-count" id="contentCount"></div>
+          <select id="sortSelect" onchange="renderDocs()" aria-label="Trier les documents">
+            <option value="curated">Parcours d’entrée</option>
+            <option value="author">Auteur A → Z</option>
+            <option value="title">Titre A → Z</option>
+            <option value="recent">Ajouts récents</option>
+            <option value="type">Type de document</option>
+          </select>
+        </div>
       </div>
+
       <div class="doc-grid" id="docGrid"></div>
     </div>
   </div>
@@ -626,6 +737,50 @@ let tagsState = {};
 let activeTag = null;
 let openCard = null;
 let docs = [];
+
+// Maquette : ordre d'accueil éditorial. À ajuster selon vos priorités associatives.
+const featuredIds = [34, 36, 37, 41, 45, 46, 1, 13, 15, 19, 55, 4];
+
+function normalizeText(v) {
+  return String(v || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+function sortDocs(list) {
+  const mode = document.getElementById('sortSelect') ? document.getElementById('sortSelect').value : 'curated';
+  const arr = [...list];
+
+  if (mode === 'title') {
+    return arr.sort((a,b) => normalizeText(a.title).localeCompare(normalizeText(b.title), 'fr'));
+  }
+  if (mode === 'author') {
+    return arr.sort((a,b) => {
+      const aa = normalizeText(a.author || 'zzz');
+      const bb = normalizeText(b.author || 'zzz');
+      return aa === bb ? normalizeText(a.title).localeCompare(normalizeText(b.title), 'fr') : aa.localeCompare(bb, 'fr');
+    });
+  }
+  if (mode === 'recent') {
+    return arr.sort((a,b) => Number(b.id || 0) - Number(a.id || 0));
+  }
+  if (mode === 'type') {
+    return arr.sort((a,b) => {
+      const t = normalizeText(a.type).localeCompare(normalizeText(b.type), 'fr');
+      return t || normalizeText(a.author || 'zzz').localeCompare(normalizeText(b.author || 'zzz'), 'fr');
+    });
+  }
+
+  return arr.sort((a,b) => {
+    const ai = featuredIds.indexOf(a.id);
+    const bi = featuredIds.indexOf(b.id);
+    if (ai !== -1 && bi !== -1) return ai - bi;
+    if (ai !== -1) return -1;
+    if (bi !== -1) return 1;
+    if (!!b.driveUrl !== !!a.driveUrl) return b.driveUrl ? 1 : -1;
+    const aa = normalizeText(a.author || 'zzz');
+    const bb = normalizeText(b.author || 'zzz');
+    return aa === bb ? normalizeText(a.title).localeCompare(normalizeText(b.title), 'fr') : aa.localeCompare(bb, 'fr');
+  });
+}
 
 // Charger annotations et tags depuis le Google Sheet
 async function loadAnnotations() {
@@ -699,6 +854,8 @@ async function showApp(nom) {
   } catch(e) {
     console.warn("Impossible de charger docs.json", e);
   }
+  const heroCount = document.getElementById('heroCount');
+  if (heroCount) heroCount.textContent = docs.length;
   docs.forEach(d => { annotationsState[d.id] = []; tagsState[d.id] = []; });
   renderDocs();
   loadAnnotations();
@@ -740,7 +897,7 @@ function getFiltered() {
 }
 
 function renderDocs() {
-  const filtered = getFiltered();
+  const filtered = sortDocs(getFiltered());
   const grid = document.getElementById('docGrid');
   const count = document.getElementById('contentCount');
   if (!grid) return;
