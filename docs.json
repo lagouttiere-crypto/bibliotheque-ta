@@ -579,7 +579,6 @@
     "langue": "fr",
     "themes": [
       "themes",
-      "fondements",
       "pédagogie somatique",
       "physiologie",
       "corps & mouvement",
@@ -599,7 +598,6 @@
     "langue": "fr",
     "themes": [
       "themes",
-      "fondements",
       "pédagogie somatique",
       "physiologie",
       "corps & mouvement",
@@ -639,7 +637,6 @@
     "langue": "fr",
     "themes": [
       "themes",
-      "fondements",
       "pédagogie somatique",
       "physiologie",
       "corps & mouvement",
@@ -659,7 +656,6 @@
     "langue": "fr",
     "themes": [
       "themes",
-      "fondements",
       "1ère génération"
     ],
     "urlDrive": "https://drive.google.com/file/d/1uMG3MyTVDkmT7IaF3HfSIqLbeOiz5luz/view?usp=drivesdk",
@@ -822,7 +818,7 @@
     "auteur": "David Gorman",
     "annee": null,
     "type": "article",
-    "langue": "en",
+    "langue": "fr",
     "themes": [
       "themes",
       "fondements",
