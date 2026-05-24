@@ -8,7 +8,9 @@
     "langue": "fr",
     "themes": [
       "phénoménologie",
-      "philosophie"
+      "corps",
+      "&",
+      "mouvement"
     ],
     "urlDrive": "https://drive.google.com/file/d/1KorxuDY8mBQUDECuRjZ5BmZ0VsCqn6uP/view?usp=drivesdk",
     "description": null,
@@ -24,7 +26,7 @@
     "langue": "fr",
     "themes": [
       "phénoménologie",
-      "philosophie"
+      "fondements"
     ],
     "urlDrive": "https://drive.google.com/file/d/1vpYlE_nnckMEE-e88gxzqa3dbBkJ0pKu/view?usp=drivesdk",
     "description": null,
@@ -40,7 +42,9 @@
     "langue": "fr",
     "themes": [
       "phénoménologie",
-      "fondements"
+      "corps",
+      "&",
+      "mouvement"
     ],
     "urlDrive": "https://drive.google.com/file/d/1f42rNUa7oQ-B1_F5sT43oa8cL91fc2dd/view?usp=drivesdk",
     "description": null,
@@ -87,7 +91,9 @@
     "type": "article",
     "langue": "fr",
     "themes": [
-      "corps & mouvement",
+      "corps",
+      "&",
+      "mouvement",
       "physiologie"
     ],
     "urlDrive": "https://drive.google.com/file/d/1GAJu8ZiAGgE0IiDtFnEt6-lVRxDECVf3/view?usp=drivesdk",
@@ -104,7 +110,9 @@
     "langue": "fr",
     "themes": [
       "phénoménologie",
-      "corps & mouvement"
+      "corps",
+      "&",
+      "mouvement"
     ],
     "urlDrive": "https://drive.google.com/file/d/1YAIHPZWnticcjO58FiAkZ8LCjULUY3bk/view?usp=drivesdk",
     "description": null,
@@ -120,7 +128,8 @@
     "langue": "fr",
     "themes": [
       "fondements",
-      "2ème génération"
+      "2ème",
+      "génération"
     ],
     "urlDrive": "https://drive.google.com/file/d/1uo8AHEpqSD6Co5OCWDYq40Ag3Q0C7i6z/view?usp=drivesdk",
     "description": null,
@@ -135,8 +144,9 @@
     "type": "article",
     "langue": "fr",
     "themes": [
-      "2ème génération",
       "pédagogie",
+      "2ème",
+      "génération",
       "arts"
     ],
     "urlDrive": "https://drive.google.com/file/d/1NDMJs7SjsMRL2zI-IQZoT2XbRLaMwnwp/view?usp=drivesdk",
@@ -152,9 +162,8 @@
     "type": "article",
     "langue": "fr",
     "themes": [
-      "2ème génération",
-      "pédagogie",
-      "fondements"
+      "fondements",
+      "pédagogie"
     ],
     "urlDrive": "https://drive.google.com/file/d/1rjHutQOh8e43tNZRvCoVfpgIW3dmkNhh/view?usp=drivesdk",
     "description": null,
@@ -169,8 +178,9 @@
     "type": "transcription",
     "langue": "fr",
     "themes": [
-      "2ème génération",
-      "fondements"
+      "fondements",
+      "2ème",
+      "génération"
     ],
     "urlDrive": "https://drive.google.com/file/d/12whFI4exC99uaibFuKrdk-uNwGEXKd18/view?usp=drivesdk",
     "description": null,
@@ -185,9 +195,12 @@
     "type": "article",
     "langue": "fr",
     "themes": [
-      "2ème génération",
       "arts",
-      "corps & mouvement"
+      "corps",
+      "&",
+      "mouvement",
+      "2ème",
+      "génération"
     ],
     "urlDrive": "https://drive.google.com/file/d/1yYcLm2z9L8vyMO7H3HWtrH0Nc89t8gMg/view?usp=drivesdk",
     "description": null,
@@ -203,8 +216,7 @@
     "langue": "fr",
     "themes": [
       "phénoménologie",
-      "neurosciences",
-      "enaction"
+      "neurosciences"
     ],
     "urlDrive": "https://drive.google.com/file/d/1d1BYjI7Ns4TLQdHG4oovf-rDKYgC6cBk/view?usp=drivesdk",
     "description": null,
@@ -220,8 +232,7 @@
     "langue": "en",
     "themes": [
       "phénoménologie",
-      "neurosciences",
-      "enaction"
+      "neurosciences"
     ],
     "urlDrive": "https://drive.google.com/file/d/1KGq-lVxt4Q0RrRCqhzuR-7vcXMThcSxq/view?usp=drivesdk",
     "description": null,
@@ -268,9 +279,9 @@
     "type": "article",
     "langue": "fr",
     "themes": [
-      "arts",
       "phénoménologie",
-      "enaction"
+      "enaction",
+      "neurosciences"
     ],
     "urlDrive": "https://drive.google.com/file/d/1tB_JhWCnhrmeSWZsQ_pHEEUoP2wpC2qm/view?usp=drivesdk",
     "description": null,
@@ -302,9 +313,7 @@
     "type": "revue",
     "langue": "en",
     "themes": [
-      "arts",
-      "enaction",
-      "neurosciences"
+      "fondements"
     ],
     "urlDrive": "https://drive.google.com/file/d/1LcWsg5AsxBedjH5K5-h0FAxOcdX73NyN/view?usp=drivesdk",
     "description": "Editorial (J. Chance) · The Garlick Report (D. Garlick) · Chorus to Extension the Fifth (D. Woodcock) · Psychophysical Unity and the Critical Moment (R. MacLeod)",
@@ -352,7 +361,8 @@
     "langue": "en",
     "themes": [
       "fondements",
-      "arts"
+      "1ère",
+      "génération"
     ],
     "urlDrive": "https://drive.google.com/file/d/1bMbS3w5qOwfuqxQCOVHdlbfgZdRVtqUF/view?usp=drivesdk",
     "description": "Editorial · New Editorial (W. Carrington) · The Garlick Report · Head at the End of its Tether (J.M. Wynhausen) · Respiratory Re-Education (F.M. Alexander)",
@@ -368,7 +378,8 @@
     "langue": "en",
     "themes": [
       "fondements",
-      "1ère génération"
+      "1ère",
+      "génération"
     ],
     "urlDrive": "https://drive.google.com/file/d/1bhhBmFnjVVaqhxw1xp6dVjO2w75FuzBl/view?usp=drivesdk",
     "description": "Editorial · The Garlick Report · An Early History of Alexander (M. Rathbone) · Marjory Barlow in Action · Towards Unity (M. Frederick)",
@@ -464,7 +475,11 @@
     "langue": "en",
     "themes": [
       "fondements",
-      "physiologie"
+      "pédagogie",
+      "somatique",
+      "corps",
+      "&",
+      "mouvement"
     ],
     "urlDrive": "https://drive.google.com/file/d/1nubreagvArScsRjAwVnEfuq9hJx5SIZ6/view?usp=drivesdk",
     "description": "Editorial (J. Chance & W. Carrington) · The Garlick Report · Equitation/Alexander Glossary · A Feldenkrais practitioner looks at the Alexander Technique (J. Heggie) · Balance and Gravity (T. Roberts)",
@@ -480,8 +495,7 @@
     "langue": "en",
     "themes": [
       "fondements",
-      "pédagogie somatique",
-      "arts"
+      "physiologie"
     ],
     "urlDrive": "https://drive.google.com/file/d/1CMS9VXQsEAuPid3jAG8Gw4bK0_Ut6RAQ/view?usp=drivesdk",
     "description": "Editorial · The Garlick Report · Man: The Tottering Biped Part VI: The Role of the Nervous System (P.V. Tobias)",
@@ -497,7 +511,7 @@
     "langue": "en",
     "themes": [
       "fondements",
-      "1ère génération"
+      "arts"
     ],
     "urlDrive": "https://drive.google.com/file/d/1qrIlTgqFM8qMTTMByD99dGCDYQAL57Gx/view?usp=drivesdk",
     "description": "Editorial · The Garlick Report · The Use of the Ear (R. Joudry) · Viewpoint (R. Rickover)",
@@ -513,7 +527,8 @@
     "langue": "en",
     "themes": [
       "fondements",
-      "pédagogie"
+      "1ère",
+      "génération"
     ],
     "urlDrive": "https://drive.google.com/file/d/1-LaDqiF6N-PSD5PhWPIqVYcLmwfDtrik/view?usp=drivesdk",
     "description": "Editorial · The Garlick Report · Aphorisms of Marjorie Barstow · FM Alexander & Samuel Butler (J. Staring) · There's More Between the Hips than Meets the Hands (K. Hannan)",
@@ -529,8 +544,7 @@
     "langue": "en",
     "themes": [
       "fondements",
-      "pédagogie somatique",
-      "physiologie"
+      "pédagogie"
     ],
     "urlDrive": "https://drive.google.com/file/d/17xHAoQhWbnVv69VsGhQrNYTldz7BDvqR/view?usp=drivesdk",
     "description": "Editorial · The Garlick Report · On Feet Wide Apart (S. Kaminitz) · Effects of Childhood Trauma (R. Mausner & J. Cohen)",
@@ -545,10 +559,9 @@
     "type": "article",
     "langue": "fr",
     "themes": [
-      "fondements",
-      "pédagogie somatique",
-      "physiologie",
-      "corps & mouvement",
+      "corps",
+      "&",
+      "mouvement",
       "phénoménologie"
     ],
     "urlDrive": "https://drive.google.com/file/d/1PFywQ8wu6jIfvTH00gcjH0MHcrseSRW8/view?usp=drivesdk",
@@ -564,10 +577,9 @@
     "type": "article",
     "langue": "fr",
     "themes": [
-      "fondements",
-      "pédagogie somatique",
-      "physiologie",
-      "corps & mouvement",
+      "corps",
+      "&",
+      "mouvement",
       "phénoménologie"
     ],
     "urlDrive": "https://drive.google.com/file/d/1j6VYgARDKsJ992VADinuBf0lHsf_np2w/view?usp=drivesdk",
@@ -583,10 +595,9 @@
     "type": "article",
     "langue": "fr",
     "themes": [
-      "fondements",
-      "pédagogie somatique",
-      "physiologie",
-      "corps & mouvement",
+      "corps",
+      "&",
+      "mouvement",
       "phénoménologie"
     ],
     "urlDrive": "https://drive.google.com/file/d/15-LO7uWURR6aiX7RGz44kmEpDGgCEm-p/view?usp=drivesdk",
@@ -602,10 +613,9 @@
     "type": "article",
     "langue": "fr",
     "themes": [
-      "fondements",
-      "pédagogie somatique",
-      "physiologie",
-      "corps & mouvement",
+      "corps",
+      "&",
+      "mouvement",
       "phénoménologie"
     ],
     "urlDrive": "https://drive.google.com/file/d/18IbD6LAR0uyXoTi09_iUlmqHwJ9Db6l7/view?usp=drivesdk",
@@ -621,8 +631,10 @@
     "type": "article",
     "langue": "fr",
     "themes": [
-      "fondements",
-      "1ère génération"
+      "corps",
+      "&",
+      "mouvement",
+      "phénoménologie"
     ],
     "urlDrive": "https://drive.google.com/file/d/1uMG3MyTVDkmT7IaF3HfSIqLbeOiz5luz/view?usp=drivesdk",
     "description": null,
@@ -638,10 +650,8 @@
     "langue": "fr",
     "themes": [
       "fondements",
-      "pédagogie somatique",
-      "physiologie",
-      "corps & mouvement",
-      "phénoménologie"
+      "1ère",
+      "génération"
     ],
     "urlDrive": "https://drive.google.com/file/d/1W9G_tvBfFxaZAyIdAE53i3ZkZ3rQLcY6/view?usp=drivesdk",
     "description": null,
@@ -657,10 +667,8 @@
     "langue": "fr",
     "themes": [
       "fondements",
-      "pédagogie somatique",
-      "physiologie",
-      "corps & mouvement",
-      "phénoménologie"
+      "1ère",
+      "génération"
     ],
     "urlDrive": "https://drive.google.com/file/d/13RYXhKlL-G92dn7kc-Ylezov_gCIB19g/view?usp=drivesdk",
     "description": null,
@@ -676,10 +684,8 @@
     "langue": "fr",
     "themes": [
       "fondements",
-      "pédagogie somatique",
-      "physiologie",
-      "corps & mouvement",
-      "phénoménologie"
+      "1ère",
+      "génération"
     ],
     "urlDrive": "https://drive.google.com/file/d/1gtnI36MA5eSb66Tfd5BwXle8OV6hXE_2/view?usp=drivesdk",
     "description": null,
@@ -695,8 +701,8 @@
     "langue": "fr",
     "themes": [
       "fondements",
-      "1ère génération",
-      "pédagogie"
+      "1ère",
+      "génération"
     ],
     "urlDrive": "https://drive.google.com/file/d/1EqAEUJ0Z4Sw8MvW4Wo2Qpx0fq9v7Ibau/view?usp=drivesdk",
     "description": null,
@@ -712,10 +718,9 @@
     "langue": "fr",
     "themes": [
       "fondements",
-      "pédagogie somatique",
-      "physiologie",
-      "corps & mouvement",
-      "phénoménologie"
+      "pédagogie",
+      "1ère",
+      "génération"
     ],
     "urlDrive": "https://drive.google.com/file/d/1rYok9plcIFSNV-Cso1PJ7XsryB6e1NBw/view?usp=drivesdk",
     "description": null,
@@ -731,7 +736,7 @@
     "langue": "fr",
     "themes": [
       "fondements",
-      "phénoménologie"
+      "philosophie"
     ],
     "urlDrive": "https://drive.google.com/file/d/1qkeKupb8Uwxaupd9KGvvAxu9ogpYzCLF/view?usp=drivesdk",
     "description": null,
@@ -747,7 +752,8 @@
     "langue": "fr",
     "themes": [
       "fondements",
-      "1ère génération"
+      "1ère",
+      "génération"
     ],
     "urlDrive": "https://drive.google.com/file/d/1r2WOuucnUn3OdMEWH1iebbfJ43TzEdjK/view?usp=drivesdk",
     "description": null,
@@ -779,7 +785,9 @@
     "langue": "en",
     "themes": [
       "fondements",
-      "corps & mouvement"
+      "corps",
+      "&",
+      "mouvement"
     ],
     "urlDrive": "https://drive.google.com/file/d/1-J_JVYLeeyIG0hph9cPWETET3yjF-q0s/view?usp=drivesdk",
     "description": null,
@@ -814,7 +822,7 @@
     ],
     "urlDrive": null,
     "description": null,
-    "physique": true,
+    "physique": false,
     "annotations": []
   },
   {
@@ -830,7 +838,7 @@
     ],
     "urlDrive": null,
     "description": null,
-    "physique": true,
+    "physique": false,
     "annotations": []
   },
   {
@@ -845,7 +853,7 @@
     ],
     "urlDrive": null,
     "description": null,
-    "physique": true,
+    "physique": false,
     "annotations": []
   },
   {
@@ -856,11 +864,13 @@
     "type": "livre",
     "langue": "en",
     "themes": [
-      "fondements"
+      "fondements",
+      "1ère",
+      "génération"
     ],
     "urlDrive": null,
     "description": null,
-    "physique": true,
+    "physique": false,
     "annotations": []
   },
   {
@@ -871,12 +881,13 @@
     "type": "livre",
     "langue": "en",
     "themes": [
-      "arts",
-      "pédagogie"
+      "fondements",
+      "1ère",
+      "génération"
     ],
     "urlDrive": null,
     "description": null,
-    "physique": true,
+    "physique": false,
     "annotations": []
   },
   {
@@ -888,11 +899,12 @@
     "langue": "en",
     "themes": [
       "fondements",
-      "1ère génération"
+      "2ème",
+      "génération"
     ],
     "urlDrive": null,
     "description": null,
-    "physique": true,
+    "physique": false,
     "annotations": []
   },
   {
@@ -903,120 +915,11 @@
     "type": "livre",
     "langue": "fr",
     "themes": [
-      "fondements",
-      "2ème génération"
+      "arts",
+      "pédagogie"
     ],
     "urlDrive": null,
     "description": null,
-    "physique": true,
-    "annotations": []
-  },
-  {
-    "id": 56,
-    "titre": "Une approche scientifique de la coordination humaine et la technique Alexander",
-    "auteur": "Jean Dominique Masoeo",
-    "annee": null,
-    "type": "article",
-    "langue": "fr",
-    "themes": [
-      "pédagogie",
-      "physiologie"
-    ],
-    "urlDrive": "https://drive.google.com/drive/folders/11WGrLn38uviroW8j597kT1rop-NTm9VF",
-    "description": null,
-    "physique": false,
-    "annotations": []
-  },
-  {
-    "id": 57,
-    "titre": "The Universal Constant in Living",
-    "auteur": "F.M. Alexander",
-    "annee": null,
-    "type": "livre",
-    "langue": "en",
-    "themes": [
-      "fondements",
-      "1ère génération"
-    ],
-    "urlDrive": "https://drive.google.com/drive/folders/1wzKMfGtW4HzRtRIVPW6vih_U9s0Eu1PT",
-    "description": null,
-    "physique": false,
-    "annotations": []
-  },
-  {
-    "id": 58,
-    "titre": "The Use of the Self",
-    "auteur": "F.M. Alexander",
-    "annee": null,
-    "type": "livre",
-    "langue": "en",
-    "themes": [
-      "fondements",
-      "1ère génération"
-    ],
-    "urlDrive": "https://drive.google.com/drive/folders/1wzKMfGtW4HzRtRIVPW6vih_U9s0Eu1PT",
-    "description": "édition de 1984, introduction John Dewey",
-    "physique": false,
-    "annotations": []
-  },
-  {
-    "id": 59,
-    "titre": "Graviception",
-    "auteur": "Glenna Batson",
-    "annee": null,
-    "type": "article",
-    "langue": "fr",
-    "themes": [
-      "fondements",
-      "1ère génération",
-      "pédagogie somatique",
-      "corps & mouvement",
-      "neurosciences",
-      "physiologie",
-      "2ème génération"
-    ],
-    "urlDrive": "https://drive.google.com/drive/folders/1TVe1G_ugso2WiKe91z57DNH0iJYlT5LS",
-    "description": "Présenté au Septième Congrès international de Technique\nAlexander. Oxford (Royaume-Uni), Août 20041",
-    "physique": false,
-    "annotations": []
-  },
-  {
-    "id": 60,
-    "titre": "« Corps douloureux » La technique F.M. Alexander au service des soignants pour un\nmieux être au travail",
-    "auteur": "Anne Zimmer",
-    "annee": null,
-    "type": "Mémoire",
-    "langue": "fr",
-    "themes": [
-      "1ère génération",
-      "pédagogie somatique",
-      "neurosciences",
-      "physiologie",
-      "2ème génération"
-    ],
-    "urlDrive": "https://drive.google.com/drive/folders/1m8J2umV4gd_3zWIBnSDcsfDUqzJwdGYS",
-    "description": "Mémoire pour l’obtention du D.U. Techniques du corps et monde du soin.Présenté et soutenu publiquement par Anne zimmer.Septembre 2014.",
-    "physique": false,
-    "annotations": []
-  },
-  {
-    "id": 61,
-    "titre": "Leçons de Technique Alexander auprès de danseurs valides et handicapés moteur de la Klaus Compagnie",
-    "auteur": "Gilles Estran",
-    "annee": null,
-    "type": "Mémoire",
-    "langue": "fr",
-    "themes": [
-      "1ère génération",
-      "pédagogie somatique",
-      "2ème génération",
-      "arts",
-      "fondements",
-      "pédagogie",
-      "corps & mouvement"
-    ],
-    "urlDrive": "https://drive.google.com/drive/folders/1m8J2umV4gd_3zWIBnSDcsfDUqzJwdGYS",
-    "description": "Mémoire pour l’obtention du D.U. Techniques du corps et monde\ndu soin Présenté et soutenu publiquement par Mr Gilles Estran. Le 28 septembre 2012",
     "physique": false,
     "annotations": []
   }
