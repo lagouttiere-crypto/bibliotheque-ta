@@ -695,8 +695,8 @@
       <section class="library-hero">
         <div>
           <div class="hero-kicker">Bibliothèque privée · ATI France</div>
-          <h1>Une salle de lecture pour circuler entre les textes et la pratique.</h1>
-          <p>Commencez par une sélection d’entrée, puis explorez librement par auteur, thème, langue, type de document ou tags des membres.</p>
+          <h1>Une salle de lecture pour circuler entre pratique et textes.</h1>
+          <p>Commencez par les fondements de la Technique Alexander, l’usage, l’inhibition et pédagogie, puis explorez librement par auteur, thème, langue, type de document ou tags des membres.</p>
         </div>
         <div class="hero-card">
           <span class="hero-number" id="heroCount">—</span>
@@ -707,13 +707,13 @@
 
       <div class="shelf-toolbar">
         <div>
-          <div class="content-title" id="contentTitle">Parcours d’entrée</div>
-          <div class="content-subtitle">Une première traversée curatée, avant le classement alphabétique.</div>
+          <div class="content-title" id="contentTitle">Premières traversées</div>
+          <div class="content-subtitle">Fondements, pratique et pédagogie ; quelques ouvertures contemporaines ensuite.</div>
         </div>
         <div class="toolbar-right">
           <div class="content-count" id="contentCount"></div>
           <select id="sortSelect" onchange="renderDocs()" aria-label="Trier les documents">
-            <option value="curated">Parcours d’entrée</option>
+            <option value="curated">Commencer par Alexander</option>
             <option value="author">Auteur A → Z</option>
             <option value="title">Titre A → Z</option>
             <option value="recent">Ajouts récents</option>
@@ -738,8 +738,36 @@ let activeTag = null;
 let openCard = null;
 let docs = [];
 
-// Maquette : ordre d'accueil éditorial. À ajuster selon vos priorités associatives.
-const featuredIds = [34, 36, 37, 41, 45, 46, 1, 13, 15, 19, 55, 4];
+// Parcours d'entrée éditorial ATI France :
+ // ouvrir par Alexander, les fondements et la pratique,
+ // puis élargir progressivement vers pédagogie, arts, recherche et traversées contemporaines.
+const featuredIds = [
+  46, // F.M. Alexander — respiration / voix
+  4,  // Habiter son corps
+  5,  // Richard Brennan
+  8,  // Inhibition — Michael Gelb
+  10, // Lana Frederick
+  9,  // Frank Pierce Jones — musiciens
+  41, // Walter Carrington — faire / non-faire
+  42, // Walter Carrington — directives
+  45, // Walter Carrington — équilibre
+  43, // Wilfred Barlow
+  39, // Act, Don't React
+  40, // Patrick MacDonald
+  19, // Patrick Macdonald — Directions
+  30, // Walter Carrington — Directions
+  33, // Marjorie Barstow
+  11, // Peter Nobes
+  44, // Aldous Huxley
+  13, // Neurophenomenology trad. fr
+  15, // Enkinaesthesia trad. fr
+  1,  // Emma Bigé
+  34, // Hubert Godard — plus loin dans le parcours
+  36,
+  37,
+  38,
+  35
+];
 
 function normalizeText(v) {
   return String(v || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
