@@ -7,6 +7,7 @@
     "type": "article",
     "langue": "fr",
     "themes": [
+      "themes",
       "phénoménologie",
       "philosophie"
     ],
@@ -23,6 +24,7 @@
     "type": "article",
     "langue": "fr",
     "themes": [
+      "themes",
       "phénoménologie",
       "philosophie"
     ],
@@ -39,6 +41,7 @@
     "type": "article",
     "langue": "fr",
     "themes": [
+      "themes",
       "phénoménologie",
       "fondements"
     ],
@@ -55,6 +58,7 @@
     "type": "livre",
     "langue": "fr",
     "themes": [
+      "themes",
       "fondements",
       "pédagogie"
     ],
@@ -71,6 +75,7 @@
     "type": "livre",
     "langue": "fr",
     "themes": [
+      "themes",
       "fondements",
       "pédagogie"
     ],
@@ -87,6 +92,7 @@
     "type": "article",
     "langue": "fr",
     "themes": [
+      "themes",
       "corps & mouvement",
       "physiologie"
     ],
@@ -103,6 +109,7 @@
     "type": "article",
     "langue": "fr",
     "themes": [
+      "themes",
       "phénoménologie",
       "corps & mouvement"
     ],
@@ -119,6 +126,7 @@
     "type": "article",
     "langue": "fr",
     "themes": [
+      "themes",
       "fondements",
       "2ème génération"
     ],
@@ -135,6 +143,7 @@
     "type": "article",
     "langue": "fr",
     "themes": [
+      "themes",
       "2ème génération",
       "pédagogie",
       "arts"
@@ -152,6 +161,7 @@
     "type": "article",
     "langue": "fr",
     "themes": [
+      "themes",
       "2ème génération",
       "pédagogie",
       "fondements"
@@ -169,6 +179,7 @@
     "type": "transcription",
     "langue": "fr",
     "themes": [
+      "themes",
       "2ème génération",
       "fondements"
     ],
@@ -185,6 +196,7 @@
     "type": "article",
     "langue": "fr",
     "themes": [
+      "themes",
       "2ème génération",
       "arts",
       "corps & mouvement"
@@ -202,6 +214,7 @@
     "type": "article",
     "langue": "fr",
     "themes": [
+      "themes",
       "phénoménologie",
       "neurosciences",
       "enaction"
@@ -219,6 +232,7 @@
     "type": "article",
     "langue": "en",
     "themes": [
+      "themes",
       "phénoménologie",
       "neurosciences",
       "enaction"
@@ -236,6 +250,7 @@
     "type": "article",
     "langue": "fr",
     "themes": [
+      "themes",
       "phénoménologie",
       "enaction"
     ],
@@ -252,6 +267,7 @@
     "type": "article",
     "langue": "en",
     "themes": [
+      "themes",
       "phénoménologie",
       "enaction"
     ],
@@ -268,6 +284,7 @@
     "type": "article",
     "langue": "fr",
     "themes": [
+      "themes",
       "arts",
       "phénoménologie",
       "enaction"
@@ -285,6 +302,7 @@
     "type": "article",
     "langue": "en",
     "themes": [
+      "themes",
       "phénoménologie",
       "enaction",
       "neurosciences"
@@ -302,6 +320,7 @@
     "type": "revue",
     "langue": "en",
     "themes": [
+      "themes",
       "arts",
       "enaction",
       "neurosciences"
@@ -319,6 +338,7 @@
     "type": "revue",
     "langue": "en",
     "themes": [
+      "themes",
       "fondements",
       "pédagogie"
     ],
@@ -335,6 +355,7 @@
     "type": "revue",
     "langue": "en",
     "themes": [
+      "themes",
       "fondements",
       "arts"
     ],
@@ -351,6 +372,7 @@
     "type": "revue",
     "langue": "en",
     "themes": [
+      "themes",
       "fondements",
       "arts"
     ],
@@ -367,6 +389,7 @@
     "type": "revue",
     "langue": "en",
     "themes": [
+      "themes",
       "fondements",
       "1ère génération"
     ],
@@ -383,6 +406,7 @@
     "type": "revue",
     "langue": "en",
     "themes": [
+      "themes",
       "fondements",
       "physiologie"
     ],
@@ -399,6 +423,7 @@
     "type": "revue",
     "langue": "en",
     "themes": [
+      "themes",
       "fondements",
       "physiologie"
     ],
@@ -415,6 +440,7 @@
     "type": "revue",
     "langue": "en",
     "themes": [
+      "themes",
       "fondements",
       "physiologie"
     ],
@@ -431,6 +457,7 @@
     "type": "revue",
     "langue": "en",
     "themes": [
+      "themes",
       "fondements",
       "physiologie"
     ],
@@ -447,6 +474,7 @@
     "type": "revue",
     "langue": "en",
     "themes": [
+      "themes",
       "fondements",
       "physiologie"
     ],
@@ -463,6 +491,7 @@
     "type": "revue",
     "langue": "en",
     "themes": [
+      "themes",
       "fondements",
       "physiologie"
     ],
@@ -479,6 +508,7 @@
     "type": "revue",
     "langue": "en",
     "themes": [
+      "themes",
       "fondements",
       "pédagogie somatique",
       "arts"
@@ -496,6 +526,7 @@
     "type": "revue",
     "langue": "en",
     "themes": [
+      "themes",
       "fondements",
       "1ère génération"
     ],
@@ -512,6 +543,7 @@
     "type": "revue",
     "langue": "en",
     "themes": [
+      "themes",
       "fondements",
       "pédagogie"
     ],
@@ -528,6 +560,7 @@
     "type": "revue",
     "langue": "en",
     "themes": [
+      "themes",
       "fondements",
       "pédagogie somatique",
       "physiologie"
@@ -545,6 +578,7 @@
     "type": "article",
     "langue": "fr",
     "themes": [
+      "themes",
       "fondements",
       "pédagogie somatique",
       "physiologie",
@@ -564,6 +598,7 @@
     "type": "article",
     "langue": "fr",
     "themes": [
+      "themes",
       "fondements",
       "pédagogie somatique",
       "physiologie",
@@ -583,6 +618,7 @@
     "type": "article",
     "langue": "fr",
     "themes": [
+      "themes",
       "fondements",
       "pédagogie somatique",
       "physiologie",
@@ -602,6 +638,7 @@
     "type": "article",
     "langue": "fr",
     "themes": [
+      "themes",
       "fondements",
       "pédagogie somatique",
       "physiologie",
@@ -621,6 +658,7 @@
     "type": "article",
     "langue": "fr",
     "themes": [
+      "themes",
       "fondements",
       "1ère génération"
     ],
@@ -637,6 +675,7 @@
     "type": "article",
     "langue": "fr",
     "themes": [
+      "themes",
       "fondements",
       "pédagogie somatique",
       "physiologie",
@@ -656,6 +695,7 @@
     "type": "article",
     "langue": "fr",
     "themes": [
+      "themes",
       "fondements",
       "pédagogie somatique",
       "physiologie",
@@ -675,6 +715,7 @@
     "type": "transcription",
     "langue": "fr",
     "themes": [
+      "themes",
       "fondements",
       "pédagogie somatique",
       "physiologie",
@@ -694,6 +735,7 @@
     "type": "article",
     "langue": "fr",
     "themes": [
+      "themes",
       "fondements",
       "1ère génération",
       "pédagogie"
@@ -711,6 +753,7 @@
     "type": "transcription",
     "langue": "fr",
     "themes": [
+      "themes",
       "fondements",
       "pédagogie somatique",
       "physiologie",
@@ -730,6 +773,7 @@
     "type": "article",
     "langue": "fr",
     "themes": [
+      "themes",
       "fondements",
       "phénoménologie"
     ],
@@ -746,6 +790,7 @@
     "type": "article",
     "langue": "fr",
     "themes": [
+      "themes",
       "fondements",
       "1ère génération"
     ],
@@ -762,6 +807,7 @@
     "type": "article",
     "langue": "fr",
     "themes": [
+      "themes",
       "fondements",
       "arts"
     ],
@@ -778,6 +824,7 @@
     "type": "article",
     "langue": "en",
     "themes": [
+      "themes",
       "fondements",
       "corps & mouvement"
     ],
@@ -794,6 +841,7 @@
     "type": "livre",
     "langue": "fr",
     "themes": [
+      "themes",
       "fondements",
       "pédagogie"
     ],
@@ -810,6 +858,7 @@
     "type": "livre",
     "langue": "fr",
     "themes": [
+      "themes",
       "fondements"
     ],
     "urlDrive": null,
@@ -825,6 +874,7 @@
     "type": "livre",
     "langue": "en",
     "themes": [
+      "themes",
       "fondements",
       "pédagogie"
     ],
@@ -841,6 +891,7 @@
     "type": "livre",
     "langue": "en",
     "themes": [
+      "themes",
       "fondements"
     ],
     "urlDrive": null,
@@ -856,6 +907,7 @@
     "type": "livre",
     "langue": "en",
     "themes": [
+      "themes",
       "fondements"
     ],
     "urlDrive": null,
@@ -871,6 +923,7 @@
     "type": "livre",
     "langue": "en",
     "themes": [
+      "themes",
       "arts",
       "pédagogie"
     ],
@@ -887,6 +940,7 @@
     "type": "livre",
     "langue": "en",
     "themes": [
+      "themes",
       "fondements",
       "1ère génération"
     ],
@@ -903,6 +957,7 @@
     "type": "livre",
     "langue": "fr",
     "themes": [
+      "themes",
       "fondements",
       "2ème génération"
     ],
@@ -919,6 +974,7 @@
     "type": "article",
     "langue": "fr",
     "themes": [
+      "themes",
       "pédagogie",
       "physiologie"
     ],
@@ -935,6 +991,7 @@
     "type": "livre",
     "langue": "en",
     "themes": [
+      "themes",
       "fondements",
       "1ère génération"
     ],
@@ -951,6 +1008,7 @@
     "type": "livre",
     "langue": "en",
     "themes": [
+      "themes",
       "fondements",
       "1ère génération"
     ],
@@ -967,6 +1025,7 @@
     "type": "article",
     "langue": "fr",
     "themes": [
+      "themes",
       "fondements",
       "1ère génération",
       "pédagogie somatique",
@@ -988,9 +1047,12 @@
     "type": "Mémoire",
     "langue": "fr",
     "themes": [
+      "themes",
+      "1ère génération",
       "pédagogie somatique",
       "neurosciences",
-      "physiologie"
+      "physiologie",
+      "2ème génération"
     ],
     "urlDrive": "https://drive.google.com/drive/folders/1m8J2umV4gd_3zWIBnSDcsfDUqzJwdGYS",
     "description": "Mémoire pour l’obtention du D.U. Techniques du corps et monde du soin.Présenté et soutenu publiquement par Anne zimmer.Septembre 2014.",
@@ -1005,7 +1067,10 @@
     "type": "Mémoire",
     "langue": "fr",
     "themes": [
+      "themes",
+      "1ère génération",
       "pédagogie somatique",
+      "2ème génération",
       "arts",
       "fondements",
       "pédagogie",
