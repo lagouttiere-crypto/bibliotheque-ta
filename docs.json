@@ -1076,5 +1076,23 @@
     "description": "Mémoire pour l’obtention du D.U. Techniques du corps et monde\ndu soin Présenté et soutenu publiquement par Mr Gilles Estran. Le 28 septembre 2012",
     "physique": false,
     "annotations": []
+  },
+  {
+    "id": 62,
+    "titre": "Living the Alexander Technique Interviews With Nine Senior Teachers",
+    "auteur": "Ruth Rootberg",
+    "annee": 2015,
+    "type": "livre",
+    "langue": "en",
+    "themes": [
+      "fondements",
+      "pédagogie",
+      "1ère génération",
+      "2ème génération"
+    ],
+    "urlDrive": "https://drive.google.com/file/d/1XK1LQCAcaQjOslh6dNvp3yWZg38okYCR/view?usp=drivesdk",
+    "description": "Living the Alexander Technique: Interviews With Nine Senior Teachers est un recueil d’entretiens menés par Ruth Rootberg avec neuf enseignant·es expérimenté·es de la Technique Alexander. À travers leurs récits de vie, ils évoquent leur parcours, leur manière d’enseigner, mais aussi la façon dont la Technique accompagne le vieillissement, la maladie, le deuil ou les transformations de l’existence. Le livre montre moins une “méthode” qu’une manière d’habiter le quotidien avec davantage de disponibilité, de présence et de souplesse. Avec plus de 400 années d’expérience cumulées, ces voix composent une mémoire vivante de la Technique Alexander, à la fois pratique, humaine et profondément incarnée.",
+    "physique": false,
+    "annotations": []
   }
 ]
