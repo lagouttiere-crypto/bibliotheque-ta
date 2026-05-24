@@ -1094,5 +1094,23 @@
     "description": "Living the Alexander Technique: Interviews With Nine Senior Teachers est un recueil d’entretiens menés par Ruth Rootberg avec neuf enseignant·es expérimenté·es de la Technique Alexander. À travers leurs récits de vie, ils évoquent leur parcours, leur manière d’enseigner, mais aussi la façon dont la Technique accompagne le vieillissement, la maladie, le deuil ou les transformations de l’existence. Le livre montre moins une “méthode” qu’une manière d’habiter le quotidien avec davantage de disponibilité, de présence et de souplesse. Avec plus de 400 années d’expérience cumulées, ces voix composent une mémoire vivante de la Technique Alexander, à la fois pratique, humaine et profondément incarnée.",
     "physique": false,
     "annotations": []
+  },
+  {
+    "id": 63,
+    "titre": "Living the Alexander Technique, Volume II- Aging with Poise",
+    "auteur": "Ruth Rootberg",
+    "annee": 2018,
+    "type": "livre",
+    "langue": "en",
+    "themes": [
+      "fondements",
+      "pédagogie",
+      "1ère génération",
+      "2ème génération"
+    ],
+    "urlDrive": "https://drive.google.com/file/d/13dfhQZ_5Tgb-OGLbux30oQ9BlA7PaZjX/view?usp=drivesdk",
+    "description": "Living the Alexander Technique, Volume II: Aging with Poise est un recueil d’entretiens menés par Ruth Rootberg avec onze enseignant·es expérimenté·es de la Technique Alexander. Le livre explore la manière dont ces praticien·nes traversent le vieillissement en s’appuyant sur les principes de la Technique : qualité de présence, liberté de mouvement, curiosité, humour et capacité d’adaptation. À travers leurs récits, il ne s’agit pas seulement de “bien vieillir”, mais de continuer à habiter le monde avec vitalité, dignité et disponibilité perceptive. Ces témoignages composent une mémoire vivante de la Technique Alexander et montrent comment celle-ci peut devenir une pratique quotidienne pour accompagner les transformations du corps, de l’attention et de la relation aux autres au fil du temps.",
+    "physique": true,
+    "annotations": []
   }
 ]
