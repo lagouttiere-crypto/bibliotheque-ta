@@ -1463,5 +1463,45 @@
     "videoPassword": null,
     "duree": "1h03",
     "annotations": []
+  },
+  {
+    "id": 72,
+    "titre": "Congrès de Stony Brook 1986 – Atelier Marjorie Barstow 1",
+    "auteur": "Marjorie Barstow",
+    "annee": 1986,
+    "type": "vidéo",
+    "langue": "en",
+    "themes": [
+      "fondements",
+      "pédagogie",
+      "1ère génération"
+    ],
+    "urlDrive": null,
+    "description": "Cet atelier offre un aperçu unique de la méthode de travail de Marjorie Barstow, qui animait des groupes importants et travaillait individuellement avec les enseignants. Marjorie Barstow fut la première personne diplômée de la première formation d'enseignants de la Technique Alexander dispensée par F. Matthias Alexander à Londres en 1934.",
+    "physique": false,
+    "videoUrl": "https://alexandertrust.org.uk/player-embed/id/646/",
+    "videoPassword": null,
+    "duree": "1h07",
+    "annotations": []
+  },
+  {
+    "id": 73,
+    "titre": "Congrès de Stony Brook 1986 – Atelier Marjorie Barstow 2eme partie",
+    "auteur": "Marjorie Barstow",
+    "annee": 1986,
+    "type": "vidéo",
+    "langue": "en",
+    "themes": [
+      "fondements",
+      "pédagogie",
+      "1ère génération"
+    ],
+    "urlDrive": null,
+    "description": "Dans cet atelier, les participants ont mis en pratique des exercices en choisissant des activités qui leur plaisaient, notamment des fentes, des squats et une séance d'écriture en groupe. Marjorie a conclu la séance en travaillant avec Freda Hart, en lisant assis sur une chaise.",
+    "physique": false,
+    "videoUrl": "https://alexandertrust.org.uk/player-embed/id/1225/",
+    "videoPassword": null,
+    "duree": "43mn",
+    "annotations": []
   }
 ]
