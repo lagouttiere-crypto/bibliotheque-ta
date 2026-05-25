@@ -1423,5 +1423,25 @@
     "videoPassword": null,
     "duree": "6mn20",
     "annotations": []
+  },
+  {
+    "id": 70,
+    "titre": "Freiburg Congress 1999 – Rivka Cohen",
+    "auteur": "Rivka Cohen",
+    "annee": 1990,
+    "type": "vidéo",
+    "langue": "en",
+    "themes": [
+      "fondements",
+      "pédagogie",
+      "2ème génération"
+    ],
+    "urlDrive": null,
+    "description": null,
+    "physique": false,
+    "videoUrl": "https://alexandertrust.org.uk/player-embed/id/1202/",
+    "videoPassword": null,
+    "duree": null,
+    "annotations": []
   }
 ]
