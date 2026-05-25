@@ -737,6 +737,7 @@ let tagsState = {};
 let activeTag = null;
 let openCard = null;
 let docs = [];
+let empruntsState = {};
 
 // Parcours d'entrée éditorial ATI France :
  // ouvrir par Alexander, les fondements et la pratique,
@@ -841,7 +842,35 @@ async function loadAnnotations() {
   renderDocs();
   renderSidebarTags();
 }
+// retourne les emprunts 
 
+async function loadEmprunts() {
+  try {
+    const res = await fetch(SHEET_URL + '?sheet=emprunts&v=' + Date.now());
+    const rows = await res.json();
+
+    empruntsState = {};
+
+    rows.forEach(row => {
+      const id = parseInt(row.id_doc);
+      if (!id) return;
+
+      const rendu = String(row.rendu || '').trim().toLowerCase();
+
+      if (rendu !== "oui") {
+        empruntsState[id] = {
+          emprunteur: row.emprunteur || '',
+          date_emprunt: row.date_emprunt || '',
+          date_retour_prevue: row.date_retour_prevue || ''
+        };
+      }
+    });
+
+  } catch(e) {
+    console.warn("Impossible de charger les emprunts", e);
+  }
+}
+//// ajoute les tags 
 function renderSidebarTags() {
   const allTags = [...new Set(Object.values(tagsState).flat())].sort();
   const container = document.getElementById('sidebarTags');
@@ -885,6 +914,7 @@ async function showApp(nom) {
   const heroCount = document.getElementById('heroCount');
   if (heroCount) heroCount.textContent = docs.length;
   docs.forEach(d => { annotationsState[d.id] = []; tagsState[d.id] = []; });
+  await loadEmprunts();
   renderDocs();
   loadAnnotations();
 }
@@ -941,6 +971,20 @@ function renderDocs() {
     const hasAnnot = annots.length > 0;
     const isOpen = openCard === d.id;
     const yearStr = d.year ? ` (${d.year})` : '';
+    const emprunt = empruntsState[d.id];
+    const empruntHtml = d.physique
+      ? (
+          emprunt
+              ? `<div style="font-size:12px;color:#8B5E34;margin-top:4px">
+             Emprunté par ${emprunt.emprunteur}
+             ${emprunt.date_emprunt ? `depuis le ${emprunt.date_emprunt}` : ''}
+             ${emprunt.date_retour_prevue ? `<br>Retour prévu : ${emprunt.date_retour_prevue}` : ''}
+           </div>`
+              : `<div style="font-size:12px;color:#4F7A52;margin-top:4px">
+             Disponible à l’emprunt
+           </div>`
+    )
+  : '';
     return `
       <div class="doc-card ${isOpen ? 'is-open' : ''}" id="card-${d.id}" onclick="toggleCard(${d.id})">
         <div class="doc-meta">
@@ -950,6 +994,7 @@ function renderDocs() {
         </div>
         <div class="doc-title">${d.title}</div>
         <div class="doc-author">${d.author || '—'}${yearStr}</div>
+        ${empruntHtml}
         <div class="doc-themes">
           ${d.themes.map(t => `<span class="theme-tag">${t}</span>`).join('')}
           ${(tagsState[d.id]||[]).map(t => `<span class="member-tag" onclick="event.stopPropagation();setActiveTag('${t}')">${t}</span>`).join('')}
