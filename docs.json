@@ -14,6 +14,9 @@
     "urlDrive": "https://drive.google.com/file/d/1KorxuDY8mBQUDECuRjZ5BmZ0VsCqn6uP/view?usp=drivesdk",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -31,6 +34,9 @@
     "urlDrive": "https://drive.google.com/file/d/1vpYlE_nnckMEE-e88gxzqa3dbBkJ0pKu/view?usp=drivesdk",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -48,6 +54,9 @@
     "urlDrive": "https://drive.google.com/file/d/1f42rNUa7oQ-B1_F5sT43oa8cL91fc2dd/view?usp=drivesdk",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -65,6 +74,9 @@
     "urlDrive": "https://drive.google.com/file/d/11IJTe0EaNco5i5l4nZq6vcyy9LPdCUwP/view?usp=drivesdk",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -82,6 +94,9 @@
     "urlDrive": "https://drive.google.com/file/d/1jLYxse0DvtoZPNwVRGn8UBSx-D4oEujH/view?usp=drivesdk",
     "description": null,
     "physique": true,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -99,6 +114,9 @@
     "urlDrive": "https://drive.google.com/file/d/1GAJu8ZiAGgE0IiDtFnEt6-lVRxDECVf3/view?usp=drivesdk",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -116,6 +134,9 @@
     "urlDrive": "https://drive.google.com/file/d/1YAIHPZWnticcjO58FiAkZ8LCjULUY3bk/view?usp=drivesdk",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -133,6 +154,9 @@
     "urlDrive": "https://drive.google.com/file/d/1uo8AHEpqSD6Co5OCWDYq40Ag3Q0C7i6z/view?usp=drivesdk",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -151,6 +175,9 @@
     "urlDrive": "https://drive.google.com/file/d/1NDMJs7SjsMRL2zI-IQZoT2XbRLaMwnwp/view?usp=drivesdk",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -169,6 +196,9 @@
     "urlDrive": "https://drive.google.com/file/d/1rjHutQOh8e43tNZRvCoVfpgIW3dmkNhh/view?usp=drivesdk",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -186,6 +216,9 @@
     "urlDrive": "https://drive.google.com/file/d/12whFI4exC99uaibFuKrdk-uNwGEXKd18/view?usp=drivesdk",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -204,6 +237,9 @@
     "urlDrive": "https://drive.google.com/file/d/1yYcLm2z9L8vyMO7H3HWtrH0Nc89t8gMg/view?usp=drivesdk",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -222,6 +258,9 @@
     "urlDrive": "https://drive.google.com/file/d/1d1BYjI7Ns4TLQdHG4oovf-rDKYgC6cBk/view?usp=drivesdk",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -240,6 +279,9 @@
     "urlDrive": "https://drive.google.com/file/d/1KGq-lVxt4Q0RrRCqhzuR-7vcXMThcSxq/view?usp=drivesdk",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -257,6 +299,9 @@
     "urlDrive": "https://drive.google.com/file/d/1KgNewxjAvLRE7D-dgqx96QutcnhipVWX/view?usp=drivesdk",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -274,6 +319,9 @@
     "urlDrive": "https://drive.google.com/file/d/1weSTw9xMgU3uk57jlv7kOBeLsXarKlhk/view?usp=drivesdk",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -292,6 +340,9 @@
     "urlDrive": "https://drive.google.com/file/d/1tB_JhWCnhrmeSWZsQ_pHEEUoP2wpC2qm/view?usp=drivesdk",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -310,6 +361,9 @@
     "urlDrive": "https://drive.google.com/file/d/1UGMPO2jZSSFCiPRjizdwtLsXGru2qGoZ/view?usp=drivesdk",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -328,6 +382,9 @@
     "urlDrive": "https://drive.google.com/file/d/1LcWsg5AsxBedjH5K5-h0FAxOcdX73NyN/view?usp=drivesdk",
     "description": "Editorial (J. Chance) · The Garlick Report (D. Garlick) · Chorus to Extension the Fifth (D. Woodcock) · Psychophysical Unity and the Critical Moment (R. MacLeod)",
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -345,6 +402,9 @@
     "urlDrive": "https://drive.google.com/file/d/1yG-Daq5iRQE0GNDeebDViUqWAQs0YsZ2/view?usp=drivesdk",
     "description": "Editorial (J. Chance) · The Garlick Report · Words as Communications (J. Clark) · Peace & the Alexander Technique (M. Stenning)",
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -362,6 +422,9 @@
     "urlDrive": "https://drive.google.com/file/d/1c4QTOYVIzC0kz4oUu0v0ieDirIlJSr_L/view?usp=drivesdk",
     "description": "Editorial · The Garlick Report · New Method of Vocal Respiratory Re-education (F.M. Alexander) · Voice and the Alexander Technique (A. Hough)",
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -379,6 +442,9 @@
     "urlDrive": "https://drive.google.com/file/d/1bMbS3w5qOwfuqxQCOVHdlbfgZdRVtqUF/view?usp=drivesdk",
     "description": "Editorial · New Editorial (W. Carrington) · The Garlick Report · Head at the End of its Tether (J.M. Wynhausen) · Respiratory Re-Education (F.M. Alexander)",
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -396,6 +462,9 @@
     "urlDrive": "https://drive.google.com/file/d/1bhhBmFnjVVaqhxw1xp6dVjO2w75FuzBl/view?usp=drivesdk",
     "description": "Editorial · The Garlick Report · An Early History of Alexander (M. Rathbone) · Marjory Barlow in Action · Towards Unity (M. Frederick)",
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -413,6 +482,9 @@
     "urlDrive": "https://drive.google.com/file/d/1r9QzzdLQIZgybCPAAedOrq67o_R4onbH/view?usp=drivesdk",
     "description": "Editorial · The Garlick Report · Man - The Tottering Biped: Posture & Locomotion in Higher Primates (P.V. Tobias) · F.M. Alexander and Evolution (J.M.O. Fischer)",
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -430,6 +502,9 @@
     "urlDrive": "https://drive.google.com/file/d/1esusS7fE2u9tBd27Ud9FM0zx5Tl-qIO8/view?usp=drivesdk",
     "description": "Editorial · The Garlick Report · Man - The Tottering Biped Part II: Anatomy of Posture (P.V. Tobias) · F.M. Alexander and Evolution (J.M.O. Fischer)",
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -447,6 +522,9 @@
     "urlDrive": "https://drive.google.com/file/d/1VwQrA0yJkuJ9Cgo-Lr3mOGsRZloBIp2d/view?usp=drivesdk",
     "description": "Editorial · The Garlick Report · Blessed Helicity (T.H. Mathews) · Man - The Tottering Biped Part III: What the Fossils Tell Us (P.V. Tobias)",
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -464,6 +542,9 @@
     "urlDrive": "https://drive.google.com/file/d/1OcQOQ8xKSPFX4JaxDijH-ydpNCY6dzPO/view?usp=drivesdk",
     "description": "Editorial · The Garlick Report · Man: The Tottering Biped Part IV: Uprightness Gravity and Balance (P.V. Tobias) · Friends of Alexander (M. Long)",
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -481,6 +562,9 @@
     "urlDrive": "https://drive.google.com/file/d/1EpSZMg3IKiQUSGKol-b7nUacFq2tTRz3/view?usp=drivesdk",
     "description": "Editorial · The Garlick Report · The Space Between: Stimulus & Response (P. Bondy) · The False Self (M. Arnold) · Man: The Tottering Biped Part V (P.V. Tobias)",
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -498,6 +582,9 @@
     "urlDrive": "https://drive.google.com/file/d/1nubreagvArScsRjAwVnEfuq9hJx5SIZ6/view?usp=drivesdk",
     "description": "Editorial (J. Chance & W. Carrington) · The Garlick Report · Equitation/Alexander Glossary · A Feldenkrais practitioner looks at the Alexander Technique (J. Heggie) · Balance and Gravity (T. Roberts)",
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -516,6 +603,9 @@
     "urlDrive": "https://drive.google.com/file/d/1CMS9VXQsEAuPid3jAG8Gw4bK0_Ut6RAQ/view?usp=drivesdk",
     "description": "Editorial · The Garlick Report · Man: The Tottering Biped Part VI: The Role of the Nervous System (P.V. Tobias)",
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -533,6 +623,9 @@
     "urlDrive": "https://drive.google.com/file/d/1qrIlTgqFM8qMTTMByD99dGCDYQAL57Gx/view?usp=drivesdk",
     "description": "Editorial · The Garlick Report · The Use of the Ear (R. Joudry) · Viewpoint (R. Rickover)",
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -550,6 +643,9 @@
     "urlDrive": "https://drive.google.com/file/d/1-LaDqiF6N-PSD5PhWPIqVYcLmwfDtrik/view?usp=drivesdk",
     "description": "Editorial · The Garlick Report · Aphorisms of Marjorie Barstow · FM Alexander & Samuel Butler (J. Staring) · There's More Between the Hips than Meets the Hands (K. Hannan)",
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -568,6 +664,9 @@
     "urlDrive": "https://drive.google.com/file/d/17xHAoQhWbnVv69VsGhQrNYTldz7BDvqR/view?usp=drivesdk",
     "description": "Editorial · The Garlick Report · On Feet Wide Apart (S. Kaminitz) · Effects of Childhood Trauma (R. Mausner & J. Cohen)",
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -587,6 +686,9 @@
     "urlDrive": "https://drive.google.com/file/d/1PFywQ8wu6jIfvTH00gcjH0MHcrseSRW8/view?usp=drivesdk",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -606,6 +708,9 @@
     "urlDrive": "https://drive.google.com/file/d/1j6VYgARDKsJ992VADinuBf0lHsf_np2w/view?usp=drivesdk",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -626,6 +731,9 @@
     "urlDrive": "https://drive.google.com/file/d/15-LO7uWURR6aiX7RGz44kmEpDGgCEm-p/view?usp=drivesdk",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -645,6 +753,9 @@
     "urlDrive": "https://drive.google.com/file/d/18IbD6LAR0uyXoTi09_iUlmqHwJ9Db6l7/view?usp=drivesdk",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -661,6 +772,9 @@
     "urlDrive": "https://drive.google.com/file/d/1uMG3MyTVDkmT7IaF3HfSIqLbeOiz5luz/view?usp=drivesdk",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -681,6 +795,9 @@
     "urlDrive": "https://drive.google.com/file/d/1W9G_tvBfFxaZAyIdAE53i3ZkZ3rQLcY6/view?usp=drivesdk",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -701,6 +818,9 @@
     "urlDrive": "https://drive.google.com/file/d/13RYXhKlL-G92dn7kc-Ylezov_gCIB19g/view?usp=drivesdk",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -721,6 +841,9 @@
     "urlDrive": "https://drive.google.com/file/d/1gtnI36MA5eSb66Tfd5BwXle8OV6hXE_2/view?usp=drivesdk",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -739,6 +862,9 @@
     "urlDrive": "https://drive.google.com/file/d/1EqAEUJ0Z4Sw8MvW4Wo2Qpx0fq9v7Ibau/view?usp=drivesdk",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -759,6 +885,9 @@
     "urlDrive": "https://drive.google.com/file/d/1rYok9plcIFSNV-Cso1PJ7XsryB6e1NBw/view?usp=drivesdk",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -776,6 +905,9 @@
     "urlDrive": "https://drive.google.com/file/d/1qkeKupb8Uwxaupd9KGvvAxu9ogpYzCLF/view?usp=drivesdk",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -793,6 +925,9 @@
     "urlDrive": "https://drive.google.com/file/d/1r2WOuucnUn3OdMEWH1iebbfJ43TzEdjK/view?usp=drivesdk",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -810,6 +945,9 @@
     "urlDrive": "https://drive.google.com/file/d/13SDQQ8x0VyyO3nQrqkou-rQbSGFomGK5/view?usp=drivesdk",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -827,6 +965,9 @@
     "urlDrive": "https://drive.google.com/file/d/1-J_JVYLeeyIG0hph9cPWETET3yjF-q0s/view?usp=drivesdk",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -844,6 +985,9 @@
     "urlDrive": null,
     "description": null,
     "physique": true,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -860,6 +1004,9 @@
     "urlDrive": null,
     "description": null,
     "physique": true,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -877,6 +1024,9 @@
     "urlDrive": null,
     "description": null,
     "physique": true,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -893,6 +1043,9 @@
     "urlDrive": null,
     "description": null,
     "physique": true,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -909,6 +1062,9 @@
     "urlDrive": null,
     "description": null,
     "physique": true,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -926,6 +1082,9 @@
     "urlDrive": null,
     "description": null,
     "physique": true,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -943,6 +1102,9 @@
     "urlDrive": null,
     "description": null,
     "physique": true,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -960,6 +1122,9 @@
     "urlDrive": null,
     "description": null,
     "physique": true,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -977,6 +1142,9 @@
     "urlDrive": "https://drive.google.com/drive/folders/11WGrLn38uviroW8j597kT1rop-NTm9VF",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -994,6 +1162,9 @@
     "urlDrive": "https://drive.google.com/drive/folders/1wzKMfGtW4HzRtRIVPW6vih_U9s0Eu1PT",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -1011,6 +1182,9 @@
     "urlDrive": "https://drive.google.com/drive/folders/1wzKMfGtW4HzRtRIVPW6vih_U9s0Eu1PT",
     "description": "édition de 1984, introduction John Dewey",
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -1033,6 +1207,9 @@
     "urlDrive": "https://drive.google.com/drive/folders/1TVe1G_ugso2WiKe91z57DNH0iJYlT5LS",
     "description": "Présenté au Septième Congrès international de Technique\nAlexander. Oxford (Royaume-Uni), Août 20041",
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -1053,6 +1230,9 @@
     "urlDrive": "https://drive.google.com/drive/folders/1m8J2umV4gd_3zWIBnSDcsfDUqzJwdGYS",
     "description": "Mémoire pour l’obtention du D.U. Techniques du corps et monde du soin.Présenté et soutenu publiquement par Anne zimmer.Septembre 2014.",
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -1075,6 +1255,9 @@
     "urlDrive": "https://drive.google.com/drive/folders/1m8J2umV4gd_3zWIBnSDcsfDUqzJwdGYS",
     "description": "Mémoire pour l’obtention du D.U. Techniques du corps et monde\ndu soin Présenté et soutenu publiquement par Mr Gilles Estran. Le 28 septembre 2012",
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -1093,6 +1276,9 @@
     "urlDrive": "https://drive.google.com/file/d/1XK1LQCAcaQjOslh6dNvp3yWZg38okYCR/view?usp=drivesdk",
     "description": "Living the Alexander Technique: Interviews With Nine Senior Teachers est un recueil d’entretiens menés par Ruth Rootberg avec neuf enseignant·es expérimenté·es de la Technique Alexander. À travers leurs récits de vie, ils évoquent leur parcours, leur manière d’enseigner, mais aussi la façon dont la Technique accompagne le vieillissement, la maladie, le deuil ou les transformations de l’existence. Le livre montre moins une “méthode” qu’une manière d’habiter le quotidien avec davantage de disponibilité, de présence et de souplesse. Avec plus de 400 années d’expérience cumulées, ces voix composent une mémoire vivante de la Technique Alexander, à la fois pratique, humaine et profondément incarnée.",
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -1111,6 +1297,9 @@
     "urlDrive": "https://drive.google.com/file/d/13dfhQZ_5Tgb-OGLbux30oQ9BlA7PaZjX/view?usp=drivesdk",
     "description": "Living the Alexander Technique, Volume II: Aging with Poise est un recueil d’entretiens menés par Ruth Rootberg avec onze enseignant·es expérimenté·es de la Technique Alexander. Le livre explore la manière dont ces praticien·nes traversent le vieillissement en s’appuyant sur les principes de la Technique : qualité de présence, liberté de mouvement, curiosité, humour et capacité d’adaptation. À travers leurs récits, il ne s’agit pas seulement de “bien vieillir”, mais de continuer à habiter le monde avec vitalité, dignité et disponibilité perceptive. Ces témoignages composent une mémoire vivante de la Technique Alexander et montrent comment celle-ci peut devenir une pratique quotidienne pour accompagner les transformations du corps, de l’attention et de la relation aux autres au fil du temps.",
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -1127,6 +1316,9 @@
     "urlDrive": null,
     "description": "Contents:\n‘Editorial’ (p. 4) by Paul Cook.\n‘Issue editorial’ (p. 4) by Ken Thompson.\n‘The science report’ (p. 5-6) by Chris Stevens.\n‘What is yoga?’ (pp. 7-11) by Ken Thompson.\n‘Off the table’ (pp. 12-15) by Karyn Chapman.\n‘The formulation of an Alexander lesson – An illustrated guide for the perplexed – Part one’ (pp. 16-18) by Melvyn Waldman.\n‘Psychophysical re-education’ (pp. 19-26) by Lyn Charlsen, Michael D. Frederick, Sigrid Wagner.\n‘Yoking the east and west’ (pp. 27, 28) by Diana Hook.\n‘Of one mind’ (pp. 29-32) by Suzanne Faulkner.\n‘Alexander teacher education – An integrated view of professional competence – Part two’ (pp. 33-36) by Terry Fitzgerald.\n‘Letter: Counterpoint – Science and Alexander’ (p. 36) by John H. M Austin, Pearl Ausubel.\n‘Viewpoint (Yoga, the Alexander Technique and structural integration all share common values)’ (pp. 37, 39) by Thomas Myers.",
     "physique": true,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -1143,6 +1335,9 @@
     "urlDrive": null,
     "description": "Contents:\n‘The Science Report’ by Kevan A. C. Martin.\n‘Still Running: Balk, Barefoot and Beyond’ by Malcolm Balk.\n‘Mind Tennis: Analysing the Critical Moment’ by Bruce Elliot, Damien Lafont, Jim McLennan, Joe Boland, Gary Adelman.\n‘Pilates and Alexander: Integrating Fitness’ by Jane Staggs and Helge Purtscheller.\n‘Weightless Directions: The Shaw Way’ by Jane-Ann Purdy.\n‘Sensing a New Golf Movement’ by Roy Palmer and Martyn Jones.\n‘On the Road Again’ by Barry Collins.",
     "physique": true,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
     "annotations": []
   },
   {
@@ -1160,6 +1355,29 @@
     "urlDrive": null,
     "description": "Dans ce travail, la paume ne s’ouvre pas parce que nous essayons de l’ouvrir.  \nGrâce à la résonance triadique, la paume s’ouvre et se vide d’elle-même.  \nÀ mesure que la paume se vide, le corps s’ouvre.  \nLa tension se relâche, et la relation entre la tête et la colonne vertébrale se réorganise — vers l’avant et vers le haut.\n\nIl ne s'agit pas d'une technique appliquée à la main.  \nC'est une manière d'utiliser son corps qui permet à l'organisme tout entier de réagir avec moins d'effort et plus de clarté.",
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "annotations": []
+  },
+  {
+    "id": 67,
+    "titre": "Lesson with Tommy Thompson: Triadic Resonance | Alexander Technique",
+    "auteur": "Tommy Thompson",
+    "annee": 2026,
+    "type": "vidéo",
+    "langue": "en",
+    "themes": [
+      "pédagogie",
+      "fondements",
+      "corps & mouvement"
+    ],
+    "urlDrive": null,
+    "description": "Dans ce travail, la paume ne s’ouvre pas parce que nous essayons de l’ouvrir.  \nGrâce à la résonance triadique, la paume s’ouvre et se vide d’elle-même.  \nÀ mesure que la paume se vide, le corps s’ouvre.  \nLa tension se relâche, et la relation entre la tête et la colonne vertébrale se réorganise — vers l’avant et vers le haut.\n\nIl ne s'agit pas d'une technique appliquée à la main.  \nC'est une manière d'utiliser son corps qui permet à l'organisme tout entier de réagir avec moins d'effort et plus de clarté.",
+    "physique": false,
+    "videoUrl": "https://youtu.be/UWTCEhzOoAs?si=B18YwGT_S5hHdgqj",
+    "videoPassword": null,
+    "duree": "10mn",
     "annotations": []
   }
 ]
