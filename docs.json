@@ -1403,5 +1403,25 @@
     "videoPassword": null,
     "duree": "1h05",
     "annotations": []
+  },
+  {
+    "id": 69,
+    "titre": "Alexander Technique workshop with Marjorie Barstow",
+    "auteur": "Marjorie Barstow",
+    "annee": 1990,
+    "type": "vidéo",
+    "langue": "en",
+    "themes": [
+      "fondements",
+      "pédagogie",
+      "1ère génération"
+    ],
+    "urlDrive": null,
+    "description": null,
+    "physique": false,
+    "videoUrl": "https://youtu.be/KnTyiPHVuCc?si=ZnrFE-FaYpsrJ0eP",
+    "videoPassword": null,
+    "duree": "6mn20",
+    "annotations": []
   }
 ]
