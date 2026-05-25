@@ -885,6 +885,7 @@ async function loadAnnotations() {
   try {
     const res = await fetch(SHEET_URL + '?sheet=annotations&v=' + Date.now());
     const rows = await res.json();
+    if (!Array.isArray(rows)) return;
     docs.forEach(d => { annotationsState[d.id] = []; });
     rows.forEach(row => {
       const id = parseInt(row.doc_id);
@@ -897,6 +898,7 @@ async function loadAnnotations() {
   try {
     const res2 = await fetch(SHEET_URL + '?sheet=tags&v=' + Date.now());
     const rows2 = await res2.json();
+    if (!Array.isArray(rows2)) return;
     docs.forEach(d => { tagsState[d.id] = []; });
     rows2.forEach(row => {
       const id = parseInt(row.doc_id);
@@ -986,8 +988,8 @@ async function showApp(nom) {
   const heroCount = document.getElementById('heroCount');
   if (heroCount) heroCount.textContent = docs.length;
   docs.forEach(d => { annotationsState[d.id] = []; tagsState[d.id] = []; });
-  await loadEmprunts();
   renderDocs();
+  loadEmprunts().then(() => renderDocs());
   loadAnnotations();
 }
 
