@@ -1014,14 +1014,29 @@ function setFilter(key, val, el) {
 }
 
 function getFiltered() {
-  const q = document.getElementById('searchInput') ? document.getElementById('searchInput').value.toLowerCase() : '';
+  const q = normalizeText(
+    document.getElementById('searchInput')?.value || ''
+  );
+
   return docs.filter(d => {
     if (filters.type !== 'tous' && d.type !== filters.type) return false;
     if (filters.lang !== 'tous' && d.lang !== filters.lang) return false;
     if (filters.theme !== 'tous' && !d.themes.includes(filters.theme)) return false;
     if (filters.gen !== 'tous' && !d.themes.includes(filters.gen)) return false;
     if (activeTag && !(tagsState[d.id]||[]).includes(activeTag)) return false;
-    if (q && !d.title.toLowerCase().includes(q) && !(d.author||'').toLowerCase().includes(q)) return false;
+
+    if (q) {
+      const searchable = normalizeText([
+        d.title,
+        d.author,
+        d.description,
+        d.themes.join(' '),
+        (tagsState[d.id]||[]).join(' '),
+        (annotationsState[d.id]||[]).map(a => a.text).join(' ')
+      ].join(' '));
+      if (!searchable.includes(q)) return false;
+    }
+
     return true;
   });
 }
