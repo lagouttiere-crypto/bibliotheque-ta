@@ -985,6 +985,19 @@ function getFiltered() {
   });
 }
 
+/// FORMATGE DATE
+function formatDateFR(dateString) {
+
+  if (!dateString) return "";
+
+  return new Date(dateString)
+    .toLocaleDateString("fr-FR", {
+      day: "numeric",
+      month: "long",
+      year: "numeric"
+    });
+}
+/// RENDU CARTE
 function renderDocs() {
   const filtered = sortDocs(getFiltered());
   const grid = document.getElementById('docGrid');
@@ -1008,8 +1021,8 @@ function renderDocs() {
           emprunt
               ? `<div style="font-size:12px;color:#8B5E34;margin-top:4px">
              Emprunté par ${emprunt.emprunteur}
-             ${emprunt.date_emprunt ? `depuis le ${emprunt.date_emprunt}` : ''}
-             ${emprunt.date_retour_prevue ? `<br>Retour prévu : ${emprunt.date_retour_prevue}` : ''}
+             ${emprunt.date_emprunt ? `depuis le ${formatDateFR(emprunt.date_emprunt)}` : ''}
+             ${emprunt.date_retour_prevue ? `<br>Retour prévu : ${formatDateFR(emprunt.date_retour_prevue)}` : ''}
            </div>`
               : `<div style="font-size:12px;color:#4F7A52;margin-top:4px">
              Disponible à l’emprunt
