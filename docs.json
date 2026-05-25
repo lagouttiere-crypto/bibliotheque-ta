@@ -1443,5 +1443,25 @@
     "videoPassword": null,
     "duree": null,
     "annotations": []
+  },
+  {
+    "id": 71,
+    "titre": "Workshop with Deborah Caplan",
+    "auteur": "Deborah Caplan",
+    "annee": 1986,
+    "type": "vidéo",
+    "langue": "en",
+    "themes": [
+      "fondements",
+      "pédagogie",
+      "2ème génération"
+    ],
+    "urlDrive": null,
+    "description": "Deborah Caplan utilise un modèle squelettique pour aborder la nature anatomique du mouvement et de la structure de la colonne vertébrale. Pendant plus de 50 ans, Deborah Caplan a appliqué avec succès la Technique Alexander aux soins du dos. Kinésithérapeute, elle était membre fondatrice de l'American Center for the Alexander Technique et formatrice principale du programme de formation des enseignants.",
+    "physique": false,
+    "videoUrl": "https://alexandertrust.org.uk/player-embed/id/1218/",
+    "videoPassword": null,
+    "duree": "1h03",
+    "annotations": []
   }
 ]
