@@ -1359,5 +1359,49 @@
     "videoPassword": null,
     "duree": "10mn",
     "annotations": []
+  },
+  {
+    "id": 67,
+    "titre": "Fond figure / Entretien avec Hubert Godard pour un atlas des figures 1",
+    "auteur": "Hubert Godard",
+    "annee": 2013,
+    "type": "vidéo",
+    "langue": "fr",
+    "themes": [
+      "corps & mouvement",
+      "arts",
+      "physiologie",
+      "phénoménologie",
+      "philosophie"
+    ],
+    "urlDrive": null,
+    "description": "https://www.pourunatlasdesfigures.net/element/fond-figure-entretien-avec-hubert-godard\n\nEntretien réalisé aux Laboratoires d’Aubervilliers le 7 novembre 2013.\nTélécharger l’index des vidéos : https://www.pourunatlasdesfigures.net/wp-content/uploads/2017/07/Fond-Figure-entretien-Hubert-Godard-INDEX.pdf",
+    "physique": false,
+    "videoUrl": "https://youtu.be/jLm4VIjIIYw",
+    "videoPassword": null,
+    "duree": "1h15mn",
+    "annotations": []
+  },
+  {
+    "id": 68,
+    "titre": "Fond / Figure : entretien avec Hubert Godard - 2eme partie",
+    "auteur": "Hubert Godard",
+    "annee": 2013,
+    "type": "vidéo",
+    "langue": "fr",
+    "themes": [
+      "corps & mouvement",
+      "arts",
+      "physiologie",
+      "phénoménologie",
+      "philosophie"
+    ],
+    "urlDrive": null,
+    "description": "https://www.pourunatlasdesfigures.net/element/fond-figure-entretien-avec-hubert-godard\n\nEntretien réalisé aux Laboratoires d’Aubervilliers le 7 novembre 2013.\nTélécharger l’index des vidéos : https://www.pourunatlasdesfigures.net/wp-content/uploads/2017/07/Fond-Figure-entretien-Hubert-Godard-INDEX.pdf",
+    "physique": false,
+    "videoUrl": "https://youtu.be/6UUTIw9TitY",
+    "videoPassword": null,
+    "duree": "1h05",
+    "annotations": []
   }
 ]
