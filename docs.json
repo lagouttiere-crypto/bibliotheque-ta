@@ -1110,6 +1110,38 @@
     ],
     "urlDrive": "https://drive.google.com/file/d/13dfhQZ_5Tgb-OGLbux30oQ9BlA7PaZjX/view?usp=drivesdk",
     "description": "Living the Alexander Technique, Volume II: Aging with Poise est un recueil d’entretiens menés par Ruth Rootberg avec onze enseignant·es expérimenté·es de la Technique Alexander. Le livre explore la manière dont ces praticien·nes traversent le vieillissement en s’appuyant sur les principes de la Technique : qualité de présence, liberté de mouvement, curiosité, humour et capacité d’adaptation. À travers leurs récits, il ne s’agit pas seulement de “bien vieillir”, mais de continuer à habiter le monde avec vitalité, dignité et disponibilité perceptive. Ces témoignages composent une mémoire vivante de la Technique Alexander et montrent comment celle-ci peut devenir une pratique quotidienne pour accompagner les transformations du corps, de l’attention et de la relation aux autres au fil du temps.",
+    "physique": false,
+    "annotations": []
+  },
+  {
+    "id": 64,
+    "titre": "Direction — Vol.3 n°1",
+    "auteur": "Jeremy Chance (éd.)",
+    "annee": 2002,
+    "type": "revue",
+    "langue": "en",
+    "themes": [
+      "fondements",
+      "corps & mouvement"
+    ],
+    "urlDrive": null,
+    "description": "Contents:\n‘Editorial’ (p. 4) by Paul Cook.\n‘Issue editorial’ (p. 4) by Ken Thompson.\n‘The science report’ (p. 5-6) by Chris Stevens.\n‘What is yoga?’ (pp. 7-11) by Ken Thompson.\n‘Off the table’ (pp. 12-15) by Karyn Chapman.\n‘The formulation of an Alexander lesson – An illustrated guide for the perplexed – Part one’ (pp. 16-18) by Melvyn Waldman.\n‘Psychophysical re-education’ (pp. 19-26) by Lyn Charlsen, Michael D. Frederick, Sigrid Wagner.\n‘Yoking the east and west’ (pp. 27, 28) by Diana Hook.\n‘Of one mind’ (pp. 29-32) by Suzanne Faulkner.\n‘Alexander teacher education – An integrated view of professional competence – Part two’ (pp. 33-36) by Terry Fitzgerald.\n‘Letter: Counterpoint – Science and Alexander’ (p. 36) by John H. M Austin, Pearl Ausubel.\n‘Viewpoint (Yoga, the Alexander Technique and structural integration all share common values)’ (pp. 37, 39) by Thomas Myers.",
+    "physique": true,
+    "annotations": []
+  },
+  {
+    "id": 65,
+    "titre": "Direction — Vol.3, n°9",
+    "auteur": "Jeremy Chance (éd.)",
+    "annee": 2015,
+    "type": "revue",
+    "langue": "en",
+    "themes": [
+      "fondements",
+      "corps & mouvement"
+    ],
+    "urlDrive": null,
+    "description": "Contents:\n‘The Science Report’ by Kevan A. C. Martin.\n‘Still Running: Balk, Barefoot and Beyond’ by Malcolm Balk.\n‘Mind Tennis: Analysing the Critical Moment’ by Bruce Elliot, Damien Lafont, Jim McLennan, Joe Boland, Gary Adelman.\n‘Pilates and Alexander: Integrating Fitness’ by Jane Staggs and Helge Purtscheller.\n‘Weightless Directions: The Shaw Way’ by Jane-Ann Purdy.\n‘Sensing a New Golf Movement’ by Roy Palmer and Martyn Jones.\n‘On the Road Again’ by Barry Collins.",
     "physique": true,
     "annotations": []
   }
