@@ -688,6 +688,8 @@
         <button class="filter-btn" onclick="setFilter('type','livre',this)">Livres<span class="filter-count" id="cnt-type-livre"></span></button>
         <button class="filter-btn" onclick="setFilter('type','transcription',this)">Transcriptions<span class="filter-count" id="cnt-type-transcription"></span></button>
         <button class="filter-btn" onclick="setFilter('type','revue',this)">Revues<span class="filter-count" id="cnt-type-revue"></span></button>
+        <button class="filter-btn" onclick="setFilter('type','vidéo',this)">Vidéos</button>
+        <button class="filter-btn" onclick="setFilter('type','audio',this)">Audio</button>
       </div>
 
       <div class="sidebar-section">
@@ -1135,6 +1137,8 @@ function renderDocs() {
     const isOpen = openCard === d.id;
     const yearStr = d.year ? ` (${d.year})` : '';
     const isVideo = d.type === 'vidéo' || d.type === 'video';
+    const isAudio = d.type === 'audio';
+    const mediaHtml = renderMedia(d);
     const emprunt = empruntsState[d.id];
     const empruntHtml = d.physique
       ? (
@@ -1155,6 +1159,7 @@ function renderDocs() {
           <span class="badge">${d.type}</span>
           <span class="badge badge-lang">${d.lang.toUpperCase()}</span>
           ${isVideo ? '<span class="badge" style="background:#E8EEF5;color:#1B3A5C;border-color:#BFD0E1">▸ vidéo</span>' : ''}
+          ${isAudio ? '<span class="badge" style="background:#EEF5FB;color:#1B3A5C;border-color:#BFD0E1">♫ audio</span>' : ''}
           ${d.physique ? '<span class="badge" style="color:#8B6F47;border-color:#8B6F47;background:#F0E8DC">📚 physique</span>' : ''}
         </div>
         <div class="doc-title">${d.title}</div>
@@ -1169,15 +1174,7 @@ function renderDocs() {
           <span class="annot-pill ${hasAnnot ? 'has-annot' : ''}">
             ◆ ${annots.length} annotation${annots.length !== 1 ? 's' : ''}
           </span>
-          ${
-            isVideo
-              ? '<span class="pdf-link">Voir la vidéo ▾</span>'
-              : (
-                  d.driveUrl
-                    ? `<a class="pdf-link" href="${d.driveUrl}" target="_blank" onclick="event.stopPropagation()">Ouvrir ↗</a>`
-                    : '<span class="pdf-link" style="opacity:0.4">Physique uniquement</span>'
-                )
-          }
+          ${mediaHtml}
         </div>
       </div>
       <div class="doc-detail ${isOpen ? 'visible' : ''}" id="detail-${d.id}">
@@ -1213,6 +1210,70 @@ function renderDocs() {
       </div>
     `;
   }).join('');
+}
+
+function getDriveDirectUrl(url) {
+
+  if (!url) return "";
+
+  const match = String(url).match(/\/d\/([^\/]+)/);
+
+  if (!match || !match[1]) {
+    return url;
+  }
+
+  return `https://drive.google.com/uc?export=download&id=${match[1]}`;
+}
+
+function renderMedia(d) {
+
+  if (!d.driveUrl) {
+
+    return `
+      <span class="pdf-link" style="opacity:0.4">
+        Physique uniquement
+      </span>
+    `;
+  }
+
+  if (d.type === 'audio') {
+
+    return `
+      <audio
+        controls
+        preload="none"
+        onclick="event.stopPropagation()"
+        style="width:100%;height:34px"
+      >
+        <source src="${getDriveDirectUrl(d.driveUrl)}">
+      </audio>
+    `;
+  }
+
+  if (d.type === 'vidéo' || d.type === 'video') {
+
+    return `
+      <a
+        class="pdf-link"
+        href="${d.driveUrl}"
+        target="_blank"
+        onclick="event.stopPropagation()"
+      >
+        Regarder ↗
+      </a>
+    `;
+  }
+
+  return `
+    <a
+      class="pdf-link"
+      href="${d.driveUrl}"
+      target="_blank"
+      onclick="event.stopPropagation()"
+    >
+      Ouvrir ↗
+    </a>
+  `;
 }
 
 function toggleCard(id) {
