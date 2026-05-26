@@ -1241,20 +1241,22 @@ function renderMedia(d) {
     : d.driveUrl;
 
   if (d.type === 'audio') {
-    return `
-      <div onclick="event.stopPropagation()" style="width:100%;margin-top:4px">
-        <iframe
-          src="${previewUrl}"
-          width="100%"
-          height="80"
-          allow="autoplay"
-          style="border:none;display:block"
-          loading="lazy"
-          title="Lecteur audio — ${d.title || ''}"
-        ></iframe>
-      </div>
-    `;
-  }
+  const match = String(d.driveUrl).match(/\/d\/([^\/]+)/);
+  const fileId = match ? match[1] : null;
+  if (!fileId) return `<a class="pdf-link" href="${d.driveUrl}" target="_blank" onclick="event.stopPropagation()">Écouter ↗</a>`;
+  return `
+    <div style="width:100%" onclick="event.stopPropagation()">
+      <iframe
+        src="https://drive.google.com/file/d/${fileId}/preview"
+        width="100%"
+        height="50"
+        frameborder="0"
+        allow="autoplay"
+        style="border:none"
+      ></iframe>
+    </div>
+  `;
+}
 
   if (d.type === 'vidéo' || d.type === 'video') {
     return `
