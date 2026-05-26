@@ -1109,11 +1109,31 @@ function getVideoDetailHtml(d) {
     `;
   }
 
+
   // Vimeo ou autre externe
   return `
     <div class="video-box">
       ${d.videoPassword ? `<div class="video-password">Mot de passe : <strong>${d.videoPassword}</strong></div>` : ''}
       <a class="pdf-link" href="${url}" target="_blank">Ouvrir la vidéo ↗</a>
+    </div>
+  `;
+}
+
+function getAudioDetailHtml(d) {
+  if (!d.driveUrl) return "";
+  const match = String(d.driveUrl).match(/\/d\/([^\/]+)/);
+  const fileId = match ? match[1] : null;
+  if (!fileId) return "";
+  return `
+    <div style="margin-bottom:1.25rem" onclick="event.stopPropagation()">
+      <iframe
+        src="https://drive.google.com/file/d/${fileId}/preview"
+        width="100%"
+        height="80"
+        frameborder="0"
+        allow="autoplay"
+        style="border:1px solid var(--border)"
+      ></iframe>
     </div>
   `;
 }
@@ -1158,7 +1178,7 @@ function renderDocs() {
           <span class="badge">${d.type}</span>
           <span class="badge badge-lang">${d.lang.toUpperCase()}</span>
           ${isVideo ? '<span class="badge" style="background:#E8EEF5;color:#1B3A5C;border-color:#BFD0E1">▸ vidéo</span>' : ''}
-          ${isAudio ? '<span class="badge" style="background:#EEF5FB;color:#1B3A5C;border-color:#BFD0E1">♫ audio</span>' : ''}
+          ${isAudio ? '<span class="badge" style="background:#EEF5FB;color:#1B3A5C;border-color:#BFD0E1">♫ audio</span>' : ''}         
           ${d.physique ? '<span class="badge" style="color:#8B6F47;border-color:#8B6F47;background:#F0E8DC">📚 physique</span>' : ''}
         </div>
         <div class="doc-title">${d.title}</div>
@@ -1182,6 +1202,7 @@ function renderDocs() {
           <div class="detail-author">${d.author || 'Auteur inconnu'}${yearStr}</div>
           ${d.description ? `<div style="font-size:13px;color:var(--ink-light);line-height:1.6;margin-bottom:1.25rem;padding:10px 14px;background:var(--white);border:1px solid var(--border)">${d.description}</div>` : ''}
           ${isVideo ? getVideoDetailHtml(d) : ''}
+          ${isAudio ? getAudioDetailHtml(d) : ''}
           <div class="detail-section-label" style="margin-bottom:8px">Tags membres</div>
           <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:16px" id="tagslist-${d.id}">
             ${(tagsState[d.id]||[]).length === 0
@@ -1241,20 +1262,8 @@ function renderMedia(d) {
     : d.driveUrl;
 
   if (d.type === 'audio') {
-  const match = String(d.driveUrl).match(/\/d\/([^\/]+)/);
-  const fileId = match ? match[1] : null;
-  if (!fileId) return `<a class="pdf-link" href="${d.driveUrl}" target="_blank" onclick="event.stopPropagation()">Écouter ↗</a>`;
   return `
-    <div style="width:100%" onclick="event.stopPropagation()">
-      <iframe
-        src="https://drive.google.com/file/d/${fileId}/preview"
-        width="100%"
-        height="50"
-        frameborder="0"
-        allow="autoplay"
-        style="border:none"
-      ></iframe>
-    </div>
+    <span class="pdf-link">Écouter ▸</span>
   `;
 }
 
