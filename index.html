@@ -688,8 +688,8 @@
         <button class="filter-btn" onclick="setFilter('type','livre',this)">Livres<span class="filter-count" id="cnt-type-livre"></span></button>
         <button class="filter-btn" onclick="setFilter('type','transcription',this)">Transcriptions<span class="filter-count" id="cnt-type-transcription"></span></button>
         <button class="filter-btn" onclick="setFilter('type','revue',this)">Revues<span class="filter-count" id="cnt-type-revue"></span></button>
-        <button class="filter-btn" onclick="setFilter('type','vidéo',this)">Vidéos</button>
-        <button class="filter-btn" onclick="setFilter('type','audio',this)">Audio</button>
+        <button class="filter-btn" onclick="setFilter('type','vidéo',this)">Vidéos<span class="filter-count" id="cnt-type-video"></span></button>
+        <button class="filter-btn" onclick="setFilter('type','audio',this)">Audio<span class="filter-count" id="cnt-type-audio"></span></button>
       </div>
 
       <div class="sidebar-section">
@@ -1078,43 +1078,42 @@ function getYoutubeEmbed(url) {
 }
 
 function getVideoDetailHtml(d) {
-  if (!d.videoUrl) return "";
+  if (!d.videoUrl && !d.driveUrl) return "";
 
-  const url = String(d.videoUrl).trim();
+  const url = String(d.videoUrl || d.driveUrl).trim();
 
   if (isYoutubeUrl(url)) {
     const embedUrl = getYoutubeEmbed(url);
+    if (!embedUrl) return `<div class="video-box"><a class="pdf-link" href="${url}" target="_blank">Ouvrir la vidéo ↗</a></div>`;
+    return `
+      <div class="video-frame">
+        <iframe src="${embedUrl}" title="${d.title || 'Vidéo'}"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+    `;
+  }
 
-    if (!embedUrl) {
-      return `
-        <div class="video-box">
-          <div style="margin-bottom:10px">Vidéo YouTube</div>
-          <a class="pdf-link" href="${url}" target="_blank" onclick="event.stopPropagation()">Ouvrir la vidéo ↗</a>
-        </div>
-      `;
-    }
-
+  // Drive ou Vimeo → embed preview
+  const fileId = getDriveFileId(url);
+  if (fileId) {
     return `
       <div class="video-frame">
         <iframe
-          src="${embedUrl}"
-          title="${d.title || "Vidéo"}"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          src="https://drive.google.com/file/d/${fileId}/preview"
+          title="${d.title || 'Vidéo'}"
+          allow="autoplay"
           allowfullscreen>
         </iframe>
       </div>
     `;
   }
 
+  // Vimeo ou autre externe
   return `
     <div class="video-box">
-      <div style="font-weight:500;color:var(--ink);margin-bottom:4px">Vidéo Vimeo ou externe</div>
-      ${d.videoPassword ? `
-        <div class="video-password">
-          Mot de passe : <strong>${d.videoPassword}</strong>
-        </div>
-      ` : ''}
-      <a class="pdf-link" href="${url}" target="_blank" onclick="event.stopPropagation()">Ouvrir la vidéo ↗</a>
+      ${d.videoPassword ? `<div class="video-password">Mot de passe : <strong>${d.videoPassword}</strong></div>` : ''}
+      <a class="pdf-link" href="${url}" target="_blank">Ouvrir la vidéo ↗</a>
     </div>
   `;
 }
@@ -1225,52 +1224,49 @@ function getDriveDirectUrl(url) {
   return `https://drive.google.com/uc?export=download&id=${match[1]}`;
 }
 
+function getDriveFileId(url) {
+  if (!url) return null;
+  const match = String(url).match(/\/d\/([^\/\?]+)/);
+  return match ? match[1] : null;
+}
+
 function renderMedia(d) {
-
   if (!d.driveUrl) {
-
-    return `
-      <span class="pdf-link" style="opacity:0.4">
-        Physique uniquement
-      </span>
-    `;
+    return `<span class="pdf-link" style="opacity:0.4">Physique uniquement</span>`;
   }
 
-  if (d.type === 'audio') {
+  const fileId = getDriveFileId(d.driveUrl);
+  const previewUrl = fileId
+    ? `https://drive.google.com/file/d/${fileId}/preview`
+    : d.driveUrl;
 
+  if (d.type === 'audio') {
     return `
-      <audio
-        controls
-        preload="none"
-        onclick="event.stopPropagation()"
-        style="width:100%;height:34px"
-      >
-        <source src="${getDriveDirectUrl(d.driveUrl)}">
-      </audio>
+      <div onclick="event.stopPropagation()" style="width:100%;margin-top:4px">
+        <iframe
+          src="${previewUrl}"
+          width="100%"
+          height="80"
+          allow="autoplay"
+          style="border:none;display:block"
+          loading="lazy"
+          title="Lecteur audio — ${d.title || ''}"
+        ></iframe>
+      </div>
     `;
   }
 
   if (d.type === 'vidéo' || d.type === 'video') {
-
     return `
-      <a
-        class="pdf-link"
-        href="${d.driveUrl}"
-        target="_blank"
-        onclick="event.stopPropagation()"
-      >
+      <a class="pdf-link" href="${d.driveUrl}" target="_blank" onclick="event.stopPropagation()">
         Regarder ↗
       </a>
     `;
   }
 
+  // PDF / article / livre / etc.
   return `
-    <a
-      class="pdf-link"
-      href="${d.driveUrl}"
-      target="_blank"
-      onclick="event.stopPropagation()"
-    >
+    <a class="pdf-link" href="${d.driveUrl}" target="_blank" onclick="event.stopPropagation()">
       Ouvrir ↗
     </a>
   `;
