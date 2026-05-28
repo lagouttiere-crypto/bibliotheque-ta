@@ -712,6 +712,117 @@
   .btn-action.bm-active { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
   .btn-action.rd-active { border-color: #4F7A52; color: #4F7A52; background: #F0F5F0; }
 
+  /* ── MODE LECTURE ── */
+  .reader-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(28, 26, 23, 0.4);
+    z-index: 200;
+    animation: fadeIn 0.2s ease;
+  }
+  .reader-overlay.open { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+  .reader-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 62%;
+    height: 100vh;
+    background: var(--white);
+    border-left: 1px solid var(--border);
+    z-index: 201;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .reader-panel.open { transform: translateX(0); }
+  .reader-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 1.25rem;
+    height: 52px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+    background: var(--white);
+  }
+  .reader-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--ink);
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .reader-author {
+    font-size: 11px;
+    color: var(--ink-faint);
+    font-style: italic;
+    white-space: nowrap;
+  }
+  .reader-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    border: 1px solid var(--border);
+    background: var(--white);
+    padding: 5px 10px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.15s;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+  .reader-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .reader-close {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--ink-faint);
+    font-size: 18px;
+    flex-shrink: 0;
+    transition: color 0.15s;
+  }
+  .reader-close:hover { color: var(--ink); }
+  .reader-body {
+    flex: 1;
+    overflow: hidden;
+  }
+  .reader-body iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  .reader-unavailable {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    flex-direction: column;
+    gap: 12px;
+    color: var(--ink-faint);
+  }
+  .reader-unavailable p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 300;
+  }
+
   /* ── MOBILE ── */
   @media (max-width: 700px) {
     .main-layout { grid-template-columns: 1fr; }
@@ -728,6 +839,7 @@
     .hero-card { border-left: none; border-top: 1px solid var(--border); padding: 1rem 0 0; }
     .shelf-toolbar { align-items: flex-start; flex-direction: column; }
     .toolbar-right { width: 100%; justify-content: space-between; }
+    .reader-panel { width: 100%; border-left: none; }
   }
 </style>
 </head>
@@ -909,6 +1021,20 @@
       <div class="doc-grid" id="docGrid"></div>
     </div>
   </div>
+</div>
+
+<!-- MODE LECTURE -->
+<div class="reader-overlay" id="readerOverlay" onclick="closeReader()"></div>
+<div class="reader-panel" id="readerPanel">
+  <div class="reader-header">
+    <div style="flex:1;min-width:0">
+      <div class="reader-title" id="readerTitle"></div>
+      <div class="reader-author" id="readerAuthor"></div>
+    </div>
+    <a class="reader-btn" id="readerExtLink" href="#" target="_blank">Ouvrir dans Drive ↗</a>
+    <button class="reader-close" onclick="closeReader()" title="Fermer">×</button>
+  </div>
+  <div class="reader-body" id="readerBody"></div>
 </div>
 
 <script>
@@ -1377,16 +1503,9 @@ function renderMedia(d) {
     return `<span class="pdf-link" style="opacity:0.4">Physique uniquement</span>`;
   }
 
-  const fileId = getDriveFileId(d.driveUrl);
-  const previewUrl = fileId
-    ? `https://drive.google.com/file/d/${fileId}/preview`
-    : d.driveUrl;
-
   if (d.type === 'audio') {
-  return `
-    <span class="pdf-link">Écouter ▸</span>
-  `;
-}
+    return `<span class="pdf-link">Écouter ▸</span>`;
+  }
 
   if (d.type === 'vidéo' || d.type === 'video') {
     return `
@@ -1396,10 +1515,10 @@ function renderMedia(d) {
     `;
   }
 
-  // PDF / article / livre / etc.
+  // PDF / article / livre → mode lecture
   return `
-    <a class="pdf-link" href="${d.driveUrl}" target="_blank" onclick="event.stopPropagation()">
-      Ouvrir ↗
+    <a class="pdf-link" href="#" onclick="event.stopPropagation();event.preventDefault();openReader(${d.id})">
+      Lire ↗
     </a>
   `;
 }
@@ -1584,6 +1703,55 @@ function switchSidebarTab(tab) {
   document.getElementById('panel-' + tab).classList.add('active');
   if (tab === 'mabiblio') renderMaBiblio();
 }
+
+/* =========================================================
+   MODE LECTURE
+========================================================= */
+
+function openReader(id) {
+  const d = docs.find(doc => doc.id === id);
+  if (!d) return;
+
+  const fileId = getDriveFileId(d.driveUrl);
+  const panel   = document.getElementById('readerPanel');
+  const overlay = document.getElementById('readerOverlay');
+  const body    = document.getElementById('readerBody');
+
+  document.getElementById('readerTitle').textContent  = d.title;
+  document.getElementById('readerAuthor').textContent = d.author || '';
+  document.getElementById('readerExtLink').href       = d.driveUrl;
+
+  if (fileId) {
+    body.innerHTML = `<iframe src="https://drive.google.com/file/d/${fileId}/preview" allowfullscreen></iframe>`;
+  } else {
+    body.innerHTML = `
+      <div class="reader-unavailable">
+        <p>Aperçu non disponible</p>
+        <a class="reader-btn" href="${d.driveUrl}" target="_blank">Ouvrir dans Drive ↗</a>
+      </div>`;
+  }
+
+  overlay.classList.add('open');
+  panel.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeReader() {
+  const panel   = document.getElementById('readerPanel');
+  const overlay = document.getElementById('readerOverlay');
+  panel.classList.remove('open');
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+  // Vider l'iframe après la transition pour éviter de garder la ressource en mémoire
+  setTimeout(() => {
+    document.getElementById('readerBody').innerHTML = '';
+  }, 300);
+}
+
+// Fermer avec Echap
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeReader();
+});
 
 </script>
 </body>
