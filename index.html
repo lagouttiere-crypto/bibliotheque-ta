@@ -624,6 +624,93 @@
     color: var(--ink-faint);
   }
 
+  /* ── MA BIBLIO ── */
+  .sidebar-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--border);
+    margin: -1.5rem -1.25rem 1.25rem;
+  }
+  .sidebar-tab {
+    padding: 10px 0;
+    text-align: center;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+    font-weight: 500;
+    background: none;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .sidebar-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .sidebar-tab:hover:not(.active) { color: var(--ink); }
+
+  .sidebar-panel { display: none; }
+  .sidebar-panel.active { display: block; }
+
+  .mb-section-label {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 500;
+    margin-bottom: 8px;
+    padding-left: 2px;
+  }
+  .mb-doc-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 7px 4px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.1s;
+  }
+  .mb-doc-item:last-child { border-bottom: none; }
+  .mb-doc-item:hover { background: var(--accent-light); }
+  .mb-doc-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.3;
+    flex: 1;
+  }
+  .mb-doc-author { font-size: 11px; color: var(--ink-faint); font-style: italic; margin-top: 1px; }
+  .mb-icon-bm { color: var(--accent); font-size: 13px; margin-top: 1px; flex-shrink: 0; }
+  .mb-icon-rd { color: #4F7A52; font-size: 13px; margin-top: 1px; flex-shrink: 0; }
+  .mb-empty { font-size: 12px; color: var(--ink-faint); font-style: italic; padding: 4px 2px; }
+  .mb-separator { height: 1px; background: var(--border); margin: 1rem 0; }
+
+  .action-btns {
+    display: flex;
+    gap: 6px;
+    margin-top: 6px;
+  }
+  .btn-action {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    border: 1px solid var(--border);
+    background: var(--white);
+    padding: 5px 9px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.15s;
+  }
+  .btn-action:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-action.bm-active { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+  .btn-action.rd-active { border-color: #4F7A52; color: #4F7A52; background: #F0F5F0; }
+
   /* ── MOBILE ── */
   @media (max-width: 700px) {
     .main-layout { grid-template-columns: 1fr; }
@@ -676,55 +763,80 @@
 
   <div class="main-layout">
     <aside>
-      <div class="search-wrap">
-        <span class="search-icon">⌕</span>
-        <input type="text" id="searchInput" placeholder="Rechercher..." oninput="renderDocs()" />
+      <div class="sidebar-tabs">
+        <button class="sidebar-tab active" id="tab-catalogue" onclick="switchSidebarTab('catalogue')">Catalogue</button>
+        <button class="sidebar-tab" id="tab-mabiblio" onclick="switchSidebarTab('mabiblio')">Ma biblio</button>
       </div>
 
-      <div class="sidebar-section">
-        <div class="sidebar-label">Type</div>
-        <button class="filter-btn active" onclick="setFilter('type','tous',this)">Tous<span class="filter-count" id="cnt-type-tous"></span></button>
-        <button class="filter-btn" onclick="setFilter('type','article',this)">Articles<span class="filter-count" id="cnt-type-article"></span></button>
-        <button class="filter-btn" onclick="setFilter('type','livre',this)">Livres<span class="filter-count" id="cnt-type-livre"></span></button>
-        <button class="filter-btn" onclick="setFilter('type','transcription',this)">Transcriptions<span class="filter-count" id="cnt-type-transcription"></span></button>
-        <button class="filter-btn" onclick="setFilter('type','revue',this)">Revues<span class="filter-count" id="cnt-type-revue"></span></button>
-        <button class="filter-btn" onclick="setFilter('type','vidéo',this)">Vidéos<span class="filter-count" id="cnt-type-video"></span></button>
-        <button class="filter-btn" onclick="setFilter('type','audio',this)">Audio<span class="filter-count" id="cnt-type-audio"></span></button>
+      <!-- PANEL CATALOGUE -->
+      <div class="sidebar-panel active" id="panel-catalogue">
+        <div class="search-wrap">
+          <span class="search-icon">⌕</span>
+          <input type="text" id="searchInput" placeholder="Rechercher..." oninput="renderDocs()" />
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-label">Type</div>
+          <button class="filter-btn active" onclick="setFilter('type','tous',this)">Tous<span class="filter-count" id="cnt-type-tous"></span></button>
+          <button class="filter-btn" onclick="setFilter('type','article',this)">Articles<span class="filter-count" id="cnt-type-article"></span></button>
+          <button class="filter-btn" onclick="setFilter('type','livre',this)">Livres<span class="filter-count" id="cnt-type-livre"></span></button>
+          <button class="filter-btn" onclick="setFilter('type','transcription',this)">Transcriptions<span class="filter-count" id="cnt-type-transcription"></span></button>
+          <button class="filter-btn" onclick="setFilter('type','revue',this)">Revues<span class="filter-count" id="cnt-type-revue"></span></button>
+          <button class="filter-btn" onclick="setFilter('type','vidéo',this)">Vidéos<span class="filter-count" id="cnt-type-video"></span></button>
+          <button class="filter-btn" onclick="setFilter('type','audio',this)">Audio<span class="filter-count" id="cnt-type-audio"></span></button>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-label">Langue</div>
+          <button class="filter-btn active" onclick="setFilter('lang','tous',this)">Toutes<span class="filter-count"></span></button>
+          <button class="filter-btn" onclick="setFilter('lang','fr',this)">Français<span class="filter-count" id="cnt-lang-fr"></span></button>
+          <button class="filter-btn" onclick="setFilter('lang','en',this)">English<span class="filter-count" id="cnt-lang-en"></span></button>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-label">Période</div>
+          <button class="filter-btn active" onclick="setFilter('gen','tous',this)">Toutes</button>
+          <button class="filter-btn" onclick="setFilter('gen','1ère génération',this)">1ère génération</button>
+          <button class="filter-btn" onclick="setFilter('gen','2ème génération',this)">2ème génération</button>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-label">Thème</div>
+          <button class="filter-btn active" onclick="setFilter('theme','tous',this)">Tous</button>
+          <button class="filter-btn" onclick="setFilter('theme','fondements',this)">Fondements</button>
+          <button class="filter-btn" onclick="setFilter('theme','pédagogie',this)">Pédagogie</button>
+          <button class="filter-btn" onclick="setFilter('theme','pédagogie somatique',this)">Péd. somatique</button>
+          <button class="filter-btn" onclick="setFilter('theme','corps & mouvement',this)">Corps & mouvement</button>
+          <button class="filter-btn" onclick="setFilter('theme','phénoménologie',this)">Phénoménologie</button>
+          <button class="filter-btn" onclick="setFilter('theme','enaction',this)">Enaction</button>
+          <button class="filter-btn" onclick="setFilter('theme','neurosciences',this)">Neurosciences</button>
+          <button class="filter-btn" onclick="setFilter('theme','physiologie',this)">Physiologie</button>
+          <button class="filter-btn" onclick="setFilter('theme','arts',this)">Arts</button>
+          <button class="filter-btn" onclick="setFilter('theme','philosophie',this)">Philosophie</button>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-label">Tags membres</div>
+          <div class="tags-sidebar" id="sidebarTags">
+            <span style="font-size:12px;color:var(--ink-faint);font-style:italic">Aucun tag pour l'instant</span>
+          </div>
+        </div>
       </div>
 
-      <div class="sidebar-section">
-        <div class="sidebar-label">Langue</div>
-        <button class="filter-btn active" onclick="setFilter('lang','tous',this)">Toutes<span class="filter-count"></span></button>
-        <button class="filter-btn" onclick="setFilter('lang','fr',this)">Français<span class="filter-count" id="cnt-lang-fr"></span></button>
-        <button class="filter-btn" onclick="setFilter('lang','en',this)">English<span class="filter-count" id="cnt-lang-en"></span></button>
-      </div>
-
-      <div class="sidebar-section">
-        <div class="sidebar-label">Période</div>
-        <button class="filter-btn active" onclick="setFilter('gen','tous',this)">Toutes</button>
-        <button class="filter-btn" onclick="setFilter('gen','1ère génération',this)">1ère génération</button>
-        <button class="filter-btn" onclick="setFilter('gen','2ème génération',this)">2ème génération</button>
-      </div>
-
-      <div class="sidebar-section">
-        <div class="sidebar-label">Thème</div>
-        <button class="filter-btn active" onclick="setFilter('theme','tous',this)">Tous</button>
-        <button class="filter-btn" onclick="setFilter('theme','fondements',this)">Fondements</button>
-        <button class="filter-btn" onclick="setFilter('theme','pédagogie',this)">Pédagogie</button>
-        <button class="filter-btn" onclick="setFilter('theme','pédagogie somatique',this)">Péd. somatique</button>
-        <button class="filter-btn" onclick="setFilter('theme','corps & mouvement',this)">Corps & mouvement</button>
-        <button class="filter-btn" onclick="setFilter('theme','phénoménologie',this)">Phénoménologie</button>
-        <button class="filter-btn" onclick="setFilter('theme','enaction',this)">Enaction</button>
-        <button class="filter-btn" onclick="setFilter('theme','neurosciences',this)">Neurosciences</button>
-        <button class="filter-btn" onclick="setFilter('theme','physiologie',this)">Physiologie</button>
-        <button class="filter-btn" onclick="setFilter('theme','arts',this)">Arts</button>
-        <button class="filter-btn" onclick="setFilter('theme','philosophie',this)">Philosophie</button>
-      </div>
-
-      <div class="sidebar-section">
-        <div class="sidebar-label">Tags membres</div>
-        <div class="tags-sidebar" id="sidebarTags">
-          <span style="font-size:12px;color:var(--ink-faint);font-style:italic">Aucun tag pour l'instant</span>
+      <!-- PANEL MA BIBLIO -->
+      <div class="sidebar-panel" id="panel-mabiblio">
+        <div class="mb-section-label" style="margin-bottom:10px">
+          À lire
+        </div>
+        <div id="mb-list-bookmark">
+          <span class="mb-empty">Aucun document marqué.</span>
+        </div>
+        <div class="mb-separator"></div>
+        <div class="mb-section-label" style="margin-bottom:10px">
+          Lus
+        </div>
+        <div id="mb-list-read">
+          <span class="mb-empty">Aucun document marqué comme lu.</span>
         </div>
       </div>
     </aside>
@@ -990,9 +1102,11 @@ async function showApp(nom) {
   const heroCount = document.getElementById('heroCount');
   if (heroCount) heroCount.textContent = docs.length;
   docs.forEach(d => { annotationsState[d.id] = []; tagsState[d.id] = []; });
+  loadLocalBiblio();
   renderDocs();
   loadEmprunts().then(() => renderDocs());
   loadAnnotations();
+  loadBiblioFromSheet();
 }
 
 function tryLogin() {
@@ -1195,6 +1309,14 @@ function renderDocs() {
           </span>
           ${mediaHtml}
         </div>
+        <div class="action-btns" onclick="event.stopPropagation()">
+          <button class="btn-action ${readingList[d.id] ? 'bm-active' : ''}" onclick="toggleBookmark(${d.id}, event)" title="À lire">
+            ${readingList[d.id] ? '◆' : '◇'} À lire
+          </button>
+          <button class="btn-action ${readLogs[d.id] ? 'rd-active' : ''}" onclick="toggleRead(${d.id}, event)" title="Marquer comme lu">
+            ${readLogs[d.id] ? '✓' : '○'} Lu
+          </button>
+        </div>
       </div>
       <div class="doc-detail ${isOpen ? 'visible' : ''}" id="detail-${d.id}">
         <div class="detail-inner">
@@ -1331,6 +1453,139 @@ async function addAnnot(id) {
   }
 }
 
-</script>
+/* =========================================================
+   MA BIBLIO — état local + synchro Sheet
+========================================================= */
+
+let readingList = {};   // { docId: true }
+let readLogs    = {};   // { docId: true }
+
+function lsKey(type) {
+  return `ta_${type}_${currentUser}`;
+}
+
+function loadLocalBiblio() {
+  try {
+    const bm = localStorage.getItem(lsKey('bookmark'));
+    readingList = bm ? JSON.parse(bm) : {};
+    const rd = localStorage.getItem(lsKey('read'));
+    readLogs = rd ? JSON.parse(rd) : {};
+  } catch(e) {
+    readingList = {}; readLogs = {};
+  }
+}
+
+function saveLocalBiblio() {
+  localStorage.setItem(lsKey('bookmark'), JSON.stringify(readingList));
+  localStorage.setItem(lsKey('read'),     JSON.stringify(readLogs));
+}
+
+// Charge depuis le Sheet au login (option D)
+async function loadBiblioFromSheet() {
+  try {
+    const bmRes = await fetch(SHEET_URL + '?sheet=reading_list&auteur=' + encodeURIComponent(currentUser) + '&v=' + Date.now());
+    const bmRows = await bmRes.json();
+    if (Array.isArray(bmRows)) {
+      bmRows.forEach(r => { readingList[parseInt(r.doc_id)] = true; });
+    }
+  } catch(e) { console.warn("reading_list Sheet non chargé", e); }
+  try {
+    const rdRes = await fetch(SHEET_URL + '?sheet=read_logs&auteur=' + encodeURIComponent(currentUser) + '&v=' + Date.now());
+    const rdRows = await rdRes.json();
+    if (Array.isArray(rdRows)) {
+      rdRows.forEach(r => { readLogs[parseInt(r.doc_id)] = true; });
+    }
+  } catch(e) { console.warn("read_logs Sheet non chargé", e); }
+  saveLocalBiblio();
+  renderDocs();
+  renderMaBiblio();
+}
+
+async function toggleBookmark(id, e) {
+  e.stopPropagation();
+  const active = !!readingList[id];
+  if (active) {
+    delete readingList[id];
+  } else {
+    readingList[id] = true;
+    // Si marqué "lu" aussi → on laisse les deux
+  }
+  saveLocalBiblio();
+  renderDocs();
+  renderMaBiblio();
+  try {
+    const action = active ? 'remove' : 'add';
+    await fetch(`${SHEET_URL}?sheet=reading_list&doc_id=${id}&auteur=${encodeURIComponent(currentUser)}&action=${action}`);
+  } catch(err) { console.warn("Sync bookmark Sheet", err); }
+}
+
+async function toggleRead(id, e) {
+  e.stopPropagation();
+  const active = !!readLogs[id];
+  if (active) {
+    delete readLogs[id];
+  } else {
+    readLogs[id] = true;
+  }
+  saveLocalBiblio();
+  renderDocs();
+  renderMaBiblio();
+  try {
+    const action = active ? 'remove' : 'add';
+    await fetch(`${SHEET_URL}?sheet=read_logs&doc_id=${id}&auteur=${encodeURIComponent(currentUser)}&action=${action}`);
+  } catch(err) { console.warn("Sync read Sheet", err); }
+}
+
+function renderMaBiblio() {
+  const bmContainer = document.getElementById('mb-list-bookmark');
+  const rdContainer = document.getElementById('mb-list-read');
+  if (!bmContainer || !rdContainer) return;
+
+  const bmDocs = docs.filter(d => readingList[d.id]);
+  const rdDocs = docs.filter(d => readLogs[d.id]);
+
+  bmContainer.innerHTML = bmDocs.length === 0
+    ? '<span class="mb-empty">Aucun document marqué.</span>'
+    : bmDocs.map(d => `
+        <div class="mb-doc-item" onclick="jumpToDoc(${d.id})">
+          <span class="mb-icon-bm">◆</span>
+          <div>
+            <div class="mb-doc-title">${d.title}</div>
+            <div class="mb-doc-author">${d.author || '—'}</div>
+          </div>
+        </div>`).join('');
+
+  rdContainer.innerHTML = rdDocs.length === 0
+    ? '<span class="mb-empty">Aucun document marqué comme lu.</span>'
+    : rdDocs.map(d => `
+        <div class="mb-doc-item" onclick="jumpToDoc(${d.id})">
+          <span class="mb-icon-rd">✓</span>
+          <div>
+            <div class="mb-doc-title">${d.title}</div>
+            <div class="mb-doc-author">${d.author || '—'}</div>
+          </div>
+        </div>`).join('');
+}
+
+function jumpToDoc(id) {
+  // Repasse sur l'onglet catalogue et ouvre la carte
+  switchSidebarTab('catalogue');
+  openCard = id;
+  renderDocs();
+  setTimeout(() => {
+    const el = document.getElementById('detail-' + id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, 80);
+}
+
+function switchSidebarTab(tab) {
+  document.querySelectorAll('.sidebar-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.sidebar-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  document.getElementById('panel-' + tab).classList.add('active');
+  if (tab === 'mabiblio') renderMaBiblio();
+}
+
+
 </body>
 </html>
