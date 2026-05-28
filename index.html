@@ -380,7 +380,7 @@
 
   .doc-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 17px;
+    font-size: 20px;
     font-weight: 400;
     line-height: 1.35;
     color: var(--ink);
@@ -389,6 +389,7 @@
     font-size: 12px;
     color: var(--ink-light);
     font-style: italic;
+    font-weight: 300;
   }
   .doc-themes {
     display: flex;
@@ -499,8 +500,8 @@
   }
   .detail-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 22px;
-    font-weight: 400;
+    font-size: 30px;
+    font-weight: 300;
     margin-bottom: 4px;
   }
   .detail-author {
@@ -1282,7 +1283,7 @@ function renderDocs() {
              ${emprunt.date_retour_prevue ? `<br>Retour prévu : ${formatDateFR(emprunt.date_retour_prevue)}` : ''}
            </div>`
               : `<div style="font-size:12px;color:#4F7A52;margin-top:4px">
-             Disponible à l’emprunt
+             Disponible à l'emprunt
            </div>`
     )
   : '';
@@ -1291,9 +1292,6 @@ function renderDocs() {
         <div class="doc-meta">
           <span class="badge">${d.type}</span>
           <span class="badge badge-lang">${d.lang.toUpperCase()}</span>
-          ${isVideo ? '<span class="badge" style="background:#E8EEF5;color:#1B3A5C;border-color:#BFD0E1">▸ vidéo</span>' : ''}
-          ${isAudio ? '<span class="badge" style="background:#EEF5FB;color:#1B3A5C;border-color:#BFD0E1">♫ audio</span>' : ''}         
-          ${d.physique ? '<span class="badge" style="color:#8B6F47;border-color:#8B6F47;background:#F0E8DC">📚 physique</span>' : ''}
         </div>
         <div class="doc-title">${d.title}</div>
         <div class="doc-author">${d.author || '—'}${yearStr}</div>
@@ -1322,7 +1320,8 @@ function renderDocs() {
         <div class="detail-inner">
           <div class="detail-title">${d.title}</div>
           <div class="detail-author">${d.author || 'Auteur inconnu'}${yearStr}</div>
-          ${d.description ? `<div style="font-size:13px;color:var(--ink-light);line-height:1.6;margin-bottom:1.25rem;padding:10px 14px;background:var(--white);border:1px solid var(--border)">${d.description}</div>` : ''}
+          <div style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:1.25rem">${d.type}${d.lang ? ' · ' + d.lang.toUpperCase() : ''}${d.year ? ' · ' + d.year : ''}</div>
+          ${d.description ? `<div style="font-size:13px;color:var(--ink-light);line-height:1.6;margin-bottom:1.25rem;padding:10px 16px;border-left:2px solid var(--border);font-style:italic">${d.description}</div>` : ''}
           ${isVideo ? getVideoDetailHtml(d) : ''}
           ${isAudio ? getAudioDetailHtml(d) : ''}
           <div class="detail-section-label" style="margin-bottom:8px">Tags membres</div>
