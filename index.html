@@ -2314,6 +2314,8 @@ function renderMySpaceGroupes() {
 ========================================================= */
 
 function openMySpace() {
+  const overlay = document.getElementById('myspaceOverlay');
+  overlay.style.display = '';  // reset Safari fix
   document.getElementById('myspaceName').textContent = currentUser;
   renderMySpacePhrase();
   renderMySpaceBody();
@@ -2328,9 +2330,13 @@ function closeMySpace() {
   const overlay = document.getElementById('myspaceOverlay');
   panel.classList.remove('open');
   overlay.classList.remove('open');
-  overlay.style.pointerEvents = 'none';
-  setTimeout(() => { overlay.style.pointerEvents = ''; }, 350);
   document.body.style.overflow = '';
+  // Safari fix : masquer l'overlay après la transition
+  setTimeout(() => {
+    if (!overlay.classList.contains('open')) {
+      overlay.style.display = 'none';
+    }
+  }, 350);
 }
 
 function renderMySpacePhrase() {
