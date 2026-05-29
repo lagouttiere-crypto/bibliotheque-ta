@@ -1783,14 +1783,15 @@ async function showApp(nom) {
     const raw = await res.json();
     docs = raw.map(d => ({
       ...d,
-      title: d.titre,
-      author: d.auteur,
-      year: d.annee,
-      lang: d.langue,
-      driveUrl: d.urlDrive || null,
-      videoUrl: d.videoUrl || d.urlVideo || "",
+      title:     d.titre,
+      author:    d.auteur,
+      year:      d.annee,
+      lang:      d.langue,
+      driveUrl:  d.urlDrive || null,
+      videoUrl:  d.videoUrl || d.urlVideo || "",
       videoPassword: d.videoPassword || d.motDePasseVideo || "",
-      duree: d.duree || d.duration || ""
+      duree:     d.duree || d.duration || "",
+      groupe_id: d.groupe_id || null
     }));
   } catch(e) {
     console.warn("Impossible de charger docs.json", e);
@@ -2296,8 +2297,28 @@ let freeNoteDebounce = null;
 function openReader(id) {
   const d = docs.find(doc => doc.id === id);
   if (!d) return;
-  currentReaderId = id;
 
+  // Vérifier si le doc est restreint à un groupe protégé
+  if (d.groupe_id) {
+    const groupe = groupesState.find(g => g.id === d.groupe_id);
+    if (groupe) {
+      const isMembre = groupe.membres.includes(currentUser);
+      if (!isMembre) {
+        if (groupe.mdp) {
+          const saisie = prompt(`Ce document est réservé au groupe "${groupe.nom}".\nEntrez le mot de passe :`);
+          if (saisie === null) return;
+          if (saisie.trim() !== groupe.mdp) { alert("Mot de passe incorrect."); return; }
+          // Rejoindre automatiquement le groupe après authentification
+          joinGroupe(groupe.id);
+        } else {
+          // Groupe public — rejoindre automatiquement
+          joinGroupe(groupe.id);
+        }
+      }
+    }
+  }
+
+  currentReaderId = id;
   const fileId  = getDriveFileId(d.driveUrl);
   const panel   = document.getElementById('readerPanel');
   const overlay = document.getElementById('readerOverlay');
