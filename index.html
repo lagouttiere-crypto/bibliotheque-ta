@@ -2233,7 +2233,7 @@ function renderGroupPanelBody() {
   const g = currentGroupe;
   const notes = groupNotesState[g.id] || {};
   const groupDocs = g.docs.length > 0
-    ? g.docs.map(id => docs.find(d => String(d.id) === id)).filter(Boolean)
+    ? g.docs.map(id => docs.find(d => String(d.id).trim() === String(id).trim())).filter(Boolean)
     : [];
   if (groupDocs.length === 0) {
     body.innerHTML = `<p style="font-size:13px;color:var(--ink-faint);font-style:italic">Aucun document assigné à ce groupe.</p>`;
