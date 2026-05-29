@@ -6,6 +6,7 @@
 <title>Bibliothèque — ATI France</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
 <style>
   :root {
     --cream: #FAFAF8;
@@ -628,7 +629,7 @@
   /* ── MA BIBLIO ── */
   .sidebar-tabs {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     border-bottom: 1px solid var(--border);
     margin: -1.5rem -1.25rem 1.25rem;
   }
@@ -712,116 +713,115 @@
   .btn-action.bm-active { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
   .btn-action.rd-active { border-color: #4F7A52; color: #4F7A52; background: #F0F5F0; }
 
-  /* ── MODE LECTURE ── */
-  .reader-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(28, 26, 23, 0.4);
-    z-index: 200;
-    animation: fadeIn 0.2s ease;
-  }
-  .reader-overlay.open { display: block; }
-  @keyframes fadeIn {
-    from { opacity: 0; } to { opacity: 1; }
-  }
-  .reader-panel {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 62%;
-    height: 100vh;
-    background: var(--white);
-    border-left: 1px solid var(--border);
-    z-index: 201;
+  /* ── NOTES ── */
+  .reader-panel .reader-body {
     display: flex;
-    flex-direction: column;
-    transform: translateX(100%);
-    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  .reader-panel.open { transform: translateX(0); }
-  .reader-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 0 1.25rem;
-    height: 52px;
-    border-bottom: 1px solid var(--border);
-    flex-shrink: 0;
-    background: var(--white);
-  }
-  .reader-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 16px;
-    font-weight: 400;
-    color: var(--ink);
-    flex: 1;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .reader-author {
-    font-size: 11px;
-    color: var(--ink-faint);
-    font-style: italic;
-    white-space: nowrap;
-  }
-  .reader-btn {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--ink-light);
-    border: 1px solid var(--border);
-    background: var(--white);
-    padding: 5px 10px;
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    transition: all 0.15s;
-    text-decoration: none;
-    flex-shrink: 0;
-  }
-  .reader-btn:hover { border-color: var(--accent); color: var(--accent); }
-  .reader-close {
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--ink-faint);
-    font-size: 18px;
-    flex-shrink: 0;
-    transition: color 0.15s;
-  }
-  .reader-close:hover { color: var(--ink); }
-  .reader-body {
-    flex: 1;
+    flex-direction: row;
     overflow: hidden;
   }
-  .reader-body iframe {
+  .reader-pdf {
+    flex: 1;
+    overflow: hidden;
+    border-right: 1px solid var(--border);
+  }
+  .reader-pdf iframe {
     width: 100%;
     height: 100%;
     border: none;
   }
-  .reader-unavailable {
+  .reader-notes-col {
+    width: 300px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--cream);
+    overflow: hidden;
+  }
+  .notes-col-header {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 500;
+    background: var(--white);
+    flex-shrink: 0;
     display: flex;
     align-items: center;
-    justify-content: center;
-    height: 100%;
-    flex-direction: column;
-    gap: 12px;
+    justify-content: space-between;
+  }
+  .notes-save-status {
+    font-size: 10px;
     color: var(--ink-faint);
+    font-style: italic;
+    letter-spacing: 0;
+    text-transform: none;
   }
-  .reader-unavailable p {
+  .notes-textarea {
+    width: 100%;
+    flex: 1;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    background: var(--white);
+    padding: 12px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--ink);
+    outline: none;
+    resize: none;
+    line-height: 1.6;
+    min-height: 160px;
+    max-height: 45%;
+  }
+  .notes-textarea::placeholder { color: var(--ink-faint); }
+  .notes-preview {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 14px;
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.7;
+  }
+  .notes-preview h1, .notes-preview h2, .notes-preview h3 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 18px;
-    font-weight: 300;
+    font-weight: 400;
+    color: var(--ink);
+    margin: 0.75rem 0 0.25rem;
   }
+  .notes-preview h1 { font-size: 20px; }
+  .notes-preview h2 { font-size: 17px; }
+  .notes-preview h3 { font-size: 15px; }
+  .notes-preview p { margin-bottom: 0.6rem; }
+  .notes-preview ul, .notes-preview ol { padding-left: 1.2rem; margin-bottom: 0.6rem; }
+  .notes-preview li { margin-bottom: 0.2rem; }
+  .notes-preview blockquote {
+    border-left: 2px solid var(--border);
+    padding-left: 12px;
+    color: var(--ink-light);
+    font-style: italic;
+    margin: 0.5rem 0;
+  }
+  .notes-preview strong { font-weight: 500; }
+  .notes-preview em { font-style: italic; }
+  .notes-preview-empty {
+    color: var(--ink-faint);
+    font-style: italic;
+    font-size: 12px;
+  }
+
+  /* Notes dans Ma Biblio */
+  .mb-note-item {
+    padding: 8px 4px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.1s;
+  }
+  .mb-note-item:last-child { border-bottom: none; }
+  .mb-note-item:hover { background: var(--accent-light); }
+  .mb-note-doc { font-family: 'Cormorant Garamond', serif; font-size: 13px; color: var(--ink); margin-bottom: 2px; }
+  .mb-note-preview { font-size: 11px; color: var(--ink-faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mb-note-free { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 2px; }
 
   /* ── MOBILE ── */
   @media (max-width: 700px) {
@@ -840,6 +840,9 @@
     .shelf-toolbar { align-items: flex-start; flex-direction: column; }
     .toolbar-right { width: 100%; justify-content: space-between; }
     .reader-panel { width: 100%; border-left: none; }
+    .reader-panel .reader-body { flex-direction: column; }
+    .reader-pdf { min-height: 40vh; border-right: none; border-bottom: 1px solid var(--border); }
+    .reader-notes-col { width: 100%; }
   }
 </style>
 </head>
@@ -879,6 +882,7 @@
       <div class="sidebar-tabs">
         <button class="sidebar-tab active" id="tab-catalogue" onclick="switchSidebarTab('catalogue')">Catalogue</button>
         <button class="sidebar-tab" id="tab-mabiblio" onclick="switchSidebarTab('mabiblio')">Ma biblio</button>
+        <button class="sidebar-tab" id="tab-notes" onclick="switchSidebarTab('notes')">Notes</button>
       </div>
 
       <!-- PANEL CATALOGUE -->
@@ -950,6 +954,21 @@
         </div>
         <div id="mb-list-read">
           <span class="mb-empty">Aucun document marqué comme lu.</span>
+        </div>
+      </div>
+      <!-- PANEL NOTES -->
+      <div class="sidebar-panel" id="panel-notes">
+        <div class="mb-section-label" style="margin-bottom:10px">Notes libres</div>
+        <div id="mb-free-note-wrap" style="margin-bottom:1rem">
+          <textarea id="mb-free-note" placeholder="Une note libre, une idée, un fil entre plusieurs textes…"
+            style="width:100%;height:100px;border:1px solid var(--border);background:var(--white);padding:8px 10px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--ink);outline:none;resize:vertical;line-height:1.6;"
+            oninput="onFreeNoteInput()"></textarea>
+          <div style="font-size:10px;color:var(--ink-faint);font-style:italic;margin-top:4px" id="free-note-status"></div>
+        </div>
+        <div class="mb-separator"></div>
+        <div class="mb-section-label" style="margin-bottom:10px">Notes par document</div>
+        <div id="mb-list-notes">
+          <span class="mb-empty">Aucune note pour l'instant.</span>
         </div>
       </div>
     </aside>
@@ -1034,7 +1053,21 @@
     <a class="reader-btn" id="readerExtLink" href="#" target="_blank">Ouvrir dans Drive ↗</a>
     <button class="reader-close" onclick="closeReader()" title="Fermer">×</button>
   </div>
-  <div class="reader-body" id="readerBody"></div>
+  <div class="reader-body">
+    <div class="reader-pdf" id="readerPdf"></div>
+    <div class="reader-notes-col">
+      <div class="notes-col-header">
+        Mes notes
+        <span class="notes-save-status" id="notesSaveStatus"></span>
+      </div>
+      <textarea class="notes-textarea" id="notesTextarea"
+        placeholder="**Titre**&#10;- point clé&#10;> citation notable&#10;&#10;Écrivez en markdown…"
+        oninput="onNoteInput()"></textarea>
+      <div class="notes-preview" id="notesPreview">
+        <span class="notes-preview-empty">Le rendu apparaît ici…</span>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -1230,10 +1263,12 @@ async function showApp(nom) {
   if (heroCount) heroCount.textContent = docs.length;
   docs.forEach(d => { annotationsState[d.id] = []; tagsState[d.id] = []; });
   loadLocalBiblio();
+  loadLocalNotes();
   renderDocs();
   loadEmprunts().then(() => renderDocs());
   loadAnnotations();
   loadBiblioFromSheet();
+  loadNotesFromSheet();
 }
 
 function tryLogin() {
@@ -1418,7 +1453,6 @@ function renderDocs() {
         <div class="doc-meta">
           <span class="badge">${d.type}</span>
           <span class="badge badge-lang">${d.lang.toUpperCase()}</span>
-          ${d.physique ? '<span class="badge" style="color:#8B6F47;border-color:#8B6F47;background:#F0E8DC">📚 physique</span>' : ''}
         </div>
         <div class="doc-title">${d.title}</div>
         <div class="doc-author">${d.author || '—'}${yearStr}</div>
@@ -1504,9 +1538,16 @@ function renderMedia(d) {
     return `<span class="pdf-link" style="opacity:0.4">Physique uniquement</span>`;
   }
 
+  const fileId = getDriveFileId(d.driveUrl);
+  const previewUrl = fileId
+    ? `https://drive.google.com/file/d/${fileId}/preview`
+    : d.driveUrl;
+
   if (d.type === 'audio') {
-    return `<span class="pdf-link">Écouter ▸</span>`;
-  }
+  return `
+    <span class="pdf-link">Écouter ▸</span>
+  `;
+}
 
   if (d.type === 'vidéo' || d.type === 'video') {
     return `
@@ -1516,10 +1557,10 @@ function renderMedia(d) {
     `;
   }
 
-  // PDF / article / livre → mode lecture
+  // PDF / article / livre / etc.
   return `
-    <a class="pdf-link" href="#" onclick="event.stopPropagation();event.preventDefault();openReader(${d.id})">
-      Lire ↗
+    <a class="pdf-link" href="${d.driveUrl}" target="_blank" onclick="event.stopPropagation()">
+      Ouvrir ↗
     </a>
   `;
 }
@@ -1703,34 +1744,47 @@ function switchSidebarTab(tab) {
   document.getElementById('tab-' + tab).classList.add('active');
   document.getElementById('panel-' + tab).classList.add('active');
   if (tab === 'mabiblio') renderMaBiblio();
+  if (tab === 'notes') renderNotesPanel();
 }
 
 /* =========================================================
-   MODE LECTURE
+   MODE LECTURE + NOTES
 ========================================================= */
+
+let currentReaderId = null;
+let noteDebounce    = null;
+let freeNoteDebounce = null;
 
 function openReader(id) {
   const d = docs.find(doc => doc.id === id);
   if (!d) return;
+  currentReaderId = id;
 
-  const fileId = getDriveFileId(d.driveUrl);
+  const fileId  = getDriveFileId(d.driveUrl);
   const panel   = document.getElementById('readerPanel');
   const overlay = document.getElementById('readerOverlay');
-  const body    = document.getElementById('readerBody');
+  const pdf     = document.getElementById('readerPdf');
 
   document.getElementById('readerTitle').textContent  = d.title;
   document.getElementById('readerAuthor').textContent = d.author || '';
   document.getElementById('readerExtLink').href       = d.driveUrl;
 
   if (fileId) {
-    body.innerHTML = `<iframe src="https://drive.google.com/file/d/${fileId}/preview" allowfullscreen></iframe>`;
+    pdf.innerHTML = `<iframe src="https://drive.google.com/file/d/${fileId}/preview" allowfullscreen></iframe>`;
   } else {
-    body.innerHTML = `
+    pdf.innerHTML = `
       <div class="reader-unavailable">
         <p>Aperçu non disponible</p>
         <a class="reader-btn" href="${d.driveUrl}" target="_blank">Ouvrir dans Drive ↗</a>
       </div>`;
   }
+
+  // Charger la note existante
+  const saved = localStorage.getItem(lsKey('note_' + id)) || '';
+  const textarea = document.getElementById('notesTextarea');
+  textarea.value = saved;
+  renderNotePreview(saved);
+  document.getElementById('notesSaveStatus').textContent = saved ? 'Sauvegardée' : '';
 
   overlay.classList.add('open');
   panel.classList.add('open');
@@ -1743,17 +1797,101 @@ function closeReader() {
   panel.classList.remove('open');
   overlay.classList.remove('open');
   document.body.style.overflow = '';
-  // Vider l'iframe après la transition pour éviter de garder la ressource en mémoire
+  currentReaderId = null;
   setTimeout(() => {
-    document.getElementById('readerBody').innerHTML = '';
+    document.getElementById('readerPdf').innerHTML = '';
+    document.getElementById('notesTextarea').value = '';
+    document.getElementById('notesPreview').innerHTML = '<span class="notes-preview-empty">Le rendu apparaît ici…</span>';
+    document.getElementById('notesSaveStatus').textContent = '';
   }, 300);
+}
+
+function renderNotePreview(text) {
+  const preview = document.getElementById('notesPreview');
+  if (!text.trim()) {
+    preview.innerHTML = '<span class="notes-preview-empty">Le rendu apparaît ici…</span>';
+    return;
+  }
+  preview.innerHTML = typeof marked !== 'undefined' ? marked.parse(text) : text;
+}
+
+function onNoteInput() {
+  const text = document.getElementById('notesTextarea').value;
+  renderNotePreview(text);
+  document.getElementById('notesSaveStatus').textContent = 'Modification…';
+  clearTimeout(noteDebounce);
+  noteDebounce = setTimeout(() => saveNote(currentReaderId, text), 1000);
+}
+
+async function saveNote(docId, text) {
+  if (!docId || !currentUser) return;
+  localStorage.setItem(lsKey('note_' + docId), text);
+  document.getElementById('notesSaveStatus').textContent = 'Sauvegardée';
+  renderNotesPanel();
+  try {
+    await fetch(`${SHEET_URL}?sheet=notes&action=save&doc_id=${docId}&auteur=${encodeURIComponent(currentUser)}&texte=${encodeURIComponent(text)}`);
+  } catch(e) { console.warn("Sync note Sheet", e); }
+}
+
+function onFreeNoteInput() {
+  const text = document.getElementById('mb-free-note').value;
+  document.getElementById('free-note-status').textContent = 'Modification…';
+  clearTimeout(freeNoteDebounce);
+  freeNoteDebounce = setTimeout(() => saveFreeNote(text), 1000);
+}
+
+async function saveFreeNote(text) {
+  if (!currentUser) return;
+  localStorage.setItem(lsKey('note_free'), text);
+  document.getElementById('free-note-status').textContent = 'Sauvegardée';
+  try {
+    await fetch(`${SHEET_URL}?sheet=notes&action=save&doc_id=&auteur=${encodeURIComponent(currentUser)}&texte=${encodeURIComponent(text)}`);
+  } catch(e) { console.warn("Sync free note Sheet", e); }
+}
+
+function loadLocalNotes() {
+  const freeArea = document.getElementById('mb-free-note');
+  if (freeArea) freeArea.value = localStorage.getItem(lsKey('note_free')) || '';
+}
+
+async function loadNotesFromSheet() {
+  try {
+    const res  = await fetch(`${SHEET_URL}?sheet=notes&auteur=${encodeURIComponent(currentUser)}&v=${Date.now()}`);
+    const rows = await res.json();
+    if (!Array.isArray(rows)) return;
+    rows.forEach(row => {
+      const docId = String(row.doc_id || '').trim();
+      const text  = String(row.texte  || '').trim();
+      if (!text) return;
+      const key = docId ? lsKey('note_' + docId) : lsKey('note_free');
+      localStorage.setItem(key, text);
+    });
+    loadLocalNotes();
+    renderNotesPanel();
+  } catch(e) { console.warn("Notes Sheet non chargées", e); }
+}
+
+function renderNotesPanel() {
+  const container = document.getElementById('mb-list-notes');
+  if (!container) return;
+  const docNotes = docs
+    .map(d => ({ d, text: localStorage.getItem(lsKey('note_' + d.id)) || '' }))
+    .filter(({ text }) => text.trim());
+  if (docNotes.length === 0) {
+    container.innerHTML = '<span class="mb-empty">Aucune note pour l\'instant.</span>';
+    return;
+  }
+  container.innerHTML = docNotes.map(({ d, text }) => `
+    <div class="mb-note-item" onclick="switchSidebarTab('catalogue');openReader(${d.id})">
+      <div class="mb-note-doc">${d.title}</div>
+      <div class="mb-note-preview">${text.replace(/[#*>_\`]/g, '').substring(0, 60)}…</div>
+    </div>`).join('');
 }
 
 // Fermer avec Echap
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeReader();
 });
-
 </script>
 </body>
 </html>
