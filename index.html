@@ -726,7 +726,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 480px;
+    width: 70%;
     max-width: 95vw;
     height: 100vh;
     background: var(--white);
@@ -788,11 +788,19 @@
 
   .myspace-body {
     flex: 1;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .myspace-col {
     overflow-y: auto;
     padding: 1.5rem 1.75rem;
     display: flex;
     flex-direction: column;
     gap: 1.75rem;
+  }
+  .myspace-col:first-child {
+    border-right: 1px solid var(--border);
   }
   .myspace-section-title {
     font-size: 9px;
@@ -1150,101 +1158,61 @@
     <div class="header-user">
       <div class="avatar" id="userAvatar" onclick="openMySpace()" style="cursor:pointer" title="Mon espace"></div>
       <span id="userName" onclick="openMySpace()" style="cursor:pointer"></span>
+      <button onclick="openMySpace()" style="background:none;border:1px solid var(--border);padding:5px 12px;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);cursor:pointer;transition:all 0.15s;" onmouseover="this.style.background='var(--accent-light)'" onmouseout="this.style.background='none'">Ma biblio</button>
     </div>
   </header>
 
   <div class="main-layout">
     <aside>
-      <div class="sidebar-tabs">
-        <button class="sidebar-tab active" id="tab-catalogue" onclick="switchSidebarTab('catalogue')">Catalogue</button>
-        <button class="sidebar-tab" id="tab-mabiblio" onclick="switchSidebarTab('mabiblio')">Ma biblio</button>
-        <button class="sidebar-tab" id="tab-notes" onclick="switchSidebarTab('notes')">Notes</button>
+      <div class="search-wrap">
+        <span class="search-icon">⌕</span>
+        <input type="text" id="searchInput" placeholder="Rechercher..." oninput="renderDocs()" />
       </div>
 
-      <!-- PANEL CATALOGUE -->
-      <div class="sidebar-panel active" id="panel-catalogue">
-        <div class="search-wrap">
-          <span class="search-icon">⌕</span>
-          <input type="text" id="searchInput" placeholder="Rechercher..." oninput="renderDocs()" />
-        </div>
-
-        <div class="sidebar-section">
-          <div class="sidebar-label">Type</div>
-          <button class="filter-btn active" onclick="setFilter('type','tous',this)">Tous<span class="filter-count" id="cnt-type-tous"></span></button>
-          <button class="filter-btn" onclick="setFilter('type','article',this)">Articles<span class="filter-count" id="cnt-type-article"></span></button>
-          <button class="filter-btn" onclick="setFilter('type','livre',this)">Livres<span class="filter-count" id="cnt-type-livre"></span></button>
-          <button class="filter-btn" onclick="setFilter('type','transcription',this)">Transcriptions<span class="filter-count" id="cnt-type-transcription"></span></button>
-          <button class="filter-btn" onclick="setFilter('type','revue',this)">Revues<span class="filter-count" id="cnt-type-revue"></span></button>
-          <button class="filter-btn" onclick="setFilter('type','vidéo',this)">Vidéos<span class="filter-count" id="cnt-type-video"></span></button>
-          <button class="filter-btn" onclick="setFilter('type','audio',this)">Audio<span class="filter-count" id="cnt-type-audio"></span></button>
-        </div>
-
-        <div class="sidebar-section">
-          <div class="sidebar-label">Langue</div>
-          <button class="filter-btn active" onclick="setFilter('lang','tous',this)">Toutes<span class="filter-count"></span></button>
-          <button class="filter-btn" onclick="setFilter('lang','fr',this)">Français<span class="filter-count" id="cnt-lang-fr"></span></button>
-          <button class="filter-btn" onclick="setFilter('lang','en',this)">English<span class="filter-count" id="cnt-lang-en"></span></button>
-        </div>
-
-        <div class="sidebar-section">
-          <div class="sidebar-label">Période</div>
-          <button class="filter-btn active" onclick="setFilter('gen','tous',this)">Toutes</button>
-          <button class="filter-btn" onclick="setFilter('gen','1ère génération',this)">1ère génération</button>
-          <button class="filter-btn" onclick="setFilter('gen','2ème génération',this)">2ème génération</button>
-        </div>
-
-        <div class="sidebar-section">
-          <div class="sidebar-label">Thème</div>
-          <button class="filter-btn active" onclick="setFilter('theme','tous',this)">Tous</button>
-          <button class="filter-btn" onclick="setFilter('theme','fondements',this)">Fondements</button>
-          <button class="filter-btn" onclick="setFilter('theme','pédagogie',this)">Pédagogie</button>
-          <button class="filter-btn" onclick="setFilter('theme','pédagogie somatique',this)">Péd. somatique</button>
-          <button class="filter-btn" onclick="setFilter('theme','corps & mouvement',this)">Corps & mouvement</button>
-          <button class="filter-btn" onclick="setFilter('theme','phénoménologie',this)">Phénoménologie</button>
-          <button class="filter-btn" onclick="setFilter('theme','enaction',this)">Enaction</button>
-          <button class="filter-btn" onclick="setFilter('theme','neurosciences',this)">Neurosciences</button>
-          <button class="filter-btn" onclick="setFilter('theme','physiologie',this)">Physiologie</button>
-          <button class="filter-btn" onclick="setFilter('theme','arts',this)">Arts</button>
-          <button class="filter-btn" onclick="setFilter('theme','philosophie',this)">Philosophie</button>
-        </div>
-
-        <div class="sidebar-section">
-          <div class="sidebar-label">Tags membres</div>
-          <div class="tags-sidebar" id="sidebarTags">
-            <span style="font-size:12px;color:var(--ink-faint);font-style:italic">Aucun tag pour l'instant</span>
-          </div>
-        </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">Type</div>
+        <button class="filter-btn active" onclick="setFilter('type','tous',this)">Tous<span class="filter-count" id="cnt-type-tous"></span></button>
+        <button class="filter-btn" onclick="setFilter('type','article',this)">Articles<span class="filter-count" id="cnt-type-article"></span></button>
+        <button class="filter-btn" onclick="setFilter('type','livre',this)">Livres<span class="filter-count" id="cnt-type-livre"></span></button>
+        <button class="filter-btn" onclick="setFilter('type','transcription',this)">Transcriptions<span class="filter-count" id="cnt-type-transcription"></span></button>
+        <button class="filter-btn" onclick="setFilter('type','revue',this)">Revues<span class="filter-count" id="cnt-type-revue"></span></button>
+        <button class="filter-btn" onclick="setFilter('type','vidéo',this)">Vidéos<span class="filter-count" id="cnt-type-video"></span></button>
+        <button class="filter-btn" onclick="setFilter('type','audio',this)">Audio<span class="filter-count" id="cnt-type-audio"></span></button>
       </div>
 
-      <!-- PANEL MA BIBLIO -->
-      <div class="sidebar-panel" id="panel-mabiblio">
-        <div class="mb-section-label" style="margin-bottom:10px">
-          À lire
-        </div>
-        <div id="mb-list-bookmark">
-          <span class="mb-empty">Aucun document marqué.</span>
-        </div>
-        <div class="mb-separator"></div>
-        <div class="mb-section-label" style="margin-bottom:10px">
-          Lus
-        </div>
-        <div id="mb-list-read">
-          <span class="mb-empty">Aucun document marqué comme lu.</span>
-        </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">Langue</div>
+        <button class="filter-btn active" onclick="setFilter('lang','tous',this)">Toutes<span class="filter-count"></span></button>
+        <button class="filter-btn" onclick="setFilter('lang','fr',this)">Français<span class="filter-count" id="cnt-lang-fr"></span></button>
+        <button class="filter-btn" onclick="setFilter('lang','en',this)">English<span class="filter-count" id="cnt-lang-en"></span></button>
       </div>
-      <!-- PANEL NOTES -->
-      <div class="sidebar-panel" id="panel-notes">
-        <div class="mb-section-label" style="margin-bottom:10px">Notes libres</div>
-        <div id="mb-free-note-wrap" style="margin-bottom:1rem">
-          <textarea id="mb-free-note" placeholder="Une note libre, une idée, un fil entre plusieurs textes…"
-            style="width:100%;height:100px;border:1px solid var(--border);background:var(--white);padding:8px 10px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--ink);outline:none;resize:vertical;line-height:1.6;"
-            oninput="onFreeNoteInput()"></textarea>
-          <div style="font-size:10px;color:var(--ink-faint);font-style:italic;margin-top:4px" id="free-note-status"></div>
-        </div>
-        <div class="mb-separator"></div>
-        <div class="mb-section-label" style="margin-bottom:10px">Notes par document</div>
-        <div id="mb-list-notes">
-          <span class="mb-empty">Aucune note pour l'instant.</span>
+
+      <div class="sidebar-section">
+        <div class="sidebar-label">Période</div>
+        <button class="filter-btn active" onclick="setFilter('gen','tous',this)">Toutes</button>
+        <button class="filter-btn" onclick="setFilter('gen','1ère génération',this)">1ère génération</button>
+        <button class="filter-btn" onclick="setFilter('gen','2ème génération',this)">2ème génération</button>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-label">Thème</div>
+        <button class="filter-btn active" onclick="setFilter('theme','tous',this)">Tous</button>
+        <button class="filter-btn" onclick="setFilter('theme','fondements',this)">Fondements</button>
+        <button class="filter-btn" onclick="setFilter('theme','pédagogie',this)">Pédagogie</button>
+        <button class="filter-btn" onclick="setFilter('theme','pédagogie somatique',this)">Péd. somatique</button>
+        <button class="filter-btn" onclick="setFilter('theme','corps & mouvement',this)">Corps & mouvement</button>
+        <button class="filter-btn" onclick="setFilter('theme','phénoménologie',this)">Phénoménologie</button>
+        <button class="filter-btn" onclick="setFilter('theme','enaction',this)">Enaction</button>
+        <button class="filter-btn" onclick="setFilter('theme','neurosciences',this)">Neurosciences</button>
+        <button class="filter-btn" onclick="setFilter('theme','physiologie',this)">Physiologie</button>
+        <button class="filter-btn" onclick="setFilter('theme','arts',this)">Arts</button>
+        <button class="filter-btn" onclick="setFilter('theme','philosophie',this)">Philosophie</button>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-label">Tags membres</div>
+        <div class="tags-sidebar" id="sidebarTags">
+          <span style="font-size:12px;color:var(--ink-faint);font-style:italic">Aucun tag pour l'instant</span>
         </div>
       </div>
     </aside>
@@ -2231,34 +2199,37 @@ function renderMySpaceBody() {
     </div>`;
 
   body.innerHTML = `
-    <div>
-      <div class="myspace-section-title">À lire — ${bmDocs.length} document${bmDocs.length !== 1 ? 's' : ''}</div>
-      ${bmDocs.length === 0
-        ? '<span class="myspace-empty">Aucun document marqué à lire.</span>'
-        : bmDocs.map(d => docCardHtml(d, true)).join('')}
+    <div class="myspace-col">
+      <div>
+        <div class="myspace-section-title">À lire — ${bmDocs.length} document${bmDocs.length !== 1 ? 's' : ''}</div>
+        ${bmDocs.length === 0
+          ? '<span class="myspace-empty">Aucun document marqué à lire.</span>'
+          : bmDocs.map(d => docCardHtml(d, true)).join('')}
+      </div>
+      <div>
+        <div class="myspace-section-title">Lus — ${rdDocs.length} document${rdDocs.length !== 1 ? 's' : ''}</div>
+        ${rdDocs.length === 0
+          ? '<span class="myspace-empty">Aucun document marqué comme lu.</span>'
+          : rdDocs.map(d => docCardHtml(d, false)).join('')}
+      </div>
     </div>
 
-    <div>
-      <div class="myspace-section-title">Lus — ${rdDocs.length} document${rdDocs.length !== 1 ? 's' : ''}</div>
-      ${rdDocs.length === 0
-        ? '<span class="myspace-empty">Aucun document marqué comme lu.</span>'
-        : rdDocs.map(d => docCardHtml(d, false)).join('')}
-    </div>
-
-    <div>
-      <div class="myspace-section-title">Mes notes</div>
-      ${freeNote.trim() ? `
-        <div class="myspace-note-card" style="margin-bottom:12px">
-          <div class="myspace-note-doc">Note libre</div>
-          <div class="myspace-note-text">${freeNote.replace(/[#*>_\`]/g,'').substring(0,120)}…</div>
-        </div>` : ''}
-      ${noteDocs.length === 0 && !freeNote.trim()
-        ? '<span class="myspace-empty">Aucune note pour l\'instant.</span>'
-        : noteDocs.map(({ d, text }) => `
-            <div class="myspace-note-card" onclick="closeMySpace();openReader(${d.id})">
-              <div class="myspace-note-doc">${d.title}</div>
-              <div class="myspace-note-text">${text.replace(/[#*>_\`]/g,'').substring(0,100)}…</div>
-            </div>`).join('')}
+    <div class="myspace-col">
+      <div>
+        <div class="myspace-section-title">Mes notes</div>
+        ${freeNote.trim() ? `
+          <div class="myspace-note-card" style="margin-bottom:12px">
+            <div class="myspace-note-doc">Note libre</div>
+            <div class="myspace-note-text">${freeNote.replace(/[#*>_\`]/g,'').substring(0,120)}…</div>
+          </div>` : ''}
+        ${noteDocs.length === 0 && !freeNote.trim()
+          ? '<span class="myspace-empty">Aucune note pour l\'instant.</span>'
+          : noteDocs.map(({ d, text }) => `
+              <div class="myspace-note-card" onclick="closeMySpace();openReader(${d.id})">
+                <div class="myspace-note-doc">${d.title}</div>
+                <div class="myspace-note-text">${text.replace(/[#*>_\`]/g,'').substring(0,100)}…</div>
+              </div>`).join('')}
+      </div>
     </div>
   `;
 }
