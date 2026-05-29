@@ -730,7 +730,7 @@
     position: fixed;
     top: 0;
     right: 0;
-    width: 62%;
+    width: 75%;
     height: 100vh;
     background: var(--white);
     border-left: 1px solid var(--border);
@@ -1556,6 +1556,7 @@ function renderDocs() {
         <div class="doc-meta">
           <span class="badge">${d.type}</span>
           <span class="badge badge-lang">${d.lang.toUpperCase()}</span>
+          ${d.physique ? '<span class="badge" style="color:#8B6F47;border-color:#8B6F47;background:#F0E8DC">📚 physique</span>' : ''}
         </div>
         <div class="doc-title">${d.title}</div>
         <div class="doc-author">${d.author || '—'}${yearStr}</div>
