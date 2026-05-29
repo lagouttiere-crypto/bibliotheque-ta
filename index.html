@@ -1986,6 +1986,8 @@ function closeReader() {
   const overlay = document.getElementById('readerOverlay');
   panel.classList.remove('open');
   overlay.classList.remove('open');
+  overlay.style.pointerEvents = 'none';
+  setTimeout(() => { overlay.style.pointerEvents = ''; }, 350);
   document.body.style.overflow = '';
   currentReaderId = null;
   setTimeout(() => {
@@ -2222,8 +2224,13 @@ async function openGroupPanel(groupeId) {
 }
 
 function closeGroupPanel() {
-  document.getElementById('groupPanel').classList.remove('open');
-  document.getElementById('groupPanelOverlay').classList.remove('open');
+  const panel   = document.getElementById('groupPanel');
+  const overlay = document.getElementById('groupPanelOverlay');
+  panel.classList.remove('open');
+  overlay.classList.remove('open');
+  // Safari fix — forcer la désactivation du pointer-events
+  overlay.style.pointerEvents = 'none';
+  setTimeout(() => { overlay.style.pointerEvents = ''; }, 350);
   currentGroupe = null;
 }
 
@@ -2317,8 +2324,12 @@ function openMySpace() {
 }
 
 function closeMySpace() {
-  document.getElementById('myspacePanel').classList.remove('open');
-  document.getElementById('myspaceOverlay').classList.remove('open');
+  const panel   = document.getElementById('myspacePanel');
+  const overlay = document.getElementById('myspaceOverlay');
+  panel.classList.remove('open');
+  overlay.classList.remove('open');
+  overlay.style.pointerEvents = 'none';
+  setTimeout(() => { overlay.style.pointerEvents = ''; }, 350);
   document.body.style.overflow = '';
 }
 
