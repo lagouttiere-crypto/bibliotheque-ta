@@ -1616,5 +1616,22 @@
     "duree": null,
     "groupe_id": "g1780071211190",
     "annotations": []
+  },
+  {
+    "id": 76,
+    "titre": "réunion du 11-03 et 04-05 26",
+    "auteur": "Heloisa, Manuelle et Matthieu",
+    "annee": 2026,
+    "type": "pad",
+    "langue": "fr",
+    "themes": [],
+    "urlDrive": "https://etherpad-om79.onrender.com/p/Groupe___Ressources_et_Diversit%C3%A9",
+    "description": null,
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": "g1780071211190",
+    "annotations": []
   }
 ]
