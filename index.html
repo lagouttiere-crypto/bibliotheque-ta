@@ -713,6 +713,179 @@
   .btn-action.bm-active { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
   .btn-action.rd-active { border-color: #4F7A52; color: #4F7A52; background: #F0F5F0; }
 
+  /* ── MON ESPACE ── */
+  .myspace-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(28, 26, 23, 0.35);
+    z-index: 200;
+  }
+  .myspace-overlay.open { display: block; }
+  .myspace-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 480px;
+    max-width: 95vw;
+    height: 100vh;
+    background: var(--white);
+    border-right: 1px solid var(--border);
+    z-index: 201;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(-100%);
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+  }
+  .myspace-panel.open { transform: translateX(0); }
+
+  .myspace-header {
+    padding: 2rem 1.75rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+    background: var(--white);
+    position: relative;
+  }
+  .myspace-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--ink-faint);
+    font-size: 18px;
+    transition: color 0.15s;
+  }
+  .myspace-close:hover { color: var(--ink); }
+  .myspace-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 0.75rem;
+  }
+  .myspace-phrase {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--ink-light);
+    line-height: 1.5;
+  }
+  .myspace-phrase strong {
+    font-style: normal;
+    font-weight: 400;
+    color: var(--accent);
+  }
+
+  .myspace-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+  .myspace-section-title {
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+  }
+  .myspace-doc-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.1s;
+  }
+  .myspace-doc-card:last-child { border-bottom: none; }
+  .myspace-doc-card:hover .myspace-doc-title { color: var(--accent); }
+  .myspace-doc-info { flex: 1; min-width: 0; }
+  .myspace-doc-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.3;
+    transition: color 0.15s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .myspace-doc-author {
+    font-size: 11px;
+    color: var(--ink-faint);
+    font-style: italic;
+    margin-top: 1px;
+  }
+  .myspace-read-btn {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent-light);
+    background: var(--accent-light);
+    padding: 4px 10px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.15s;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .myspace-read-btn:hover { background: var(--accent); color: var(--white); border-color: var(--accent); }
+
+  .myspace-note-card {
+    padding: 10px 14px;
+    background: var(--cream);
+    border-left: 2px solid var(--border);
+    cursor: pointer;
+    transition: border-color 0.15s;
+    margin-bottom: 8px;
+  }
+  .myspace-note-card:hover { border-color: var(--accent); }
+  .myspace-note-doc {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .myspace-note-text {
+    font-size: 13px;
+    color: var(--ink-light);
+    line-height: 1.5;
+    font-style: italic;
+  }
+  .myspace-free-note {
+    padding: 12px 14px;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--ink-light);
+    line-height: 1.6;
+    font-style: italic;
+    white-space: pre-wrap;
+  }
+  .myspace-empty {
+    font-size: 12px;
+    color: var(--ink-faint);
+    font-style: italic;
+  }
+
   /* ── MODE LECTURE ── */
   .reader-overlay {
     display: none;
@@ -975,8 +1148,8 @@
       <span>Collection ATI France</span>
     </div>
     <div class="header-user">
-      <div class="avatar" id="userAvatar"></div>
-      <span id="userName"></span>
+      <div class="avatar" id="userAvatar" onclick="openMySpace()" style="cursor:pointer" title="Mon espace"></div>
+      <span id="userName" onclick="openMySpace()" style="cursor:pointer"></span>
     </div>
   </header>
 
@@ -1143,6 +1316,17 @@
       <div class="doc-grid" id="docGrid"></div>
     </div>
   </div>
+</div>
+
+<!-- MON ESPACE -->
+<div class="myspace-overlay" id="myspaceOverlay" onclick="closeMySpace()"></div>
+<div class="myspace-panel" id="myspacePanel">
+  <div class="myspace-header">
+    <button class="myspace-close" onclick="closeMySpace()">×</button>
+    <div class="myspace-name" id="myspaceName"></div>
+    <div class="myspace-phrase" id="myspacePhrase"></div>
+  </div>
+  <div class="myspace-body" id="myspaceBody"></div>
 </div>
 
 <!-- MODE LECTURE -->
@@ -1994,8 +2178,90 @@ function renderNotesPanel() {
 
 // Fermer avec Echap
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeReader();
+  if (e.key === 'Escape') { closeReader(); closeMySpace(); }
 });
+
+/* =========================================================
+   MON ESPACE
+========================================================= */
+
+function openMySpace() {
+  document.getElementById('myspaceName').textContent = currentUser;
+  renderMySpacePhrase();
+  renderMySpaceBody();
+  document.getElementById('myspaceOverlay').classList.add('open');
+  document.getElementById('myspacePanel').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeMySpace() {
+  document.getElementById('myspacePanel').classList.remove('open');
+  document.getElementById('myspaceOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function renderMySpacePhrase() {
+  const bmDocs = docs.filter(d => readingList[d.id]);
+  const el = document.getElementById('myspacePhrase');
+  if (bmDocs.length === 0) {
+    el.innerHTML = `Ta bibliothèque personnelle commence ici.`;
+  } else {
+    const last = bmDocs[bmDocs.length - 1];
+    const count = bmDocs.length;
+    const word = count === 1 ? "texte t'attend" : "textes t'attendent";    el.innerHTML = `${count} ${word}.<br>Le dernier ajouté à ta liste : <strong>${last.title}</strong>.`;
+  }
+}
+
+function renderMySpaceBody() {
+  const body = document.getElementById('myspaceBody');
+  const bmDocs = docs.filter(d => readingList[d.id]);
+  const rdDocs = docs.filter(d => readLogs[d.id]);
+  const noteDocs = docs
+    .map(d => ({ d, text: localStorage.getItem(lsKey('note_' + d.id)) || '' }))
+    .filter(({ text }) => text.trim());
+  const freeNote = localStorage.getItem(lsKey('note_free')) || '';
+
+  const docCardHtml = (d, btn = true) => `
+    <div class="myspace-doc-card" onclick="closeMySpace();openReader(${d.id})">
+      <div class="myspace-doc-info">
+        <div class="myspace-doc-title">${d.title}</div>
+        <div class="myspace-doc-author">${d.author || '—'}</div>
+      </div>
+      ${btn ? `<button class="myspace-read-btn" onclick="event.stopPropagation();closeMySpace();openReader(${d.id})">Lire ↗</button>` : ''}
+    </div>`;
+
+  body.innerHTML = `
+    <div>
+      <div class="myspace-section-title">À lire — ${bmDocs.length} document${bmDocs.length !== 1 ? 's' : ''}</div>
+      ${bmDocs.length === 0
+        ? '<span class="myspace-empty">Aucun document marqué à lire.</span>'
+        : bmDocs.map(d => docCardHtml(d, true)).join('')}
+    </div>
+
+    <div>
+      <div class="myspace-section-title">Lus — ${rdDocs.length} document${rdDocs.length !== 1 ? 's' : ''}</div>
+      ${rdDocs.length === 0
+        ? '<span class="myspace-empty">Aucun document marqué comme lu.</span>'
+        : rdDocs.map(d => docCardHtml(d, false)).join('')}
+    </div>
+
+    <div>
+      <div class="myspace-section-title">Mes notes</div>
+      ${freeNote.trim() ? `
+        <div class="myspace-note-card" style="margin-bottom:12px">
+          <div class="myspace-note-doc">Note libre</div>
+          <div class="myspace-note-text">${freeNote.replace(/[#*>_\`]/g,'').substring(0,120)}…</div>
+        </div>` : ''}
+      ${noteDocs.length === 0 && !freeNote.trim()
+        ? '<span class="myspace-empty">Aucune note pour l\'instant.</span>'
+        : noteDocs.map(({ d, text }) => `
+            <div class="myspace-note-card" onclick="closeMySpace();openReader(${d.id})">
+              <div class="myspace-note-doc">${d.title}</div>
+              <div class="myspace-note-text">${text.replace(/[#*>_\`]/g,'').substring(0,100)}…</div>
+            </div>`).join('')}
+    </div>
+  `;
+}
 </script>
 </body>
 </html>
