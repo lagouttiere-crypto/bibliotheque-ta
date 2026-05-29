@@ -713,431 +713,6 @@
   .btn-action.bm-active { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
   .btn-action.rd-active { border-color: #4F7A52; color: #4F7A52; background: #F0F5F0; }
 
-  /* ── MON ESPACE ── */
-  .myspace-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(28, 26, 23, 0.35);
-    z-index: 200;
-  }
-  .myspace-overlay.open { display: block; }
-  .myspace-panel {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 70%;
-    max-width: 95vw;
-    height: 100vh;
-    background: var(--white);
-    border-right: 1px solid var(--border);
-    z-index: 201;
-    display: flex;
-    flex-direction: column;
-    transform: translateX(-100%);
-    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: hidden;
-  }
-  .myspace-panel.open { transform: translateX(0); }
-
-  .myspace-header {
-    padding: 2rem 1.75rem 1.5rem;
-    border-bottom: 1px solid var(--border);
-    flex-shrink: 0;
-    background: var(--white);
-    position: relative;
-  }
-  .myspace-close {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    width: 28px;
-    height: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--ink-faint);
-    font-size: 18px;
-    transition: color 0.15s;
-  }
-  .myspace-close:hover { color: var(--ink); }
-  .myspace-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 36px;
-    font-weight: 300;
-    color: var(--ink);
-    line-height: 1;
-    margin-bottom: 0.75rem;
-  }
-  .myspace-phrase {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 15px;
-    font-weight: 300;
-    font-style: italic;
-    color: var(--ink-light);
-    line-height: 1.5;
-  }
-  .myspace-phrase strong {
-    font-style: normal;
-    font-weight: 400;
-    color: var(--accent);
-  }
-
-  .myspace-body {
-    flex: 1;
-    overflow: hidden;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-  .myspace-col {
-    overflow-y: auto;
-    padding: 1.5rem 1.75rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.75rem;
-  }
-  .myspace-col:first-child {
-    border-right: 1px solid var(--border);
-  }
-  .myspace-section-title {
-    font-size: 9px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--ink-faint);
-    font-weight: 500;
-    margin-bottom: 0.75rem;
-  }
-  .myspace-doc-card {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border);
-    cursor: pointer;
-    transition: background 0.1s;
-  }
-  .myspace-doc-card:last-child { border-bottom: none; }
-  .myspace-doc-card:hover .myspace-doc-title { color: var(--accent); }
-  .myspace-doc-info { flex: 1; min-width: 0; }
-  .myspace-doc-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 15px;
-    font-weight: 400;
-    color: var(--ink);
-    line-height: 1.3;
-    transition: color 0.15s;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .myspace-doc-author {
-    font-size: 11px;
-    color: var(--ink-faint);
-    font-style: italic;
-    margin-top: 1px;
-  }
-  .myspace-read-btn {
-    font-size: 10px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--accent);
-    border: 1px solid var(--accent-light);
-    background: var(--accent-light);
-    padding: 4px 10px;
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    transition: all 0.15s;
-    flex-shrink: 0;
-    white-space: nowrap;
-  }
-  .myspace-read-btn:hover { background: var(--accent); color: var(--white); border-color: var(--accent); }
-
-  .myspace-note-card {
-    padding: 10px 14px;
-    background: var(--cream);
-    border-left: 2px solid var(--border);
-    cursor: pointer;
-    transition: border-color 0.15s;
-    margin-bottom: 8px;
-  }
-  .myspace-note-card:hover { border-color: var(--accent); }
-  .myspace-note-doc {
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--accent);
-    font-weight: 500;
-    margin-bottom: 4px;
-  }
-  .myspace-note-text {
-    font-size: 13px;
-    color: var(--ink-light);
-    line-height: 1.5;
-    font-style: italic;
-  }
-  .myspace-free-note {
-    padding: 12px 14px;
-    background: var(--cream);
-    border: 1px solid var(--border);
-    font-size: 13px;
-    color: var(--ink-light);
-    line-height: 1.6;
-    font-style: italic;
-    white-space: pre-wrap;
-  }
-  .myspace-empty {
-    font-size: 12px;
-    color: var(--ink-faint);
-    font-style: italic;
-  }
-
-  .doc-autocomplete-wrap { position: relative; margin-bottom: 8px; }
-  .doc-autocomplete-input {
-    width: 100%;
-    border: 1px solid var(--border);
-    background: var(--white);
-    padding: 8px 10px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    color: var(--ink);
-    outline: none;
-  }
-  .doc-autocomplete-input:focus { border-color: var(--accent); }
-  .doc-autocomplete-input::placeholder { color: var(--ink-faint); }
-  .doc-autocomplete-dropdown {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-top: none;
-    max-height: 200px;
-    overflow-y: auto;
-    z-index: 400;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  }
-  .doc-autocomplete-dropdown.open { display: block; }
-  .doc-autocomplete-item {
-    padding: 8px 12px;
-    cursor: pointer;
-    font-size: 13px;
-    color: var(--ink);
-    transition: background 0.1s;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px;
-  }
-  .doc-autocomplete-item:hover { background: var(--accent-light); }
-  .doc-autocomplete-item span { font-size: 11px; color: var(--ink-faint); font-style: italic; flex-shrink: 0; }
-  .doc-selected-list { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; min-height: 10px; }
-  .doc-selected-tag {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    background: var(--accent-light);
-    color: var(--accent);
-    border: 1px solid var(--accent-light);
-    padding: 3px 8px;
-    font-size: 12px;
-    font-family: 'DM Sans', sans-serif;
-  }
-  .doc-selected-remove {
-    cursor: pointer;
-    font-size: 14px;
-    line-height: 1;
-    color: var(--accent);
-    background: none;
-    border: none;
-    padding: 0;
-    font-family: sans-serif;
-  }
-  .doc-selected-remove:hover { color: var(--ink); }
-
-  /* ── GROUPES ── */
-  .group-card {
-    border: 1px solid var(--border);
-    padding: 12px 14px;
-    margin-bottom: 8px;
-    cursor: pointer;
-    transition: border-color 0.15s;
-    background: var(--white);
-  }
-  .group-card:hover { border-color: var(--accent); }
-  .group-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 16px;
-    font-weight: 400;
-    color: var(--ink);
-    margin-bottom: 3px;
-  }
-  .group-meta {
-    font-size: 11px;
-    color: var(--ink-faint);
-    display: flex;
-    gap: 10px;
-  }
-  .group-members { font-style: italic; }
-  .group-actions {
-    display: flex;
-    gap: 6px;
-    margin-top: 8px;
-  }
-  .btn-group {
-    font-size: 10px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 5px 10px;
-    border: 1px solid var(--border);
-    background: var(--white);
-    color: var(--ink-light);
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    transition: all 0.15s;
-  }
-  .btn-group:hover { border-color: var(--accent); color: var(--accent); }
-  .btn-group.primary { background: var(--accent); color: var(--white); border-color: var(--accent); }
-  .btn-group.primary:hover { opacity: 0.85; }
-  .btn-group.danger:hover { border-color: #C0392B; color: #C0392B; }
-
-  .group-form {
-    background: var(--cream);
-    border: 1px solid var(--border);
-    padding: 14px;
-    margin-bottom: 12px;
-  }
-  .group-form input, .group-form textarea {
-    width: 100%;
-    border: 1px solid var(--border);
-    background: var(--white);
-    padding: 8px 10px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    color: var(--ink);
-    outline: none;
-    margin-bottom: 8px;
-  }
-  .group-form input:focus, .group-form textarea:focus { border-color: var(--accent); }
-  .group-form input::placeholder, .group-form textarea::placeholder { color: var(--ink-faint); }
-  .group-form-label {
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--ink-faint);
-    font-weight: 500;
-    margin-bottom: 5px;
-    display: block;
-  }
-
-  /* Panneau groupe ouvert */
-  .group-panel-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(28,26,23,0.35);
-    z-index: 300;
-  }
-  .group-panel-overlay.open { display: block; }
-  .group-panel {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 65%;
-    max-width: 95vw;
-    height: 100vh;
-    background: var(--white);
-    border-left: 1px solid var(--border);
-    z-index: 301;
-    display: flex;
-    flex-direction: column;
-    transform: translateX(100%);
-    transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
-    overflow: hidden;
-  }
-  .group-panel.open { transform: translateX(0); }
-  .group-panel-header {
-    padding: 0 1.25rem;
-    height: 52px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-shrink: 0;
-  }
-  .group-panel-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 18px;
-    font-weight: 400;
-    flex: 1;
-  }
-  .group-panel-body {
-    flex: 1;
-    overflow-y: auto;
-    padding: 1.25rem 1.5rem;
-  }
-  .group-doc-section {
-    margin-bottom: 1.5rem;
-    border: 1px solid var(--border);
-  }
-  .group-doc-header {
-    padding: 10px 14px;
-    background: var(--cream);
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .group-doc-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 15px;
-    font-weight: 400;
-    color: var(--ink);
-  }
-  .group-notes-list {
-    padding: 10px 14px;
-  }
-  .group-note-item {
-    padding: 8px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .group-note-item:last-child { border-bottom: none; }
-  .group-note-author {
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--accent);
-    margin-bottom: 3px;
-  }
-  .group-note-text {
-    font-size: 13px;
-    color: var(--ink);
-    line-height: 1.5;
-  }
-  .group-note-form {
-    padding: 10px 14px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    gap: 6px;
-  }
-  .group-note-form textarea {
-    flex: 1;
-    border: 1px solid var(--border);
-    background: var(--cream);
-    padding: 7px 10px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 12px;
-    color: var(--ink);
-    outline: none;
-    resize: none;
-    height: 56px;
-    line-height: 1.5;
-  }
-  .group-note-form textarea:focus { border-color: var(--accent); background: var(--white); }
-
   /* ── MODE LECTURE ── */
   .reader-overlay {
     display: none;
@@ -1400,62 +975,104 @@
       <span>Collection ATI France</span>
     </div>
     <div class="header-user">
-      <div class="avatar" id="userAvatar" onclick="openMySpace()" style="cursor:pointer" title="Mon espace"></div>
-      <span id="userName" onclick="openMySpace()" style="cursor:pointer"></span>
-      <button onclick="openMySpace()" style="background:none;border:1px solid var(--border);padding:5px 12px;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);cursor:pointer;transition:all 0.15s;" onmouseover="this.style.background='var(--accent-light)'" onmouseout="this.style.background='none'">Ma biblio</button>
+      <div class="avatar" id="userAvatar"></div>
+      <span id="userName"></span>
     </div>
   </header>
 
   <div class="main-layout">
     <aside>
-      <div class="search-wrap">
-        <span class="search-icon">⌕</span>
-        <input type="text" id="searchInput" placeholder="Rechercher..." oninput="renderDocs()" />
+      <div class="sidebar-tabs">
+        <button class="sidebar-tab active" id="tab-catalogue" onclick="switchSidebarTab('catalogue')">Catalogue</button>
+        <button class="sidebar-tab" id="tab-mabiblio" onclick="switchSidebarTab('mabiblio')">Ma biblio</button>
+        <button class="sidebar-tab" id="tab-notes" onclick="switchSidebarTab('notes')">Notes</button>
       </div>
 
-      <div class="sidebar-section">
-        <div class="sidebar-label">Type</div>
-        <button class="filter-btn active" onclick="setFilter('type','tous',this)">Tous<span class="filter-count" id="cnt-type-tous"></span></button>
-        <button class="filter-btn" onclick="setFilter('type','article',this)">Articles<span class="filter-count" id="cnt-type-article"></span></button>
-        <button class="filter-btn" onclick="setFilter('type','livre',this)">Livres<span class="filter-count" id="cnt-type-livre"></span></button>
-        <button class="filter-btn" onclick="setFilter('type','transcription',this)">Transcriptions<span class="filter-count" id="cnt-type-transcription"></span></button>
-        <button class="filter-btn" onclick="setFilter('type','revue',this)">Revues<span class="filter-count" id="cnt-type-revue"></span></button>
-        <button class="filter-btn" onclick="setFilter('type','vidéo',this)">Vidéos<span class="filter-count" id="cnt-type-video"></span></button>
-        <button class="filter-btn" onclick="setFilter('type','audio',this)">Audio<span class="filter-count" id="cnt-type-audio"></span></button>
-        <button class="filter-btn" onclick="setFilter('type','pad',this)">Pads<span class="filter-count" id="cnt-type-pad"></span></button>
-      </div>
-        <div class="sidebar-label">Langue</div>
-        <button class="filter-btn active" onclick="setFilter('lang','tous',this)">Toutes<span class="filter-count"></span></button>
-        <button class="filter-btn" onclick="setFilter('lang','fr',this)">Français<span class="filter-count" id="cnt-lang-fr"></span></button>
-        <button class="filter-btn" onclick="setFilter('lang','en',this)">English<span class="filter-count" id="cnt-lang-en"></span></button>
+      <!-- PANEL CATALOGUE -->
+      <div class="sidebar-panel active" id="panel-catalogue">
+        <div class="search-wrap">
+          <span class="search-icon">⌕</span>
+          <input type="text" id="searchInput" placeholder="Rechercher..." oninput="renderDocs()" />
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-label">Type</div>
+          <button class="filter-btn active" onclick="setFilter('type','tous',this)">Tous<span class="filter-count" id="cnt-type-tous"></span></button>
+          <button class="filter-btn" onclick="setFilter('type','article',this)">Articles<span class="filter-count" id="cnt-type-article"></span></button>
+          <button class="filter-btn" onclick="setFilter('type','livre',this)">Livres<span class="filter-count" id="cnt-type-livre"></span></button>
+          <button class="filter-btn" onclick="setFilter('type','transcription',this)">Transcriptions<span class="filter-count" id="cnt-type-transcription"></span></button>
+          <button class="filter-btn" onclick="setFilter('type','revue',this)">Revues<span class="filter-count" id="cnt-type-revue"></span></button>
+          <button class="filter-btn" onclick="setFilter('type','vidéo',this)">Vidéos<span class="filter-count" id="cnt-type-video"></span></button>
+          <button class="filter-btn" onclick="setFilter('type','audio',this)">Audio<span class="filter-count" id="cnt-type-audio"></span></button>
+          <button class="filter-btn" onclick="setFilter('type','pad',this)">Pads<span class="filter-count" id="cnt-type-pad"></span></button>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-label">Langue</div>
+          <button class="filter-btn active" onclick="setFilter('lang','tous',this)">Toutes<span class="filter-count"></span></button>
+          <button class="filter-btn" onclick="setFilter('lang','fr',this)">Français<span class="filter-count" id="cnt-lang-fr"></span></button>
+          <button class="filter-btn" onclick="setFilter('lang','en',this)">English<span class="filter-count" id="cnt-lang-en"></span></button>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-label">Période</div>
+          <button class="filter-btn active" onclick="setFilter('gen','tous',this)">Toutes</button>
+          <button class="filter-btn" onclick="setFilter('gen','1ère génération',this)">1ère génération</button>
+          <button class="filter-btn" onclick="setFilter('gen','2ème génération',this)">2ème génération</button>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-label">Thème</div>
+          <button class="filter-btn active" onclick="setFilter('theme','tous',this)">Tous</button>
+          <button class="filter-btn" onclick="setFilter('theme','fondements',this)">Fondements</button>
+          <button class="filter-btn" onclick="setFilter('theme','pédagogie',this)">Pédagogie</button>
+          <button class="filter-btn" onclick="setFilter('theme','pédagogie somatique',this)">Péd. somatique</button>
+          <button class="filter-btn" onclick="setFilter('theme','corps & mouvement',this)">Corps & mouvement</button>
+          <button class="filter-btn" onclick="setFilter('theme','phénoménologie',this)">Phénoménologie</button>
+          <button class="filter-btn" onclick="setFilter('theme','enaction',this)">Enaction</button>
+          <button class="filter-btn" onclick="setFilter('theme','neurosciences',this)">Neurosciences</button>
+          <button class="filter-btn" onclick="setFilter('theme','physiologie',this)">Physiologie</button>
+          <button class="filter-btn" onclick="setFilter('theme','arts',this)">Arts</button>
+          <button class="filter-btn" onclick="setFilter('theme','philosophie',this)">Philosophie</button>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-label">Tags membres</div>
+          <div class="tags-sidebar" id="sidebarTags">
+            <span style="font-size:12px;color:var(--ink-faint);font-style:italic">Aucun tag pour l'instant</span>
+          </div>
+        </div>
       </div>
 
-      <div class="sidebar-section">
-        <div class="sidebar-label">Période</div>
-        <button class="filter-btn active" onclick="setFilter('gen','tous',this)">Toutes</button>
-        <button class="filter-btn" onclick="setFilter('gen','1ère génération',this)">1ère génération</button>
-        <button class="filter-btn" onclick="setFilter('gen','2ème génération',this)">2ème génération</button>
+      <!-- PANEL MA BIBLIO -->
+      <div class="sidebar-panel" id="panel-mabiblio">
+        <div class="mb-section-label" style="margin-bottom:10px">
+          À lire
+        </div>
+        <div id="mb-list-bookmark">
+          <span class="mb-empty">Aucun document marqué.</span>
+        </div>
+        <div class="mb-separator"></div>
+        <div class="mb-section-label" style="margin-bottom:10px">
+          Lus
+        </div>
+        <div id="mb-list-read">
+          <span class="mb-empty">Aucun document marqué comme lu.</span>
+        </div>
       </div>
-
-      <div class="sidebar-section">
-        <div class="sidebar-label">Thème</div>
-        <button class="filter-btn active" onclick="setFilter('theme','tous',this)">Tous</button>
-        <button class="filter-btn" onclick="setFilter('theme','fondements',this)">Fondements</button>
-        <button class="filter-btn" onclick="setFilter('theme','pédagogie',this)">Pédagogie</button>
-        <button class="filter-btn" onclick="setFilter('theme','pédagogie somatique',this)">Péd. somatique</button>
-        <button class="filter-btn" onclick="setFilter('theme','corps & mouvement',this)">Corps & mouvement</button>
-        <button class="filter-btn" onclick="setFilter('theme','phénoménologie',this)">Phénoménologie</button>
-        <button class="filter-btn" onclick="setFilter('theme','enaction',this)">Enaction</button>
-        <button class="filter-btn" onclick="setFilter('theme','neurosciences',this)">Neurosciences</button>
-        <button class="filter-btn" onclick="setFilter('theme','physiologie',this)">Physiologie</button>
-        <button class="filter-btn" onclick="setFilter('theme','arts',this)">Arts</button>
-        <button class="filter-btn" onclick="setFilter('theme','philosophie',this)">Philosophie</button>
-      </div>
-
-      <div class="sidebar-section">
-        <div class="sidebar-label">Tags membres</div>
-        <div class="tags-sidebar" id="sidebarTags">
-          <span style="font-size:12px;color:var(--ink-faint);font-style:italic">Aucun tag pour l'instant</span>
+      <!-- PANEL NOTES -->
+      <div class="sidebar-panel" id="panel-notes">
+        <div class="mb-section-label" style="margin-bottom:10px">Notes libres</div>
+        <div id="mb-free-note-wrap" style="margin-bottom:1rem">
+          <textarea id="mb-free-note" placeholder="Une note libre, une idée, un fil entre plusieurs textes…"
+            style="width:100%;height:100px;border:1px solid var(--border);background:var(--white);padding:8px 10px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--ink);outline:none;resize:vertical;line-height:1.6;"
+            oninput="onFreeNoteInput()"></textarea>
+          <div style="font-size:10px;color:var(--ink-faint);font-style:italic;margin-top:4px" id="free-note-status"></div>
+        </div>
+        <div class="mb-separator"></div>
+        <div class="mb-section-label" style="margin-bottom:10px">Notes par document</div>
+        <div id="mb-list-notes">
+          <span class="mb-empty">Aucune note pour l'instant.</span>
         </div>
       </div>
     </aside>
@@ -1527,54 +1144,6 @@
       <div class="doc-grid" id="docGrid"></div>
     </div>
   </div>
-</div>
-
-<!-- MON ESPACE -->
-<div class="myspace-overlay" id="myspaceOverlay" onclick="closeMySpace()"></div>
-<div class="myspace-panel" id="myspacePanel">
-  <div class="myspace-header">
-    <button class="myspace-close" onclick="closeMySpace()">×</button>
-    <div class="myspace-name" id="myspaceName"></div>
-    <div class="myspace-phrase" id="myspacePhrase"></div>
-  </div>
-  <div class="myspace-body" id="myspaceBody"></div>
-  <div style="border-top:1px solid var(--border);padding:1.25rem 1.75rem;flex-shrink:0;background:var(--white)">
-    <div class="myspace-section-title" style="margin-bottom:10px">Mes groupes de lecture</div>
-    <div id="myspace-groupes"></div>
-    <div id="myspace-autres-groupes" style="margin-top:12px"></div>
-    <div id="myspace-create-form" style="display:none">
-      <div class="group-form">
-        <label class="group-form-label">Nom du groupe</label>
-        <input type="text" id="new-group-name" placeholder="ex: Phénoménologie, Stage 2026…" />
-        <label class="group-form-label">Mot de passe (optionnel — laisser vide pour un groupe ouvert)</label>
-        <input type="password" id="new-group-mdp" placeholder="Mot de passe du groupe…" />
-        <label class="group-form-label">Ajouter des documents</label>
-        <div class="doc-selected-list" id="new-group-docs-tags"></div>
-        <div class="doc-autocomplete-wrap">
-          <input type="text" class="doc-autocomplete-input" id="new-group-docs-search"
-            placeholder="Tapez un titre ou un auteur…"
-            oninput="onGroupDocSearch()" autocomplete="off" />
-          <div class="doc-autocomplete-dropdown" id="new-group-docs-dropdown"></div>
-        </div>
-        <div style="display:flex;gap:6px">
-          <button class="btn-group primary" onclick="createGroupe()">Créer</button>
-          <button class="btn-group" onclick="document.getElementById('myspace-create-form').style.display='none'">Annuler</button>
-        </div>
-      </div>
-    </div>
-    <button class="btn-group" style="margin-top:8px" onclick="document.getElementById('myspace-create-form').style.display=document.getElementById('myspace-create-form').style.display==='none'?'block':'none'">+ Créer un groupe</button>
-  </div>
-</div>
-
-<!-- PANNEAU GROUPE -->
-<div class="group-panel-overlay" id="groupPanelOverlay" onclick="closeGroupPanel()"></div>
-<div class="group-panel" id="groupPanel">
-  <div class="group-panel-header">
-    <div class="group-panel-title" id="groupPanelTitle"></div>
-    <span style="font-size:11px;color:var(--ink-faint);font-style:italic" id="groupPanelMembers"></span>
-    <button class="reader-close" onclick="closeGroupPanel()">×</button>
-  </div>
-  <div class="group-panel-body" id="groupPanelBody"></div>
 </div>
 
 <!-- MODE LECTURE -->
@@ -1782,15 +1351,14 @@ async function showApp(nom) {
     const raw = await res.json();
     docs = raw.map(d => ({
       ...d,
-      title:     d.titre,
-      author:    d.auteur,
-      year:      d.annee,
-      lang:      d.langue,
-      driveUrl:  d.urlDrive || null,
-      videoUrl:  d.videoUrl || d.urlVideo || "",
+      title: d.titre,
+      author: d.auteur,
+      year: d.annee,
+      lang: d.langue,
+      driveUrl: d.urlDrive || null,
+      videoUrl: d.videoUrl || d.urlVideo || "",
       videoPassword: d.videoPassword || d.motDePasseVideo || "",
-      duree:     d.duree || d.duration || "",
-      groupe_id: d.groupe_id || null
+      duree: d.duree || d.duration || ""
     }));
   } catch(e) {
     console.warn("Impossible de charger docs.json", e);
@@ -1805,7 +1373,6 @@ async function showApp(nom) {
   loadAnnotations();
   loadBiblioFromSheet();
   loadNotesFromSheet();
-  loadGroupes();
 }
 
 function tryLogin() {
@@ -2079,33 +1646,16 @@ function renderMedia(d) {
   if (!d.driveUrl) {
     return `<span class="pdf-link" style="opacity:0.4">Physique uniquement</span>`;
   }
-
   if (d.type === 'audio') {
     return `<span class="pdf-link">Écouter ▸</span>`;
   }
-
   if (d.type === 'vidéo' || d.type === 'video') {
-    return `
-      <a class="pdf-link" href="${d.driveUrl}" target="_blank" onclick="event.stopPropagation()">
-        Regarder ↗
-      </a>
-    `;
+    return `<a class="pdf-link" href="${d.driveUrl}" target="_blank" onclick="event.stopPropagation()">Regarder ↗</a>`;
   }
-
   if (d.type === 'pad' || isFramapadUrl(d.driveUrl)) {
-    return `
-      <a class="pdf-link" href="#" onclick="event.stopPropagation();event.preventDefault();openReader(${d.id})">
-        Ouvrir le pad ↗
-      </a>
-    `;
+    return `<a class="pdf-link" href="#" onclick="event.stopPropagation();event.preventDefault();openReader(${d.id})">Ouvrir le pad ↗</a>`;
   }
-
-  // PDF / article / livre → mode lecture
-  return `
-    <a class="pdf-link" href="#" onclick="event.stopPropagation();event.preventDefault();openReader(${d.id})">
-      Lire ↗
-    </a>
-  `;
+  return `<a class="pdf-link" href="#" onclick="event.stopPropagation();event.preventDefault();openReader(${d.id})">Lire ↗</a>`;
 }
 
 function toggleCard(id) {
@@ -2301,28 +1851,8 @@ let freeNoteDebounce = null;
 function openReader(id) {
   const d = docs.find(doc => doc.id === id);
   if (!d) return;
-
-  // Vérifier si le doc est restreint à un groupe protégé
-  if (d.groupe_id) {
-    const groupe = groupesState.find(g => g.id === d.groupe_id);
-    if (groupe) {
-      const isMembre = groupe.membres.includes(currentUser);
-      if (!isMembre) {
-        if (groupe.mdp) {
-          const saisie = prompt(`Ce document est réservé au groupe "${groupe.nom}".\nEntrez le mot de passe :`);
-          if (saisie === null) return;
-          if (saisie.trim() !== groupe.mdp) { alert("Mot de passe incorrect."); return; }
-          // Rejoindre automatiquement le groupe après authentification
-          joinGroupe(groupe.id);
-        } else {
-          // Groupe public — rejoindre automatiquement
-          joinGroupe(groupe.id);
-        }
-      }
-    }
-  }
-
   currentReaderId = id;
+
   const fileId  = getDriveFileId(d.driveUrl);
   const panel   = document.getElementById('readerPanel');
   const overlay = document.getElementById('readerOverlay');
@@ -2453,348 +1983,10 @@ function renderNotesPanel() {
     </div>`).join('');
 }
 
-/* =========================================================
-   GROUPES DE LECTURE
-========================================================= */
-
-let groupesState = [];      // tous les groupes
-let currentGroupe = null;   // groupe ouvert dans le panneau
-let groupNotesState = {};   // { groupeId: { docId: [{auteur, texte}] } }
-
-async function loadGroupes() {
-  try {
-    const res  = await fetch(`${SHEET_URL}?sheet=groupes&v=${Date.now()}`);
-    const rows = await res.json();
-    if (Array.isArray(rows)) {
-      groupesState = rows.map(r => ({
-        id:       String(r.id       || '').trim(),
-        nom:      String(r.nom      || '').trim(),
-        createur: String(r.createur || '').trim(),
-        membres:  String(r.membres  || '').split(',').map(m => m.trim()).filter(Boolean),
-        docs:     String(r.docs     || '').split(',').map(d => d.trim()).filter(Boolean),
-        mdp:      String(r.mdp      || '').trim(),
-        date:     String(r.date     || '').trim(),
-      }));
-    }
-  } catch(e) { console.warn("Groupes non chargés", e); }
-  renderMySpaceGroupes();
-}
-
-async function loadGroupNotes(groupeId) {
-  try {
-    const res  = await fetch(`${SHEET_URL}?sheet=notes_groupe&groupe_id=${groupeId}&v=${Date.now()}`);
-    const rows = await res.json();
-    if (!Array.isArray(rows)) return;
-    if (!groupNotesState[groupeId]) groupNotesState[groupeId] = {};
-    rows.forEach(r => {
-      const docId = String(r.doc_id || '').trim();
-      if (!groupNotesState[groupeId][docId]) groupNotesState[groupeId][docId] = [];
-      groupNotesState[groupeId][docId].push({ auteur: r.auteur, texte: r.texte });
-    });
-  } catch(e) { console.warn("Notes groupe non chargées", e); }
-}
-
-let selectedGroupDocs = []; // ids des docs sélectionnés
-
-function onGroupDocSearch() {
-  const q = normalizeText(document.getElementById('new-group-docs-search').value);
-  const dropdown = document.getElementById('new-group-docs-dropdown');
-  if (!q || q.length < 2) { dropdown.classList.remove('open'); return; }
-
-  const matches = docs.filter(d =>
-    !selectedGroupDocs.includes(d.id) &&
-    (normalizeText(d.title).includes(q) || normalizeText(d.author || '').includes(q))
-  ).slice(0, 8);
-
-  if (matches.length === 0) { dropdown.classList.remove('open'); return; }
-
-  dropdown.innerHTML = matches.map(d => `
-    <div class="doc-autocomplete-item" onclick="addGroupDocSelection(${d.id})">
-      <div>${d.title}</div>
-      <span>${d.author || '—'}</span>
-    </div>`).join('');
-  dropdown.classList.add('open');
-}
-
-function addGroupDocSelection(id) {
-  if (selectedGroupDocs.includes(id)) return;
-  selectedGroupDocs.push(id);
-  document.getElementById('new-group-docs-search').value = '';
-  document.getElementById('new-group-docs-dropdown').classList.remove('open');
-  renderGroupDocTags();
-}
-
-function removeGroupDocSelection(id) {
-  selectedGroupDocs = selectedGroupDocs.filter(d => d !== id);
-  renderGroupDocTags();
-}
-
-function renderGroupDocTags() {
-  const container = document.getElementById('new-group-docs-tags');
-  if (!container) return;
-  container.innerHTML = selectedGroupDocs.map(id => {
-    const d = docs.find(doc => doc.id === id);
-    if (!d) return '';
-    return `<span class="doc-selected-tag">
-      ${d.title}
-      <button class="doc-selected-remove" onclick="removeGroupDocSelection(${id})">×</button>
-    </span>`;
-  }).join('');
-}
-
-// Fermer dropdown si clic ailleurs
-document.addEventListener('click', e => {
-  if (!e.target.closest('.doc-autocomplete-wrap')) {
-    document.querySelectorAll('.doc-autocomplete-dropdown').forEach(d => d.classList.remove('open'));
-  }
-});
-
-async function createGroupe() {
-  const nom = document.getElementById('new-group-name').value.trim();
-  const mdp = document.getElementById('new-group-mdp').value.trim();
-  if (!nom) return;
-  const docsStr = selectedGroupDocs.join(',');
-  try {
-    await fetch(`${SHEET_URL}?sheet=groupes&action=create&nom=${encodeURIComponent(nom)}&auteur=${encodeURIComponent(currentUser)}&docs=${encodeURIComponent(docsStr)}&mdp=${encodeURIComponent(mdp)}`);
-    document.getElementById('new-group-name').value = '';
-    document.getElementById('new-group-mdp').value = '';
-    selectedGroupDocs = [];
-    renderGroupDocTags();
-    document.getElementById('myspace-create-form').style.display = 'none';
-    await loadGroupes();
-  } catch(e) { console.warn("Erreur création groupe", e); }
-}
-
-async function joinGroupe(groupeId) {
-  const g = groupesState.find(g => g.id === groupeId);
-  if (!g) return;
-  if (g.mdp) {
-    const saisie = prompt(`Ce groupe est protégé.\nEntrez le mot de passe :`);
-    if (saisie === null) return;
-    if (saisie.trim() !== g.mdp) { alert("Mot de passe incorrect."); return; }
-  }
-  try {
-    await fetch(`${SHEET_URL}?sheet=groupes&action=join&groupe_id=${groupeId}&auteur=${encodeURIComponent(currentUser)}`);
-    await loadGroupes();
-  } catch(e) { console.warn("Erreur rejoindre groupe", e); }
-}
-
-async function leaveGroupe(groupeId) {
-  if (!confirm("Quitter ce groupe ?")) return;
-  try {
-    await fetch(`${SHEET_URL}?sheet=groupes&action=leave&groupe_id=${groupeId}&auteur=${encodeURIComponent(currentUser)}`);
-    await loadGroupes();
-  } catch(e) { console.warn("Erreur quitter groupe", e); }
-}
-
-async function openGroupPanel(groupeId) {
-  const g = groupesState.find(g => g.id === groupeId);
-  if (!g) return;
-  currentGroupe = g;
-
-  document.getElementById('groupPanelTitle').textContent   = g.nom;
-  document.getElementById('groupPanelMembers').textContent = g.membres.join(', ');
-
-  await loadGroupNotes(groupeId);
-  renderGroupPanelBody();
-
-  document.getElementById('groupPanelOverlay').classList.add('open');
-  document.getElementById('groupPanel').classList.add('open');
-}
-
-function closeGroupPanel() {
-  document.getElementById('groupPanel').classList.remove('open');
-  document.getElementById('groupPanelOverlay').classList.remove('open');
-  currentGroupe = null;
-}
-
-function renderGroupPanelBody() {
-  const body = document.getElementById('groupPanelBody');
-  if (!currentGroupe) return;
-  const g = currentGroupe;
-  const notes = groupNotesState[g.id] || {};
-
-  // Documents du groupe (ou tous si pas de sélection)
-  const groupDocs = g.docs.length > 0
-    ? g.docs.map(id => docs.find(d => String(d.id) === id)).filter(Boolean)
-    : [];
-
-  if (groupDocs.length === 0) {
-    body.innerHTML = `
-      <p style="font-size:13px;color:var(--ink-faint);font-style:italic;margin-bottom:1rem">
-        Aucun document assigné à ce groupe. Les membres peuvent noter n'importe quel document.
-      </p>`;
-    return;
-  }
-
-  body.innerHTML = groupDocs.map(d => {
-    const docNotes = notes[String(d.id)] || [];
-    return `
-      <div class="group-doc-section">
-        <div class="group-doc-header">
-          <span class="group-doc-name">${d.title}</span>
-          <a href="#" onclick="event.preventDefault();closeGroupPanel();openReader(${d.id})" style="font-size:11px;color:var(--accent);text-decoration:none;letter-spacing:0.05em;text-transform:uppercase">Lire ↗</a>
-        </div>
-        <div class="group-notes-list">
-          ${docNotes.length === 0
-            ? '<span style="font-size:12px;color:var(--ink-faint);font-style:italic">Pas encore de notes.</span>'
-            : docNotes.map(n => `
-                <div class="group-note-item">
-                  <div class="group-note-author">${n.auteur}</div>
-                  <div class="group-note-text">${String(n.texte || '').replace(/</g,'&lt;')}</div>
-                </div>`).join('')}
-        </div>
-        <div class="group-note-form">
-          <textarea id="gnote-${g.id}-${d.id}" placeholder="Ajouter une note…" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();addGroupNote('${g.id}',${d.id})}"></textarea>
-          <button class="btn-group primary" onclick="addGroupNote('${g.id}',${d.id})">Envoyer</button>
-        </div>
-      </div>`;
-  }).join('');
-}
-
-async function addGroupNote(groupeId, docId) {
-  const input = document.getElementById(`gnote-${groupeId}-${docId}`);
-  if (!input) return;
-  const texte = input.value.trim();
-  if (!texte) return;
-
-  if (!groupNotesState[groupeId]) groupNotesState[groupeId] = {};
-  if (!groupNotesState[groupeId][docId]) groupNotesState[groupeId][docId] = [];
-  groupNotesState[groupeId][docId].push({ auteur: currentUser, texte });
-  input.value = '';
-  renderGroupPanelBody();
-
-  try {
-    await fetch(`${SHEET_URL}?sheet=notes_groupe&action=save&groupe_id=${groupeId}&doc_id=${docId}&auteur=${encodeURIComponent(currentUser)}&texte=${encodeURIComponent(texte)}`);
-  } catch(e) { console.warn("Erreur envoi note groupe", e); }
-}
-
-function renderMySpaceGroupes() {
-  const mesGroupes    = groupesState.filter(g => g.membres.includes(currentUser));
-  const autresGroupes = groupesState.filter(g => !g.membres.includes(currentUser));
-
-  const mesEl = document.getElementById('myspace-groupes');
-  const autresEl = document.getElementById('myspace-autres-groupes');
-  if (!mesEl || !autresEl) return;
-
-  mesEl.innerHTML = mesGroupes.length === 0
-    ? '<span class="myspace-empty">Tu n\'appartiens à aucun groupe.</span>'
-    : mesGroupes.map(g => `
-        <div class="group-card" onclick="openGroupPanel('${g.id}')">
-          <div class="group-name">${g.nom}${g.mdp ? ' 🔒' : ''}</div>
-          <div class="group-meta">
-            <span class="group-members">${g.membres.join(', ')}</span>
-            <span>${g.docs.length} doc${g.docs.length !== 1 ? 's' : ''}</span>
-          </div>
-          <div class="group-actions" onclick="event.stopPropagation()">
-            <button class="btn-group primary" onclick="openGroupPanel('${g.id}')">Ouvrir</button>
-            ${g.createur !== currentUser ? `<button class="btn-group danger" onclick="leaveGroupe('${g.id}')">Quitter</button>` : ''}
-          </div>
-        </div>`).join('');
-
-  autresEl.innerHTML = autresGroupes.length === 0 ? '' : `
-    <div class="myspace-section-title" style="margin-bottom:8px;margin-top:4px">Autres groupes</div>
-    ${autresGroupes.map(g => `
-      <div class="group-card">
-        <div class="group-name">${g.nom}${g.mdp ? ' 🔒' : ''}</div>
-        <div class="group-meta">
-          <span class="group-members">${g.membres.join(', ')}</span>
-        </div>
-        <div class="group-actions">
-          <button class="btn-group primary" onclick="joinGroupe('${g.id}')">Rejoindre</button>
-        </div>
-      </div>`).join('')}`;
-}
-
 // Fermer avec Echap
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closeReader(); closeMySpace(); closeGroupPanel(); }
+  if (e.key === 'Escape') closeReader();
 });
-
-/* =========================================================
-   MON ESPACE
-========================================================= */
-
-function openMySpace() {
-  document.getElementById('myspaceName').textContent = currentUser;
-  renderMySpacePhrase();
-  renderMySpaceBody();
-  document.getElementById('myspaceOverlay').classList.add('open');
-  document.getElementById('myspacePanel').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeMySpace() {
-  document.getElementById('myspacePanel').classList.remove('open');
-  document.getElementById('myspaceOverlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function renderMySpacePhrase() {
-  const bmDocs = docs.filter(d => readingList[d.id]);
-  const el = document.getElementById('myspacePhrase');
-  if (bmDocs.length === 0) {
-    el.innerHTML = `Ta bibliothèque personnelle commence ici.`;
-  } else {
-    const last = bmDocs[bmDocs.length - 1];
-    const count = bmDocs.length;
-    const word = count === 1 ? "texte t'attend" : "textes t'attendent";    el.innerHTML = `${count} ${word}.<br>Le dernier ajouté à ta liste : <strong>${last.title}</strong>.`;
-  }
-}
-
-function renderMySpaceBody() {
-  const body = document.getElementById('myspaceBody');
-  const bmDocs = docs.filter(d => readingList[d.id]);
-  const rdDocs = docs.filter(d => readLogs[d.id]);
-  const noteDocs = docs
-    .map(d => ({ d, text: localStorage.getItem(lsKey('note_' + d.id)) || '' }))
-    .filter(({ text }) => text.trim());
-  const freeNote = localStorage.getItem(lsKey('note_free')) || '';
-
-  const docCardHtml = (d, btn = true) => `
-    <div class="myspace-doc-card" onclick="closeMySpace();openReader(${d.id})">
-      <div class="myspace-doc-info">
-        <div class="myspace-doc-title">${d.title}</div>
-        <div class="myspace-doc-author">${d.author || '—'}</div>
-      </div>
-      ${btn ? `<button class="myspace-read-btn" onclick="event.stopPropagation();closeMySpace();openReader(${d.id})">Lire ↗</button>` : ''}
-    </div>`;
-
-  body.innerHTML = `
-    <div class="myspace-col">
-      <div>
-        <div class="myspace-section-title">À lire — ${bmDocs.length} document${bmDocs.length !== 1 ? 's' : ''}</div>
-        ${bmDocs.length === 0
-          ? '<span class="myspace-empty">Aucun document marqué à lire.</span>'
-          : bmDocs.map(d => docCardHtml(d, true)).join('')}
-      </div>
-      <div>
-        <div class="myspace-section-title">Lus — ${rdDocs.length} document${rdDocs.length !== 1 ? 's' : ''}</div>
-        ${rdDocs.length === 0
-          ? '<span class="myspace-empty">Aucun document marqué comme lu.</span>'
-          : rdDocs.map(d => docCardHtml(d, false)).join('')}
-      </div>
-    </div>
-
-    <div class="myspace-col">
-      <div>
-        <div class="myspace-section-title">Mes notes</div>
-        ${freeNote.trim() ? `
-          <div class="myspace-note-card" style="margin-bottom:12px">
-            <div class="myspace-note-doc">Note libre</div>
-            <div class="myspace-note-text">${freeNote.replace(/[#*>_\`]/g,'').substring(0,120)}…</div>
-          </div>` : ''}
-        ${noteDocs.length === 0 && !freeNote.trim()
-          ? '<span class="myspace-empty">Aucune note pour l\'instant.</span>'
-          : noteDocs.map(({ d, text }) => `
-              <div class="myspace-note-card" onclick="closeMySpace();openReader(${d.id})">
-                <div class="myspace-note-doc">${d.title}</div>
-                <div class="myspace-note-text">${text.replace(/[#*>_\`]/g,'').substring(0,100)}…</div>
-              </div>`).join('')}
-      </div>
-    </div>
-  `;
-}
 </script>
 </body>
 </html>
