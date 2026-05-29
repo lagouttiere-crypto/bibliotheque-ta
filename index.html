@@ -1453,6 +1453,7 @@ function renderDocs() {
         <div class="doc-meta">
           <span class="badge">${d.type}</span>
           <span class="badge badge-lang">${d.lang.toUpperCase()}</span>
+          ${d.physique ? '<span class="badge" style="color:#8B6F47;border-color:#8B6F47;background:#F0E8DC">📚 physique</span>' : ''}
         </div>
         <div class="doc-title">${d.title}</div>
         <div class="doc-author">${d.author || '—'}${yearStr}</div>
@@ -1538,16 +1539,9 @@ function renderMedia(d) {
     return `<span class="pdf-link" style="opacity:0.4">Physique uniquement</span>`;
   }
 
-  const fileId = getDriveFileId(d.driveUrl);
-  const previewUrl = fileId
-    ? `https://drive.google.com/file/d/${fileId}/preview`
-    : d.driveUrl;
-
   if (d.type === 'audio') {
-  return `
-    <span class="pdf-link">Écouter ▸</span>
-  `;
-}
+    return `<span class="pdf-link">Écouter ▸</span>`;
+  }
 
   if (d.type === 'vidéo' || d.type === 'video') {
     return `
@@ -1557,10 +1551,10 @@ function renderMedia(d) {
     `;
   }
 
-  // PDF / article / livre / etc.
+  // PDF / article / livre → mode lecture
   return `
-    <a class="pdf-link" href="${d.driveUrl}" target="_blank" onclick="event.stopPropagation()">
-      Ouvrir ↗
+    <a class="pdf-link" href="#" onclick="event.stopPropagation();event.preventDefault();openReader(${d.id})">
+      Lire ↗
     </a>
   `;
 }
