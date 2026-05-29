@@ -1660,10 +1660,10 @@ function renderMedia(d) {
     `;
   }
 
-  // PDF / article / livre / etc.
+  // PDF / article / livre → mode lecture
   return `
-    <a class="pdf-link" href="${d.driveUrl}" target="_blank" onclick="event.stopPropagation()">
-      Ouvrir ↗
+    <a class="pdf-link" href="#" onclick="event.stopPropagation();event.preventDefault();openReader(${d.id})">
+      Lire ↗
     </a>
   `;
 }
