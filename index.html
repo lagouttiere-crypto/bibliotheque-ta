@@ -2365,10 +2365,10 @@ function renderMySpaceBody() {
     <div class="myspace-col">
       <div>
         <div class="myspace-section-title">Mes notes</div>
-        ${freeNote.trim() ? `<div class="myspace-note-card" style="margin-bottom:12px"><div class="myspace-note-doc">Note libre</div><div class="myspace-note-text">${freeNote.replace(/[#*>_\`]/g,'').substring(0,120)}…</div></div>` : ''}
+        ${freeNote.trim() ? `<div class="myspace-note-card" style="margin-bottom:12px"><div class="myspace-note-doc">Note libre</div><div class="myspace-note-text">${freeNote.replace(/[#*>_]/g,'').substring(0,120)}…</div></div>` : ''}
         ${noteDocs.length === 0 && !freeNote.trim()
-          ? '<span class='myspace-empty'>Aucune note pour l'instant.</span>'
-          : noteDocs.map(({ d, text }) => `<div class="myspace-note-card" onclick="closeMySpace();openReader(${d.id})"><div class="myspace-note-doc">${d.title}</div><div class="myspace-note-text">${text.replace(/[#*>_\`]/g,'').substring(0,100)}…</div></div>`).join('')}
+          ? `<span class="myspace-empty">Aucune note pour l'instant.</span>`
+          : noteDocs.map(({ d, text }) => `<div class="myspace-note-card" onclick="closeMySpace();openReader(${d.id})"><div class="myspace-note-doc">${d.title}</div><div class="myspace-note-text">${text.replace(/[#*>_]/g,'').substring(0,100)}…</div></div>`).join('')}
       </div>
     </div>`;
 }
