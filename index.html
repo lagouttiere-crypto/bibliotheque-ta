@@ -894,6 +894,71 @@
     font-style: italic;
   }
 
+  .doc-autocomplete-wrap { position: relative; margin-bottom: 8px; }
+  .doc-autocomplete-input {
+    width: 100%;
+    border: 1px solid var(--border);
+    background: var(--white);
+    padding: 8px 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--ink);
+    outline: none;
+  }
+  .doc-autocomplete-input:focus { border-color: var(--accent); }
+  .doc-autocomplete-input::placeholder { color: var(--ink-faint); }
+  .doc-autocomplete-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-top: none;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 400;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  .doc-autocomplete-dropdown.open { display: block; }
+  .doc-autocomplete-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--ink);
+    transition: background 0.1s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+  .doc-autocomplete-item:hover { background: var(--accent-light); }
+  .doc-autocomplete-item span { font-size: 11px; color: var(--ink-faint); font-style: italic; flex-shrink: 0; }
+  .doc-selected-list { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; min-height: 10px; }
+  .doc-selected-tag {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--accent-light);
+    color: var(--accent);
+    border: 1px solid var(--accent-light);
+    padding: 3px 8px;
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .doc-selected-remove {
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    color: var(--accent);
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: sans-serif;
+  }
+  .doc-selected-remove:hover { color: var(--ink); }
+
   /* ── GROUPES ── */
   .group-card {
     border: 1px solid var(--border);
@@ -1482,8 +1547,14 @@
       <div class="group-form">
         <label class="group-form-label">Nom du groupe</label>
         <input type="text" id="new-group-name" placeholder="ex: Phénoménologie, Stage 2026…" />
-        <label class="group-form-label">Documents (optionnel — ids séparés par virgules)</label>
-        <input type="text" id="new-group-docs" placeholder="ex: 4,13,15" />
+        <label class="group-form-label">Ajouter des documents</label>
+        <div class="doc-selected-list" id="new-group-docs-tags"></div>
+        <div class="doc-autocomplete-wrap">
+          <input type="text" class="doc-autocomplete-input" id="new-group-docs-search"
+            placeholder="Tapez un titre ou un auteur…"
+            oninput="onGroupDocSearch()" autocomplete="off" />
+          <div class="doc-autocomplete-dropdown" id="new-group-docs-dropdown"></div>
+        </div>
         <div style="display:flex;gap:6px">
           <button class="btn-group primary" onclick="createGroupe()">Créer</button>
           <button class="btn-group" onclick="document.getElementById('myspace-create-form').style.display='none'">Annuler</button>
@@ -2393,15 +2464,70 @@ async function loadGroupNotes(groupeId) {
   } catch(e) { console.warn("Notes groupe non chargées", e); }
 }
 
+let selectedGroupDocs = []; // ids des docs sélectionnés
+
+function onGroupDocSearch() {
+  const q = normalizeText(document.getElementById('new-group-docs-search').value);
+  const dropdown = document.getElementById('new-group-docs-dropdown');
+  if (!q || q.length < 2) { dropdown.classList.remove('open'); return; }
+
+  const matches = docs.filter(d =>
+    !selectedGroupDocs.includes(d.id) &&
+    (normalizeText(d.title).includes(q) || normalizeText(d.author || '').includes(q))
+  ).slice(0, 8);
+
+  if (matches.length === 0) { dropdown.classList.remove('open'); return; }
+
+  dropdown.innerHTML = matches.map(d => `
+    <div class="doc-autocomplete-item" onclick="addGroupDocSelection(${d.id})">
+      <div>${d.title}</div>
+      <span>${d.author || '—'}</span>
+    </div>`).join('');
+  dropdown.classList.add('open');
+}
+
+function addGroupDocSelection(id) {
+  if (selectedGroupDocs.includes(id)) return;
+  selectedGroupDocs.push(id);
+  document.getElementById('new-group-docs-search').value = '';
+  document.getElementById('new-group-docs-dropdown').classList.remove('open');
+  renderGroupDocTags();
+}
+
+function removeGroupDocSelection(id) {
+  selectedGroupDocs = selectedGroupDocs.filter(d => d !== id);
+  renderGroupDocTags();
+}
+
+function renderGroupDocTags() {
+  const container = document.getElementById('new-group-docs-tags');
+  if (!container) return;
+  container.innerHTML = selectedGroupDocs.map(id => {
+    const d = docs.find(doc => doc.id === id);
+    if (!d) return '';
+    return `<span class="doc-selected-tag">
+      ${d.title}
+      <button class="doc-selected-remove" onclick="removeGroupDocSelection(${id})">×</button>
+    </span>`;
+  }).join('');
+}
+
+// Fermer dropdown si clic ailleurs
+document.addEventListener('click', e => {
+  if (!e.target.closest('.doc-autocomplete-wrap')) {
+    document.querySelectorAll('.doc-autocomplete-dropdown').forEach(d => d.classList.remove('open'));
+  }
+});
+
 async function createGroupe() {
-  const nom  = document.getElementById('new-group-name').value.trim();
-  const docs = document.getElementById('new-group-docs').value.trim();
+  const nom = document.getElementById('new-group-name').value.trim();
   if (!nom) return;
+  const docsStr = selectedGroupDocs.join(',');
   try {
-    const res = await fetch(`${SHEET_URL}?sheet=groupes&action=create&nom=${encodeURIComponent(nom)}&auteur=${encodeURIComponent(currentUser)}&docs=${encodeURIComponent(docs)}`);
-    const data = await res.json();
+    await fetch(`${SHEET_URL}?sheet=groupes&action=create&nom=${encodeURIComponent(nom)}&auteur=${encodeURIComponent(currentUser)}&docs=${encodeURIComponent(docsStr)}`);
     document.getElementById('new-group-name').value = '';
-    document.getElementById('new-group-docs').value = '';
+    selectedGroupDocs = [];
+    renderGroupDocTags();
     document.getElementById('myspace-create-form').style.display = 'none';
     await loadGroupes();
   } catch(e) { console.warn("Erreur création groupe", e); }
