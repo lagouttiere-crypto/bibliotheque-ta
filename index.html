@@ -1547,6 +1547,8 @@
       <div class="group-form">
         <label class="group-form-label">Nom du groupe</label>
         <input type="text" id="new-group-name" placeholder="ex: Phénoménologie, Stage 2026…" />
+        <label class="group-form-label">Mot de passe (optionnel — laisser vide pour un groupe ouvert)</label>
+        <input type="password" id="new-group-mdp" placeholder="Mot de passe du groupe…" />
         <label class="group-form-label">Ajouter des documents</label>
         <div class="doc-selected-list" id="new-group-docs-tags"></div>
         <div class="doc-autocomplete-wrap">
@@ -2443,6 +2445,7 @@ async function loadGroupes() {
         createur: String(r.createur || '').trim(),
         membres:  String(r.membres  || '').split(',').map(m => m.trim()).filter(Boolean),
         docs:     String(r.docs     || '').split(',').map(d => d.trim()).filter(Boolean),
+        mdp:      String(r.mdp      || '').trim(),
         date:     String(r.date     || '').trim(),
       }));
     }
@@ -2521,11 +2524,13 @@ document.addEventListener('click', e => {
 
 async function createGroupe() {
   const nom = document.getElementById('new-group-name').value.trim();
+  const mdp = document.getElementById('new-group-mdp').value.trim();
   if (!nom) return;
   const docsStr = selectedGroupDocs.join(',');
   try {
-    await fetch(`${SHEET_URL}?sheet=groupes&action=create&nom=${encodeURIComponent(nom)}&auteur=${encodeURIComponent(currentUser)}&docs=${encodeURIComponent(docsStr)}`);
+    await fetch(`${SHEET_URL}?sheet=groupes&action=create&nom=${encodeURIComponent(nom)}&auteur=${encodeURIComponent(currentUser)}&docs=${encodeURIComponent(docsStr)}&mdp=${encodeURIComponent(mdp)}`);
     document.getElementById('new-group-name').value = '';
+    document.getElementById('new-group-mdp').value = '';
     selectedGroupDocs = [];
     renderGroupDocTags();
     document.getElementById('myspace-create-form').style.display = 'none';
@@ -2534,6 +2539,13 @@ async function createGroupe() {
 }
 
 async function joinGroupe(groupeId) {
+  const g = groupesState.find(g => g.id === groupeId);
+  if (!g) return;
+  if (g.mdp) {
+    const saisie = prompt(`Ce groupe est protégé.\nEntrez le mot de passe :`);
+    if (saisie === null) return;
+    if (saisie.trim() !== g.mdp) { alert("Mot de passe incorrect."); return; }
+  }
   try {
     await fetch(`${SHEET_URL}?sheet=groupes&action=join&groupe_id=${groupeId}&auteur=${encodeURIComponent(currentUser)}`);
     await loadGroupes();
@@ -2642,7 +2654,7 @@ function renderMySpaceGroupes() {
     ? '<span class="myspace-empty">Tu n\'appartiens à aucun groupe.</span>'
     : mesGroupes.map(g => `
         <div class="group-card" onclick="openGroupPanel('${g.id}')">
-          <div class="group-name">${g.nom}</div>
+          <div class="group-name">${g.nom}${g.mdp ? ' 🔒' : ''}</div>
           <div class="group-meta">
             <span class="group-members">${g.membres.join(', ')}</span>
             <span>${g.docs.length} doc${g.docs.length !== 1 ? 's' : ''}</span>
@@ -2657,7 +2669,7 @@ function renderMySpaceGroupes() {
     <div class="myspace-section-title" style="margin-bottom:8px;margin-top:4px">Autres groupes</div>
     ${autresGroupes.map(g => `
       <div class="group-card">
-        <div class="group-name">${g.nom}</div>
+        <div class="group-name">${g.nom}${g.mdp ? ' 🔒' : ''}</div>
         <div class="group-meta">
           <span class="group-members">${g.membres.join(', ')}</span>
         </div>
