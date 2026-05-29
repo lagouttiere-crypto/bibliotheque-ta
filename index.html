@@ -1422,9 +1422,8 @@
         <button class="filter-btn" onclick="setFilter('type','revue',this)">Revues<span class="filter-count" id="cnt-type-revue"></span></button>
         <button class="filter-btn" onclick="setFilter('type','vidéo',this)">Vidéos<span class="filter-count" id="cnt-type-video"></span></button>
         <button class="filter-btn" onclick="setFilter('type','audio',this)">Audio<span class="filter-count" id="cnt-type-audio"></span></button>
+        <button class="filter-btn" onclick="setFilter('type','pad',this)">Pads<span class="filter-count" id="cnt-type-pad"></span></button>
       </div>
-
-      <div class="sidebar-section">
         <div class="sidebar-label">Langue</div>
         <button class="filter-btn active" onclick="setFilter('lang','tous',this)">Toutes<span class="filter-count"></span></button>
         <button class="filter-btn" onclick="setFilter('lang','fr',this)">Français<span class="filter-count" id="cnt-lang-fr"></span></button>
@@ -2072,26 +2071,31 @@ function getDriveFileId(url) {
   return match ? match[1] : null;
 }
 
+function isFramapadUrl(url) {
+  return /framapad\.org|mypads\./.test(String(url || ''));
+}
+
 function renderMedia(d) {
   if (!d.driveUrl) {
     return `<span class="pdf-link" style="opacity:0.4">Physique uniquement</span>`;
   }
 
-  const fileId = getDriveFileId(d.driveUrl);
-  const previewUrl = fileId
-    ? `https://drive.google.com/file/d/${fileId}/preview`
-    : d.driveUrl;
-
   if (d.type === 'audio') {
-  return `
-    <span class="pdf-link">Écouter ▸</span>
-  `;
-}
+    return `<span class="pdf-link">Écouter ▸</span>`;
+  }
 
   if (d.type === 'vidéo' || d.type === 'video') {
     return `
       <a class="pdf-link" href="${d.driveUrl}" target="_blank" onclick="event.stopPropagation()">
         Regarder ↗
+      </a>
+    `;
+  }
+
+  if (d.type === 'pad' || isFramapadUrl(d.driveUrl)) {
+    return `
+      <a class="pdf-link" href="#" onclick="event.stopPropagation();event.preventDefault();openReader(${d.id})">
+        Ouvrir le pad ↗
       </a>
     `;
   }
@@ -2328,7 +2332,9 @@ function openReader(id) {
   document.getElementById('readerAuthor').textContent = d.author || '';
   document.getElementById('readerExtLink').href       = d.driveUrl;
 
-  if (fileId) {
+  if (d.type === 'pad' || isFramapadUrl(d.driveUrl || '')) {
+    pdf.innerHTML = `<iframe src="${d.driveUrl}" width="100%" height="100%" frameborder="0" style="border:none"></iframe>`;
+  } else if (fileId) {
     pdf.innerHTML = `<iframe src="https://drive.google.com/file/d/${fileId}/preview" allowfullscreen></iframe>`;
   } else {
     pdf.innerHTML = `
