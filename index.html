@@ -2282,7 +2282,7 @@ function renderMySpaceGroupes() {
   const autresEl = document.getElementById('myspace-autres-groupes');
   if (!mesEl || !autresEl) return;
   mesEl.innerHTML = mesGroupes.length === 0
-    ? '<span class='myspace-empty'>Tu n'appartiens à aucun groupe.</span>'
+    ? "<span class='myspace-empty'>Tu n'appartiens à aucun groupe.</span>"
     : mesGroupes.map(g => `
         <div class="group-card" onclick="openGroupPanel('${g.id}')">
           <div class="group-name">${g.nom}${g.mdp ? ' 🔒' : ''}</div>
@@ -2367,7 +2367,7 @@ function renderMySpaceBody() {
         <div class="myspace-section-title">Mes notes</div>
         ${freeNote.trim() ? `<div class="myspace-note-card" style="margin-bottom:12px"><div class="myspace-note-doc">Note libre</div><div class="myspace-note-text">${freeNote.replace(/[#*>_\`]/g,'').substring(0,120)}…</div></div>` : ''}
         ${noteDocs.length === 0 && !freeNote.trim()
-          ? '<span class="myspace-empty">Aucune note pour l'instant.</span>'
+          ? '<span class='myspace-empty'>Aucune note pour l'instant.</span>'
           : noteDocs.map(({ d, text }) => `<div class="myspace-note-card" onclick="closeMySpace();openReader(${d.id})"><div class="myspace-note-doc">${d.title}</div><div class="myspace-note-text">${text.replace(/[#*>_\`]/g,'').substring(0,100)}…</div></div>`).join('')}
       </div>
     </div>`;
