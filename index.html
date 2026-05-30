@@ -1426,6 +1426,25 @@ function renderSidebarTags() {
   ).join('');
 }
 
+///ajoute le nombre de doc en fonction des filtres 
+
+function updateFilterCounts() {
+  // Types
+  const types = ['article', 'livre', 'transcription', 'revue', 'vidéo', 'audio', 'pad'];
+  const typeIds = ['article', 'livre', 'transcription', 'revue', 'video', 'audio', 'pad'];
+  types.forEach((type, i) => {
+    const el = document.getElementById('cnt-type-' + typeIds[i]);
+    if (el) el.textContent = docs.filter(d => d.type === type).length;
+  });
+  document.getElementById('cnt-type-tous').textContent = docs.length;
+
+  // Langues
+  ['fr', 'en'].forEach(lang => {
+    const el = document.getElementById('cnt-lang-' + lang);
+    if (el) el.textContent = docs.filter(d => d.lang === lang).length;
+  });
+}
+
 function setActiveTag(tag) {
   activeTag = activeTag === tag ? null : tag;
   renderDocs();
@@ -1459,6 +1478,7 @@ async function showApp(nom) {
   }
   const heroCount = document.getElementById('heroCount');
   if (heroCount) heroCount.textContent = docs.length;
+  updateFilterCounts();
   docs.forEach(d => { annotationsState[d.id] = []; tagsState[d.id] = []; });
   loadLocalBiblio();
   loadLocalNotes();
