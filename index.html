@@ -2446,7 +2446,7 @@ function renderNotesGraph() {
     return `<span class="myspace-empty">Ajoute des #tags dans tes notes pour voir les connexions apparaître.</span>`;
   }
 
-  const W = 340, H = 240, R = 7;
+  const W = 300, H = 200, R = 5;
   const nodes = tagged.map(([id, tags]) => {
     const d = docs.find(doc => String(doc.id) === id);
     return { id, tags, title: d ? d.title : id };
@@ -2482,7 +2482,7 @@ function renderNotesGraph() {
         onmouseout="document.getElementById('graph-tooltip').style.opacity=0">
         <circle cx="${n.x}" cy="${n.y}" r="${R}" fill="var(--accent-light)" stroke="var(--accent)" stroke-width="0.8"/>
         <text x="${n.x}" y="${n.y + R + 9}" text-anchor="middle"
-          style="font-size:9px;fill:var(--ink-light);font-family:'DM Sans',sans-serif">${short}</text>
+          style="font-size:8px;fill:var(--ink-light);font-family:'DM Sans',sans-serif">${short}</text>
       </g>`;
   }).join('');
 
