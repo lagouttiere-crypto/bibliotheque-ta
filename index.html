@@ -1511,6 +1511,7 @@ async function showApp(nom) {
   loadAnnotations();
   loadBiblioFromSheet();
   loadNotesFromSheet();
+  loadNotesTags();
   loadGroupes();
 }
 
@@ -2075,13 +2076,22 @@ function onNoteInput() {
   noteDebounce = setTimeout(() => saveNote(currentReaderId, text), 1000);
 }
 
+function extractTags(text) {
+  const matches = text.match(/#[\wÀ-ÿ\-]+/g) || [];
+  return [...new Set(matches.map(t => t.toLowerCase()))];
+}
+
 async function saveNote(docId, text) {
   if (!docId || !currentUser) return;
   localStorage.setItem(lsKey('note_' + docId), text);
   document.getElementById('notesSaveStatus').textContent = 'Sauvegardée';
   renderNotesPanel();
+  const tags = extractTags(text);
   try {
     await fetch(`${SHEET_URL}?sheet=notes&action=save&doc_id=${docId}&auteur=${encodeURIComponent(currentUser)}&texte=${encodeURIComponent(text)}`);
+    if (tags.length > 0) {
+      await fetch(`${SHEET_URL}?sheet=notes_tags&action=save&doc_id=${docId}&auteur=${encodeURIComponent(currentUser)}&tags=${encodeURIComponent(tags.join(','))}`);
+    }
   } catch(e) { console.warn("Sync note Sheet", e); }
 }
 
@@ -2121,6 +2131,23 @@ async function loadNotesFromSheet() {
     loadLocalNotes();
     renderNotesPanel();
   } catch(e) { console.warn("Notes Sheet non chargées", e); }
+}
+
+let notesTagsState = {};
+
+async function loadNotesTags() {
+  try {
+    const res = await fetch(`${SHEET_URL}?sheet=notes_tags&auteur=${encodeURIComponent(currentUser)}&v=${Date.now()}`);
+    const rows = await res.json();
+    notesTagsState = {};
+    if (Array.isArray(rows)) {
+      rows.forEach(r => {
+        const id = String(r.doc_id).trim();
+        if (!notesTagsState[id]) notesTagsState[id] = [];
+        if (r.tag) notesTagsState[id].push(r.tag);
+      });
+    }
+  } catch(e) { console.warn("Notes tags non chargés", e); }
 }
 
 function renderNotesPanel() {
