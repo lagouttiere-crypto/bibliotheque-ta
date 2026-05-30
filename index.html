@@ -2400,10 +2400,11 @@ function renderMySpaceGroupes() {
    MON ESPACE
 ========================================================= */
 
-function openMySpace() {
+async function openMySpace() {
   const overlay = document.getElementById('myspaceOverlay');
-  overlay.style.display = '';  // reset Safari fix
+  overlay.style.display = '';
   document.getElementById('myspaceName').textContent = currentUser;
+  await loadNotesTags();
   renderMySpacePhrase();
   renderMySpaceBody();
   renderMySpaceGroupes();
