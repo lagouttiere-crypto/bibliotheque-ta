@@ -1613,16 +1613,6 @@ function getVideoDetailHtml(d) {
     `;
   }
 
-  // Lien embed direct (Alexander Trust, etc.)
-    if (String(url).includes('/embed/') || String(url).includes('/player-embed/')) {
-    return `
-      <div class="video-frame">
-        <iframe src="${url}" 
-          title="${d.title || 'Vidéo'}"
-          allowfullscreen>
-        </iframe>
-      </div>`;
-  }
 
   // Drive ou Vimeo → embed preview
   const fileId = getDriveFileId(url);
