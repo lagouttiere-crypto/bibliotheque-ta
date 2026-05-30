@@ -1454,6 +1454,7 @@ function renderHeroLastDocs() {
   const el = document.getElementById('heroLastDocs');
   if (!el) return;
   const last = [...docs]
+    .filter(d => d.type !== 'pad') /// filtre les pads 
     .sort((a, b) => Number(b.id) - Number(a.id))
     .slice(0, 3);
   el.innerHTML = last.map(d => `
