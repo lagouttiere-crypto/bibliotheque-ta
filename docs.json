@@ -1789,5 +1789,28 @@
     "duree": null,
     "groupe_id": null,
     "annotations": []
+  },
+  {
+    "id": 84,
+    "titre": "Plus nous tournons en rond, Plus nous restons les mêmes",
+    "auteur": "David Gorman",
+    "annee": 1995,
+    "type": "article",
+    "langue": "fr",
+    "themes": [
+      "pédagogie",
+      "fondements",
+      "corps & mouvement",
+      "phénoménologie",
+      "2ème génération"
+    ],
+    "urlDrive": "https://drive.google.com/file/d/1PnNdjDZtQeDYB0R6HaObjyCRb4jawqxx/view?usp=drivesdk",
+    "description": "\"CECI EST A PROPOS DE LA NATURE DE L’HABITUDE — des habitudes non-\nconstructives, en particulier celles que l’on nomme des cercles vicieux. C’est-à-dire\nd’une réaction en chaîne dont chaque étape ajoute quelque chose qui m’oblige à\nréagir en allant à l’étape suivante, qui à son tour me force à avancer à l’étape\nsuivante, et ainsi de suite, jusqu’à ce que je sois condamné à répéter le cycle : ce qui a\npour conséquence de le renforcer et de l’ériger en habitude.\"",
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": null,
+    "annotations": []
   }
 ]
