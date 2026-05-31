@@ -1835,5 +1835,27 @@
     "duree": null,
     "groupe_id": null,
     "annotations": []
+  },
+  {
+    "id": 86,
+    "titre": "Notre expérience peut-elle nous montrer la vérité ?",
+    "auteur": "David Gorman",
+    "annee": 2003,
+    "type": "article",
+    "langue": "fr",
+    "themes": [
+      "phénoménologie",
+      "pédagogie",
+      "fondements",
+      "2ème génération"
+    ],
+    "urlDrive": "https://drive.google.com/file/d/1Nqsf5tVQe7elBD5qJ4KbE44ZYUZvFtq3/view?usp=drivesdk",
+    "description": "Texte issu d'une conférence publique donnée à la New Thought Church of Religious Science à\nMinneapolis, MN, USA, le 30 janvier 2003. L'auteur a pris la liberté non seulement d'éditer\nle texte pour en faciliter la lecture, mais aussi de l'approfondir et de l'enrichir - en d'autres\ntermes, selon ses propres mots : « c'est ce que je voulais dire. » La période de questions-\nréponses en fin de conférence n'est pas reproduite ici.",
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": null,
+    "annotations": []
   }
 ]
