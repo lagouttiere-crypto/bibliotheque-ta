@@ -1880,5 +1880,54 @@
     "duree": null,
     "groupe_id": null,
     "annotations": []
+  },
+  {
+    "id": 88,
+    "titre": "L'inscription mentale du corps",
+    "auteur": "Jacques Gaillard",
+    "annee": 2013,
+    "type": "article",
+    "langue": "fr",
+    "themes": [
+      "pédagogie",
+      "corps & mouvement",
+      "arts",
+      "phénoménologie",
+      "enaction",
+      "philosophie",
+      "2ème génération"
+    ],
+    "urlDrive": "https://drive.google.com/file/d/1Vlg0lmO_6uc3nU3Y66f6lAQjoUpvlKUb/view?usp=drivesdk",
+    "description": null,
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": null,
+    "annotations": []
+  },
+  {
+    "id": 89,
+    "titre": "PSYCHO - PHENOMENOLOGIE DE L'ACTIVITE REFLEXIVE DE L'ENSEIGNANT LORS D'INTERACTIONS PEDAGOGIQUES.",
+    "auteur": "Céline MIERZEJEWSKI, Jacques GAILLARD",
+    "annee": null,
+    "type": "article",
+    "langue": "fr",
+    "themes": [
+      "pédagogie",
+      "corps & mouvement",
+      "arts",
+      "phénoménologie",
+      "enaction",
+      "2ème génération"
+    ],
+    "urlDrive": "https://drive.google.com/file/d/1rPAgDMuMBoq13yqu_-qAD80puGJl0-IW/view?usp=drivesdk",
+    "description": null,
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": null,
+    "annotations": []
   }
 ]
