@@ -1857,5 +1857,28 @@
     "duree": null,
     "groupe_id": null,
     "annotations": []
+  },
+  {
+    "id": 87,
+    "titre": "Par la seule intention",
+    "auteur": "David Gorman, Marion Day",
+    "annee": 2012,
+    "type": "article",
+    "langue": "fr",
+    "themes": [
+      "pédagogie",
+      "fondements",
+      "arts",
+      "phénoménologie",
+      "2ème génération"
+    ],
+    "urlDrive": "https://drive.google.com/file/d/1QKG-EoQaENuMF3YnAz9x3xFOPjSacDbC/view?usp=drivesdk",
+    "description": "Cet article est extrait d'un groupe LearningMethods en ligne consacré à\nl'application du chant — 2 août 2012.",
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": null,
+    "annotations": []
   }
 ]
