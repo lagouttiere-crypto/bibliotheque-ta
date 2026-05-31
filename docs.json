@@ -1662,5 +1662,28 @@
     "duree": "59mn",
     "groupe_id": null,
     "annotations": []
+  },
+  {
+    "id": 78,
+    "titre": "David Gorman Bordeaux 03 2014 07 26 PM Standing on Top 03 Question, Sit Stand",
+    "auteur": "David Gorman",
+    "annee": 2014,
+    "type": "vidéo",
+    "langue": "fr",
+    "themes": [
+      "2ème génération",
+      "phénoménologie",
+      "corps & mouvement",
+      "fondements",
+      "pédagogie"
+    ],
+    "urlDrive": null,
+    "description": "Séminaire donné à Abzac (école de Gilles Estran) en juillet 2014.",
+    "physique": false,
+    "videoUrl": "https://youtu.be/p3M_Hy172Ro",
+    "videoPassword": null,
+    "duree": "40mn",
+    "groupe_id": null,
+    "annotations": []
   }
 ]
