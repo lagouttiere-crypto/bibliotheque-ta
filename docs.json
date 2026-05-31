@@ -1929,5 +1929,25 @@
     "duree": null,
     "groupe_id": null,
     "annotations": []
+  },
+  {
+    "id": 90,
+    "titre": "Une leçon de marche consciente",
+    "auteur": "Jean-Dominique MASOERO",
+    "annee": 2010,
+    "type": "article",
+    "langue": "fr",
+    "themes": [
+      "pédagogie",
+      "corps & mouvement"
+    ],
+    "urlDrive": "https://drive.google.com/file/d/1SpQD0VttNTrmWrpB2sosxI8et15i9bcB/view?usp=drivesdk",
+    "description": null,
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": null,
+    "annotations": []
   }
 ]
