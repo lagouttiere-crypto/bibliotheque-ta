@@ -1706,5 +1706,88 @@
     "duree": null,
     "groupe_id": null,
     "annotations": []
+  },
+  {
+    "id": 80,
+    "titre": "The Body Moveable - first edition",
+    "auteur": "David Gorman",
+    "annee": 1981,
+    "type": "livre",
+    "langue": "en",
+    "themes": [
+      "corps & mouvement",
+      "physiologie",
+      "arts"
+    ],
+    "urlDrive": "https://drive.google.com/file/d/14-pqRnwRsHEdLbYkfjPmrOfuxSYRVZjY/view?usp=drivesdk",
+    "description": null,
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": null,
+    "annotations": []
+  },
+  {
+    "id": 81,
+    "titre": "",
+    "auteur": null,
+    "annee": null,
+    "type": "article",
+    "langue": "fr",
+    "themes": [],
+    "urlDrive": "https://drive.google.com/file/d/124QMqmxUwMvlVwI8ID6GK05W0ocgfoAT/view?usp=drivesdk",
+    "description": null,
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": null,
+    "annotations": []
+  },
+  {
+    "id": 82,
+    "titre": "The Actor and the Alexander Technique",
+    "auteur": "Kelly McEvenue; David  Gorman; Patsy Rodenburg",
+    "annee": 2002,
+    "type": "livre",
+    "langue": "en",
+    "themes": [
+      "fondements",
+      "pédagogie",
+      "arts",
+      "corps & mouvement",
+      "2ème génération"
+    ],
+    "urlDrive": "https://drive.google.com/file/d/1vytEiHe3II13g77iOQpdpMchMpKoWpd7/view?usp=drivesdk",
+    "description": null,
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": null,
+    "annotations": []
+  },
+  {
+    "id": 83,
+    "titre": "Jadis perdu… et maintenant retrouvé",
+    "auteur": "David Gorman",
+    "annee": 2013,
+    "type": "article",
+    "langue": "fr",
+    "themes": [
+      "corps & mouvement",
+      "phénoménologie",
+      "2ème génération",
+      "pédagogie"
+    ],
+    "urlDrive": "https://drive.google.com/file/d/1YZ8QEbieuzWwvyAW5Rt1t_Xelta8f3dD/view?usp=drivesdk",
+    "description": "\"Avez-vous déjà eu un (ou plusieurs) de ces moments où vous vous sentez totalement\nentier et totalement libre ? Où tout semble se faire de lui-même, avec une aisance\nabsolue ? Où vous êtes totalement présent et en harmonie avec l'instant ? Où une\nhabileté et une coordination remarquables jaillissent de vous sans effort ?\nAu cours de plusieurs décennies de travail avec des personnes, surtout des\ninterprètes, j'ai exploré ces moments de « fonctionnement optimal » des centaines de\nfois, et j'en suis venu à voir comment presque tout ce que nous avons besoin de\nsavoir sur un bon usage et un bon fonctionnement se révèle dans ces instants-là.\"",
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": null,
+    "annotations": []
   }
 ]
