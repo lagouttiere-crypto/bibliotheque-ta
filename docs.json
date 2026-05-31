@@ -1616,5 +1616,51 @@
     "duree": null,
     "groupe_id": "g1780071211190",
     "annotations": []
+  },
+  {
+    "id": 76,
+    "titre": "David Gorman Bordeaux 01 2014 07 26 AM Intro  Standing on Top 01 Centred Support, Bending",
+    "auteur": "David Gorman",
+    "annee": 2014,
+    "type": "vidéo",
+    "langue": "fr",
+    "themes": [
+      "pédagogie",
+      "fondements",
+      "corps & mouvement",
+      "phénoménologie",
+      "2ème génération"
+    ],
+    "urlDrive": null,
+    "description": "Séminaire donné à Abzac (école de Gilles Estran) en juillet 2014.",
+    "physique": false,
+    "videoUrl": "https://youtu.be/hZZbxfET4UQ",
+    "videoPassword": null,
+    "duree": "1H36",
+    "groupe_id": null,
+    "annotations": []
+  },
+  {
+    "id": 77,
+    "titre": "David Gorman Bordeaux 02 2014 07 26 AM Standing on Top 02 Support goes Up",
+    "auteur": "David Gorman",
+    "annee": 2014,
+    "type": "vidéo",
+    "langue": "fr",
+    "themes": [
+      "pédagogie",
+      "fondements",
+      "corps & mouvement",
+      "phénoménologie",
+      "2ème génération"
+    ],
+    "urlDrive": null,
+    "description": "Séminaire donné à Abzac (école de Gilles Estran) en juillet 2014.",
+    "physique": false,
+    "videoUrl": "https://youtu.be/VRDjTn1pJyc",
+    "videoPassword": null,
+    "duree": "59mn",
+    "groupe_id": null,
+    "annotations": []
   }
 ]
