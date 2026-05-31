@@ -1812,5 +1812,28 @@
     "duree": null,
     "groupe_id": null,
     "annotations": []
+  },
+  {
+    "id": 85,
+    "titre": "Quel est le contraire de parfait ?",
+    "auteur": "David Gorman",
+    "annee": 2010,
+    "type": "article",
+    "langue": "fr",
+    "themes": [
+      "pédagogie",
+      "corps & mouvement",
+      "physiologie",
+      "phénoménologie",
+      "2ème génération"
+    ],
+    "urlDrive": "https://drive.google.com/file/d/1iZR-zvVVqrpTAPyZeB4cIicfI5NCePOP/view?usp=drivesdk",
+    "description": null,
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": null,
+    "annotations": []
   }
 ]
