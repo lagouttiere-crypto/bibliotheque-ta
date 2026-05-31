@@ -1685,5 +1685,26 @@
     "duree": "40mn",
     "groupe_id": null,
     "annotations": []
+  },
+  {
+    "id": 79,
+    "titre": "Alexander Technique: the Ground Rules - Marjory Barlow in conversation with  Seán Carey",
+    "auteur": "Seán Carey",
+    "annee": 2011,
+    "type": "livre",
+    "langue": "en",
+    "themes": [
+      "fondements",
+      "pédagogie",
+      "1ère génération"
+    ],
+    "urlDrive": "https://drive.google.com/file/d/1Bg3bFHiaj2dxmA-j6yINwxbza5A6PZOq/view?usp=drivesdk",
+    "description": null,
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": null,
+    "annotations": []
   }
 ]
