@@ -938,9 +938,56 @@
   .myspace-name { font-family:'Cormorant Garamond',serif; font-size:36px; font-weight:300; color:var(--ink); line-height:1; margin-bottom:0.75rem; }
   .myspace-phrase { font-family:'Cormorant Garamond',serif; font-size:15px; font-weight:300; font-style:italic; color:var(--ink-light); line-height:1.5; }
   .myspace-phrase strong { font-style:normal; font-weight:400; color:var(--accent); }
-  .myspace-body { flex:1; overflow:hidden; display:grid; grid-template-columns:2fr 1fr 1fr; }
-  .myspace-col { overflow-y:auto; padding:1.5rem 1.75rem; display:flex; flex-direction:column; gap:1.75rem; }
-  .myspace-col:first-child { border-right:1px solid var(--border); }
+  /* Onglets Mon Espace */
+  .myspace-tabs-bar {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    background: var(--white);
+    flex-shrink: 0;
+    padding: 0 1.75rem;
+    gap: 0;
+  }
+  .myspace-tab-btn {
+    padding: 12px 20px 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--ink-faint);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-bottom: -1px;
+  }
+  .myspace-tab-btn:hover:not(.active) { color: var(--ink); }
+  .myspace-tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .myspace-tab-btn .tab-count {
+    display: inline-block;
+    background: var(--accent-light);
+    color: var(--accent);
+    border-radius: 9px;
+    font-size: 9px;
+    padding: 1px 6px;
+    margin-left: 5px;
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+  .myspace-body { flex:1; overflow:hidden; display:flex; flex-direction:column; }
+  .myspace-tab-panel { display:none; flex:1; overflow-y:auto; padding:1.75rem; }
+  .myspace-tab-panel.active { display:flex; flex-direction:column; gap:1.75rem; }
+  /* Onglet Notes & Carte : 2 colonnes */
+  .myspace-notes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.75rem;
+    flex: 1;
+  }
+  @media (max-width: 700px) {
+    .myspace-notes-grid { grid-template-columns: 1fr; }
+  }
   .myspace-section-title { font-size:9px; letter-spacing:0.22em; text-transform:uppercase; color:var(--ink-faint); font-weight:500; margin-bottom:0.75rem; }
   .myspace-doc-card { display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid var(--border); cursor:pointer; }
   .myspace-doc-card:last-child { border-bottom:none; }
@@ -1208,12 +1255,54 @@
     <div class="myspace-name" id="myspaceName"></div>
     <div class="myspace-phrase" id="myspacePhrase"></div>
   </div>
-  <div class="myspace-body" id="myspaceBody"></div>
-  <div style="border-top:1px solid var(--border);padding:1.25rem 1.75rem;flex-shrink:0;background:var(--white);overflow-y:auto;max-height:50vh">
-    <div class="myspace-section-title" style="margin-bottom:10px">Mes groupes de lecture</div>
-    <div id="myspace-groupes"></div>
-    <div id="myspace-autres-groupes" style="margin-top:12px"></div>
-    <div id="myspace-create-form" style="display:none">
+
+  <!-- Barre d'onglets -->
+  <div class="myspace-tabs-bar">
+    <button class="myspace-tab-btn active" id="ms-tab-btn-docs" onclick="switchMySpaceTab('docs')">
+      Textes <span class="tab-count" id="ms-tab-count-docs">0</span>
+    </button>
+    <button class="myspace-tab-btn" id="ms-tab-btn-notes" onclick="switchMySpaceTab('notes')">
+      Notes &amp; Carte
+    </button>
+    <button class="myspace-tab-btn" id="ms-tab-btn-groupes" onclick="switchMySpaceTab('groupes')">
+      Groupes <span class="tab-count" id="ms-tab-count-groupes">0</span>
+    </button>
+  </div>
+
+  <div class="myspace-body">
+    <!-- Onglet 1 : Textes -->
+    <div class="myspace-tab-panel active" id="ms-panel-docs">
+      <div>
+        <div class="myspace-section-title" id="ms-alire-title">À lire — 0 document</div>
+        <div id="ms-alire-list"><span class="myspace-empty">Aucun document marqué à lire.</span></div>
+      </div>
+      <div>
+        <div class="myspace-section-title" id="ms-lus-title">Lus — 0 document</div>
+        <div id="ms-lus-list"><span class="myspace-empty">Aucun document marqué comme lu.</span></div>
+      </div>
+    </div>
+
+    <!-- Onglet 2 : Notes & Carte -->
+    <div class="myspace-tab-panel" id="ms-panel-notes">
+      <div class="myspace-notes-grid">
+        <div>
+          <div class="myspace-section-title">Mes notes</div>
+          <div id="ms-notes-list"><span class="myspace-empty">Aucune note pour l'instant.</span></div>
+        </div>
+        <div>
+          <div class="myspace-section-title">Carte de mes lectures</div>
+          <div id="ms-graph-container"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Onglet 3 : Groupes -->
+    <div class="myspace-tab-panel" id="ms-panel-groupes">
+      <div>
+        <div class="myspace-section-title" style="margin-bottom:10px">Mes groupes de lecture</div>
+        <div id="myspace-groupes"></div>
+        <div id="myspace-autres-groupes" style="margin-top:12px"></div>
+        <div id="myspace-create-form" style="display:none">
       <div class="group-form">
         <label class="group-form-label">Nom du groupe</label>
         <input type="text" id="new-group-name" placeholder="ex: Phénoménologie, Stage 2026…" />
@@ -1234,6 +1323,8 @@
       </div>
     </div>
     <button class="btn-group" style="margin-top:8px" onclick="document.getElementById('myspace-create-form').style.display=document.getElementById('myspace-create-form').style.display==='none'?'block':'none'">+ Créer un groupe</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -2380,6 +2471,9 @@ function renderMySpaceGroupes() {
   const mesEl    = document.getElementById('myspace-groupes');
   const autresEl = document.getElementById('myspace-autres-groupes');
   if (!mesEl || !autresEl) return;
+  // Compteur onglet
+  const cntEl = document.getElementById('ms-tab-count-groupes');
+  if (cntEl) cntEl.textContent = mesGroupes.length;
   mesEl.innerHTML = mesGroupes.length === 0
     ? "<span class='myspace-empty'>Tu n'appartiens à aucun groupe.</span>"
     : mesGroupes.map(g => `
@@ -2413,6 +2507,8 @@ async function openMySpace() {
   renderMySpacePhrase();
   renderMySpaceBody();
   renderMySpaceGroupes();
+  // Revenir sur l'onglet Textes à chaque ouverture
+  switchMySpaceTab('docs');
   document.getElementById('myspaceOverlay').classList.add('open');
   document.getElementById('myspacePanel').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -2567,13 +2663,35 @@ function initGraph(svg, nodes, edges, W, H) {
   simulation.alpha(1).restart();
 }
 
+/* =========================================================
+   MON ESPACE — ONGLETS
+========================================================= */
+
+function switchMySpaceTab(tab) {
+  ['docs','notes','groupes'].forEach(t => {
+    document.getElementById('ms-tab-btn-' + t).classList.toggle('active', t === tab);
+    document.getElementById('ms-panel-' + t).classList.toggle('active', t === tab);
+  });
+  // Le graphe est rendu à la demande seulement (coûteux)
+  if (tab === 'notes') {
+    const container = document.getElementById('ms-graph-container');
+    if (container && !container.dataset.rendered) {
+      container.innerHTML = renderNotesGraph();
+      container.dataset.rendered = '1';
+    }
+  }
+}
+
 function renderMySpaceBody() {
-  const body = document.getElementById('myspaceBody');
   const bmDocs   = docs.filter(d => readingList[d.id]);
   const rdDocs   = docs.filter(d => readLogs[d.id]);
   const noteDocs = docs.map(d => ({ d, text: localStorage.getItem(lsKey('note_' + d.id)) || '' })).filter(({ text }) => text.trim());
   const freeNote = localStorage.getItem(lsKey('note_free')) || '';
 
+  // Compteurs onglets
+  document.getElementById('ms-tab-count-docs').textContent = bmDocs.length + rdDocs.length;
+
+  // ── Onglet Textes ──
   const docCardHtml = (d, btn = true) => `
     <div class="myspace-doc-card" onclick="closeMySpace();openReader(${d.id})">
       <div class="myspace-doc-info">
@@ -2583,34 +2701,36 @@ function renderMySpaceBody() {
       ${btn ? `<button class="myspace-read-btn" onclick="event.stopPropagation();closeMySpace();openReader(${d.id})">Lire ↗</button>` : ''}
     </div>`;
 
-  const graphHtml = renderNotesGraph();
+  document.getElementById('ms-alire-title').textContent =
+    `À lire — ${bmDocs.length} document${bmDocs.length !== 1 ? 's' : ''}`;
+  document.getElementById('ms-alire-list').innerHTML = bmDocs.length === 0
+    ? `<span class="myspace-empty">Aucun document marqué à lire.</span>`
+    : bmDocs.map(d => docCardHtml(d, true)).join('');
 
- body.innerHTML = `
-    <div class="myspace-col">
-      <div>
-        <div class="myspace-section-title">À lire — ${bmDocs.length} document${bmDocs.length!==1?'s':''}</div>
-        ${bmDocs.length === 0 ? '<span class="myspace-empty">Aucun document marqué à lire.</span>' : bmDocs.map(d => docCardHtml(d, true)).join('')}
-      </div>
-      <div>
-        <div class="myspace-section-title">Lus — ${rdDocs.length} document${rdDocs.length!==1?'s':''}</div>
-        ${rdDocs.length === 0 ? '<span class="myspace-empty">Aucun document marqué comme lu.</span>' : rdDocs.map(d => docCardHtml(d, false)).join('')}
-      </div>
-    </div>
-    <div class="myspace-col">
-      <div>
-        <div class="myspace-section-title">Mes notes</div>
-        ${freeNote.trim() ? `<div class="myspace-note-card" style="margin-bottom:12px"><div class="myspace-note-doc">Note libre</div><div class="myspace-note-text">${freeNote.replace(/[#*>_]/g,'').substring(0,120)}…</div></div>` : ''}
-        ${noteDocs.length === 0 && !freeNote.trim()
-          ? `<span class="myspace-empty">Aucune note pour l'instant.</span>`
-          : noteDocs.map(({ d, text }) => `<div class="myspace-note-card" onclick="closeMySpace();openReader(${d.id})"><div class="myspace-note-doc">${d.title}</div><div class="myspace-note-text">${text.replace(/[#*>_]/g,'').substring(0,100)}…</div></div>`).join('')}
-      </div>
-    </div>
-    <div class="myspace-col">
-      <div>
-        <div class="myspace-section-title">Carte de mes lectures</div>
-        ${graphHtml}
-      </div>
-    </div>`;
+  document.getElementById('ms-lus-title').textContent =
+    `Lus — ${rdDocs.length} document${rdDocs.length !== 1 ? 's' : ''}`;
+  document.getElementById('ms-lus-list').innerHTML = rdDocs.length === 0
+    ? `<span class="myspace-empty">Aucun document marqué comme lu.</span>`
+    : rdDocs.map(d => docCardHtml(d, false)).join('');
+
+  // ── Onglet Notes (liste seulement, graphe chargé à l'ouverture de l'onglet) ──
+  const notesList = document.getElementById('ms-notes-list');
+  notesList.innerHTML = freeNote.trim()
+    ? `<div class="myspace-note-card" style="margin-bottom:8px"><div class="myspace-note-doc">Note libre</div><div class="myspace-note-text">${freeNote.replace(/[#*>_]/g,'').substring(0,120)}…</div></div>`
+    : '';
+  if (noteDocs.length === 0 && !freeNote.trim()) {
+    notesList.innerHTML = `<span class="myspace-empty">Aucune note pour l'instant.</span>`;
+  } else {
+    notesList.innerHTML += noteDocs.map(({ d, text }) =>
+      `<div class="myspace-note-card" onclick="closeMySpace();openReader(${d.id})">
+        <div class="myspace-note-doc">${d.title}</div>
+        <div class="myspace-note-text">${text.replace(/[#*>_]/g,'').substring(0,120)}…</div>
+      </div>`).join('');
+  }
+
+  // Réinitialiser le graphe pour forcer un re-rendu si on revient sur l'onglet
+  const gc = document.getElementById('ms-graph-container');
+  if (gc) { gc.innerHTML = ''; gc.dataset.rendered = ''; }
 }
 </script>
 </body>
