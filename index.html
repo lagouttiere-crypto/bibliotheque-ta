@@ -1676,8 +1676,16 @@ function getFiltered() {
   const q = normalizeText(
     document.getElementById('searchInput')?.value || ''
   );
+   // Groupes dont l'utilisateur est membre
+  const mesGroupeIds = groupesState
+    .filter(g => g.membres.includes(currentUser))
+    .map(g => g.id);
 
   return docs.filter(d => {
+    // Doc privé à un groupe → visible seulement si membre
+    if (d.groupe_id && d.groupe_id !== '') {
+      if (!mesGroupeIds.includes(String(d.groupe_id).trim())) return false;
+    }
     if (filters.type !== 'tous' && d.type !== filters.type) return false;
     if (filters.lang !== 'tous' && d.lang !== filters.lang) return false;
     if (filters.theme !== 'tous' && !d.themes.includes(filters.theme)) return false;
