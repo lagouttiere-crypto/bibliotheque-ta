@@ -1588,10 +1588,16 @@ function updateFilterCounts() {
 function renderHeroLastDocs() {
   const el = document.getElementById('heroLastDocs');
   if (!el) return;
+  const mesGroupeIds = groupesState
+    .filter(g => g.membres.includes(currentUser))
+    .map(g => g.id);
+
   const last = [...docs]
-    .filter(d => d.type !== 'pad') /// filtre les pads 
+    .filter(d => d.type !== 'pad')
+    .filter(d => !d.groupe_id || d.groupe_id === '' || mesGroupeIds.includes(String(d.groupe_id).trim()))
     .sort((a, b) => Number(b.id) - Number(a.id))
     .slice(0, 3);
+    
   el.innerHTML = last.map(d => `
     <div onclick="openCard=${d.id};renderDocs();setTimeout(()=>{document.getElementById('detail-${d.id}')?.scrollIntoView({behavior:'smooth',block:'nearest'})},80)"
       style="font-size:12px;color:var(--accent);cursor:pointer;padding:3px 0;display:flex;align-items:baseline;gap:6px;transition:opacity 0.15s"
