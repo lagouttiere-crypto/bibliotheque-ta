@@ -2143,18 +2143,7 @@ function openReader(id) {
   document.getElementById('readerExtLink').href       = d.driveUrl;
 
   if (d.type === 'pad' || isFramapadUrl(d.driveUrl || '')) {
-    if (isSafari()) {
-      pdf.innerHTML = `
-        <div class="reader-unavailable">
-          <p>Safari ne supporte pas l'édition embarquée</p>
-          <a class="reader-btn" href="${d.driveUrl}" target="_blank">Ouvrir le pad ↗</a>
-          <span style="font-size:12px;color:var(--ink-faint);margin-top:8px;display:block;text-align:center">
-            Tes notes restent disponibles dans le panneau ci-contre
-          </span>
-        </div>`;
-    } else {
-      pdf.innerHTML = `<iframe src="${d.driveUrl}" width="100%" height="100%" frameborder="0" style="border:none"></iframe>`;
-    }
+    pdf.innerHTML = `<iframe src="${d.driveUrl}" width="100%" height="100%" frameborder="0" style="border:none"></iframe>`;
   } else if (fileId) {
     pdf.innerHTML = `<iframe src="https://drive.google.com/file/d/${fileId}/preview" allowfullscreen></iframe>`;
   } else {
