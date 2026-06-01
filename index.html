@@ -1026,8 +1026,22 @@
   .group-card-header .group-name { flex:1; }
   .group-accordion-arrow { font-size:11px; color:var(--ink-faint); transition:transform 0.2s; flex-shrink:0; }
   .group-card.accordion-open .group-accordion-arrow { transform:rotate(180deg); color:var(--accent); }
-  .group-accordion-body { display:none; margin-top:10px; border-top:1px solid var(--border); padding-top:10px; }
-  .group-card.accordion-open .group-accordion-body { display:block; }
+  .group-accordion-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+  overflow: hidden;
+  transition: grid-template-rows 0.3s ease, margin-top 0.3s ease, padding-top 0.3s ease;
+  }
+  .group-accordion-body > * { min-height: 0; }
+  .group-card.accordion-open .group-accordion-body {
+  grid-template-rows: 1fr;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  }
   .group-accordion-doc { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:7px 0; border-bottom:1px solid var(--border); }
   .group-accordion-doc:last-child { border-bottom:none; }
   .group-accordion-doc-info { flex:1; min-width:0; }
