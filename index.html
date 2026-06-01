@@ -1021,6 +1021,32 @@
   /* ── GROUPES ── */
   .group-card { border:1px solid var(--border); padding:12px 14px; margin-bottom:8px; cursor:pointer; transition:border-color 0.15s; background:var(--white); }
   .group-card:hover { border-color:var(--accent); }
+  .group-card.accordion-open { border-color:var(--accent); }
+  .group-card-header { display:flex; align-items:center; gap:8px; cursor:pointer; }
+  .group-card-header .group-name { flex:1; }
+  .group-accordion-arrow { font-size:11px; color:var(--ink-faint); transition:transform 0.2s; flex-shrink:0; }
+  .group-card.accordion-open .group-accordion-arrow { transform:rotate(180deg); color:var(--accent); }
+  .group-accordion-body { display:none; margin-top:10px; border-top:1px solid var(--border); padding-top:10px; }
+  .group-card.accordion-open .group-accordion-body { display:block; }
+  .group-accordion-doc { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:7px 0; border-bottom:1px solid var(--border); }
+  .group-accordion-doc:last-child { border-bottom:none; }
+  .group-accordion-doc-info { flex:1; min-width:0; }
+  .group-accordion-doc-title { font-family:'Cormorant Garamond',serif; font-size:14px; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .group-accordion-doc-author { font-size:11px; color:var(--ink-faint); font-style:italic; margin-top:1px; }
+  .group-accordion-empty { font-size:12px; color:var(--ink-faint); font-style:italic; padding:4px 0; }
+  .group-accordion-actions { display:flex; align-items:center; gap:6px; flex-shrink:0; }
+  .group-accordion-notes-toggle { font-size:10px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-faint); background:none; border:1px solid var(--border); padding:3px 8px; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.15s; }
+  .group-accordion-notes-toggle:hover { border-color:var(--accent); color:var(--accent); }
+  .group-accordion-notes-toggle.active { background:var(--accent-light); color:var(--accent); border-color:var(--accent-light); }
+  .group-accordion-notes { display:none; background:var(--cream); border:1px solid var(--border); border-top:none; padding:8px 10px; margin-bottom:2px; }
+  .group-accordion-notes.open { display:block; }
+  .group-accordion-note-item { padding:5px 0; border-bottom:1px solid var(--border); }
+  .group-accordion-note-item:last-child { border-bottom:none; }
+  .group-accordion-note-author { font-size:10px; font-weight:500; color:var(--accent); margin-bottom:2px; }
+  .group-accordion-note-text { font-size:12px; color:var(--ink); line-height:1.5; }
+  .group-accordion-note-form { display:flex; gap:5px; margin-top:6px; }
+  .group-accordion-note-form textarea { flex:1; border:1px solid var(--border); background:var(--white); padding:6px 8px; font-family:'DM Sans',sans-serif; font-size:12px; color:var(--ink); outline:none; resize:none; height:44px; line-height:1.4; }
+  .group-accordion-note-form textarea:focus { border-color:var(--accent); }
   .group-name { font-family:'Cormorant Garamond',serif; font-size:16px; font-weight:400; color:var(--ink); margin-bottom:3px; }
   .group-meta { font-size:11px; color:var(--ink-faint); display:flex; gap:10px; }
   .group-members { font-style:italic; }
@@ -2465,6 +2491,69 @@ async function addGroupNote(groupeId, docId) {
   } catch(e) { console.warn("Erreur envoi note groupe", e); }
 }
 
+function toggleGroupAccordion(groupeId) {
+  const card = document.getElementById('group-accord-' + groupeId);
+  if (!card) return;
+  const isOpen = card.classList.toggle('accordion-open');
+  // Charger les notes du groupe à la première ouverture
+  if (isOpen && card.dataset.notesLoaded !== '1') {
+    loadGroupNotes(groupeId).then(() => {
+      renderGroupAccordionNotes(groupeId);
+      card.dataset.notesLoaded = '1';
+    });
+  }
+}
+
+function toggleAccordionDocNotes(groupeId, docId) {
+  const el = document.getElementById(`ga-notes-${groupeId}-${docId}`);
+  const btn = document.getElementById(`ga-notebtn-${groupeId}-${docId}`);
+  if (!el || !btn) return;
+  const open = el.classList.toggle('open');
+  btn.classList.toggle('active', open);
+}
+
+function renderGroupAccordionNotes(groupeId) {
+  const g = groupesState.find(g => g.id === groupeId);
+  if (!g) return;
+  const notes = groupNotesState[groupeId] || {};
+  const groupDocs = g.docs.length > 0
+    ? g.docs.map(id => docs.find(d => String(d.id).trim() === String(id).trim())).filter(Boolean)
+    : [];
+  groupDocs.forEach(d => {
+    const notesEl = document.getElementById(`ga-notes-${groupeId}-${d.id}`);
+    if (!notesEl) return;
+    const docNotes = notes[String(d.id)] || [];
+    notesEl.innerHTML = docNotes.length === 0
+      ? `<span style="font-size:11px;color:var(--ink-faint);font-style:italic">Pas encore de notes.</span>`
+      : docNotes.map(n => `
+          <div class="group-accordion-note-item">
+            <div class="group-accordion-note-author">${n.auteur}</div>
+            <div class="group-accordion-note-text">${String(n.texte||'').replace(/</g,'&lt;')}</div>
+          </div>`).join('');
+    // Re-ajouter le formulaire
+    notesEl.innerHTML += `
+      <div class="group-accordion-note-form">
+        <textarea id="ga-inp-${groupeId}-${d.id}" placeholder="Ajouter une note…"
+          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();addGroupNoteAccordion('${groupeId}',${d.id})}"></textarea>
+        <button class="btn-group primary" onclick="addGroupNoteAccordion('${groupeId}',${d.id})">↵</button>
+      </div>`;
+  });
+}
+
+async function addGroupNoteAccordion(groupeId, docId) {
+  const input = document.getElementById(`ga-inp-${groupeId}-${docId}`);
+  if (!input) return;
+  const texte = input.value.trim();
+  if (!texte) return;
+  if (!groupNotesState[groupeId]) groupNotesState[groupeId] = {};
+  if (!groupNotesState[groupeId][docId]) groupNotesState[groupeId][docId] = [];
+  groupNotesState[groupeId][docId].push({ auteur: currentUser, texte });
+  renderGroupAccordionNotes(groupeId);
+  try {
+    await fetch(`${SHEET_URL}?sheet=notes_groupe&action=save&groupe_id=${groupeId}&doc_id=${docId}&auteur=${encodeURIComponent(currentUser)}&texte=${encodeURIComponent(texte)}`);
+  } catch(e) { console.warn("Erreur envoi note groupe", e); }
+}
+
 function renderMySpaceGroupes() {
   const mesGroupes    = groupesState.filter(g => g.membres.includes(currentUser));
   const autresGroupes = groupesState.filter(g => !g.membres.includes(currentUser));
@@ -2474,17 +2563,54 @@ function renderMySpaceGroupes() {
   // Compteur onglet
   const cntEl = document.getElementById('ms-tab-count-groupes');
   if (cntEl) cntEl.textContent = mesGroupes.length;
+
+  const groupDocHtml = (g) => {
+    const groupDocs = g.docs.length > 0
+      ? g.docs.map(id => docs.find(d => String(d.id).trim() === String(id).trim())).filter(Boolean)
+      : [];
+    if (groupDocs.length === 0) {
+      return `<div class="group-accordion-empty">Aucun document dans ce groupe.</div>`;
+    }
+    return groupDocs.map(d => `
+      <div class="group-accordion-doc">
+        <div class="group-accordion-doc-info">
+          <div class="group-accordion-doc-title">${d.title}</div>
+          <div class="group-accordion-doc-author">${d.author || '—'}</div>
+        </div>
+        <div class="group-accordion-actions">
+          <button class="group-accordion-notes-toggle" id="ga-notebtn-${g.id}-${d.id}"
+            onclick="event.stopPropagation();toggleAccordionDocNotes('${g.id}',${d.id})">Notes</button>
+          <button class="myspace-read-btn" onclick="event.stopPropagation();closeMySpace();openReader(${d.id})">Lire ↗</button>
+        </div>
+      </div>
+      <div class="group-accordion-notes" id="ga-notes-${g.id}-${d.id}">
+        <span style="font-size:11px;color:var(--ink-faint);font-style:italic">Chargement…</span>
+      </div>`).join('');
+  };
+
   mesEl.innerHTML = mesGroupes.length === 0
     ? "<span class='myspace-empty'>Tu n'appartiens à aucun groupe.</span>"
     : mesGroupes.map(g => `
-        <div class="group-card" onclick="openGroupPanel('${g.id}')">
-          <div class="group-name">${g.nom}${g.mdp ? ' 🔒' : ''}</div>
-          <div class="group-meta"><span class="group-members">${g.membres.join(', ')}</span><span>${g.docs.length} doc${g.docs.length!==1?'s':''}</span></div>
-          <div class="group-actions" onclick="event.stopPropagation()">
-            <button class="btn-group primary" onclick="openGroupPanel('${g.id}')">Ouvrir</button>
-            ${g.createur !== currentUser ? `<button class="btn-group danger" onclick="leaveGroupe('${g.id}')">Quitter</button>` : ''}
+        <div class="group-card" id="group-accord-${g.id}">
+          <div class="group-card-header" onclick="toggleGroupAccordion('${g.id}')">
+            <div>
+              <div class="group-name">${g.nom}${g.mdp ? ' 🔒' : ''}</div>
+              <div class="group-meta">
+                <span class="group-members">${g.membres.join(', ')}</span>
+                <span style="margin-left:8px">${g.docs.length} doc${g.docs.length!==1?'s':''}</span>
+              </div>
+            </div>
+            <span class="group-accordion-arrow">▾</span>
+          </div>
+          <div class="group-accordion-body">
+            ${groupDocHtml(g)}
+            <div class="group-actions" style="margin-top:10px;padding-top:8px;border-top:1px solid var(--border)">
+              <button class="btn-group primary" onclick="event.stopPropagation();openGroupPanel('${g.id}')">Vue complète ↗</button>
+              ${g.createur !== currentUser ? `<button class="btn-group danger" onclick="event.stopPropagation();leaveGroupe('${g.id}')">Quitter</button>` : ''}
+            </div>
           </div>
         </div>`).join('');
+
   autresEl.innerHTML = autresGroupes.length === 0 ? '' : `
     <div class="myspace-section-title" style="margin-bottom:8px;margin-top:4px">Autres groupes</div>
     ${autresGroupes.map(g => `
