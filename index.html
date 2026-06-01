@@ -1093,6 +1093,12 @@
   .group-note-form textarea { flex:1; border:1px solid var(--border); background:var(--cream); padding:7px 10px; font-family:'DM Sans',sans-serif; font-size:12px; color:var(--ink); outline:none; resize:none; height:56px; line-height:1.5; }
   .group-note-form textarea:focus { border-color:var(--accent); background:var(--white); }
 
+  /* ── TRÈFLES ── */
+  .trefles-row { display:flex; gap:3px; margin-top:4px; }
+  .trefle-btn { background:none; border:none; cursor:pointer; font-size:13px; padding:1px 2px; opacity:0.2; transition:opacity 0.15s, transform 0.1s; line-height:1; }
+  .trefle-btn:hover { opacity:0.5; transform:scale(1.2); }
+  .trefle-btn.active { opacity:1; }
+
   /* ── MOBILE ── */
   @media (max-width: 700px) {
     .main-layout { grid-template-columns: 1fr; }
@@ -1417,7 +1423,7 @@ let activeTag = null;
 let openCard = null;
 let docs = [];
 let empruntsState = {};
-
+let favoritesState = {}; // { docId: 1|2|3 }
 // Parcours d'entrée éditorial ATI France :
  // ouvrir par Alexander, les fondements et la pratique,
  // puis élargir progressivement vers pédagogie, arts, recherche et traversées contemporaines.
@@ -1597,7 +1603,7 @@ function renderHeroLastDocs() {
     .filter(d => !d.groupe_id || d.groupe_id === '' || mesGroupeIds.includes(String(d.groupe_id).trim()))
     .sort((a, b) => Number(b.id) - Number(a.id))
     .slice(0, 3);
-    
+
   el.innerHTML = last.map(d => `
     <div onclick="openCard=${d.id};renderDocs();setTimeout(()=>{document.getElementById('detail-${d.id}')?.scrollIntoView({behavior:'smooth',block:'nearest'})},80)"
       style="font-size:12px;color:var(--accent);cursor:pointer;padding:3px 0;display:flex;align-items:baseline;gap:6px;transition:opacity 0.15s"
@@ -1654,6 +1660,7 @@ async function showApp(nom) {
   loadNotesFromSheet();
   loadNotesTags();
   loadGroupes();
+  loadFavoritesFromSheet();
 }
 
 function tryLogin() {
@@ -1840,8 +1847,8 @@ function renderDocs() {
               : `<div style="font-size:12px;color:#4F7A52;margin-top:4px">
              Disponible à l'emprunt
            </div>`
-    )
-  : '';
+        )
+      : '';
     return `
       <div class="doc-card ${isOpen ? 'is-open' : ''}" id="card-${d.id}" onclick="toggleCard(${d.id})">
         <div class="doc-meta">
@@ -1870,6 +1877,9 @@ function renderDocs() {
           <button class="btn-action ${readLogs[d.id] ? 'rd-active' : ''}" onclick="toggleRead(${d.id}, event)" title="Marquer comme lu">
             ${readLogs[d.id] ? '✓' : '○'} Lu
           </button>
+        </div>
+        <div class="trefles-row" onclick="event.stopPropagation()">
+          ${[1,2,3].map(n => `<button class="trefle-btn ${(favoritesState[d.id]||0) >= n ? 'active' : ''}" onclick="toggleTrefle(${d.id},${n},event)">☘</button>`).join('')}
         </div>
       </div>
       <div class="doc-detail ${isOpen ? 'visible' : ''}" id="detail-${d.id}">
@@ -2309,6 +2319,36 @@ function renderNotesPanel() {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') { closeReader(); closeMySpace(); closeGroupPanel(); }
 });
+
+async function loadFavoritesFromSheet() {
+  try {
+    const res = await fetch(`${SHEET_URL}?sheet=favorites&auteur=${encodeURIComponent(currentUser)}&v=${Date.now()}`);
+    const rows = await res.json();
+    if (Array.isArray(rows)) {
+      rows.forEach(r => {
+        const id = parseInt(r.doc_id);
+        const n  = parseInt(r.trefles) || 0;
+        if (id && n > 0) favoritesState[id] = n;
+      });
+    }
+  } catch(e) { console.warn("Favorites non chargés", e); }
+  renderDocs();
+}
+
+async function toggleTrefle(id, n, e) {
+  e.stopPropagation();
+  const current = favoritesState[id] || 0;
+  const next = current === n ? 0 : n;
+  if (next === 0) { delete favoritesState[id]; } else { favoritesState[id] = next; }
+  renderDocs();
+  try {
+    if (next === 0) {
+      await fetch(`${SHEET_URL}?sheet=favorites&action=remove&doc_id=${id}&auteur=${encodeURIComponent(currentUser)}`);
+    } else {
+      await fetch(`${SHEET_URL}?sheet=favorites&action=set&doc_id=${id}&auteur=${encodeURIComponent(currentUser)}&trefles=${next}`);
+    }
+  } catch(err) { console.warn("Sync trefle", err); }
+}
 
 /* =========================================================
    GROUPES DE LECTURE
@@ -2827,8 +2867,10 @@ function switchMySpaceTab(tab) {
 }
 
 function renderMySpaceBody() {
-  const bmDocs   = docs.filter(d => readingList[d.id]);
-  const rdDocs   = docs.filter(d => readLogs[d.id]);
+  const bmDocs = docs.filter(d => readingList[d.id])
+  .sort((a,b) => (favoritesState[b.id]||0) - (favoritesState[a.id]||0));
+  const rdDocs = docs.filter(d => readLogs[d.id])
+  .sort((a,b) => (favoritesState[b.id]||0) - (favoritesState[a.id]||0));
   const noteDocs = docs.map(d => ({ d, text: localStorage.getItem(lsKey('note_' + d.id)) || '' })).filter(({ text }) => text.trim());
   const freeNote = localStorage.getItem(lsKey('note_free')) || '';
 
