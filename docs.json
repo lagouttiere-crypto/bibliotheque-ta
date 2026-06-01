@@ -1966,5 +1966,44 @@
     "duree": null,
     "groupe_id": "g1780295953497",
     "annotations": []
+  },
+  {
+    "id": 92,
+    "titre": "Organisation-venue-Jacques-Gaillard",
+    "auteur": "Matthieu Gaudeau",
+    "annee": 2026,
+    "type": "pad",
+    "langue": "fr",
+    "themes": [],
+    "urlDrive": "https://hackmd.io/@FNV_RGtvTxqLGqegYtACYg/Hku2GbolGx/edit",
+    "description": "pad collaboratif pour la venue de Jacques Gaillard en 2026.",
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": "g1780318839064",
+    "annotations": []
+  },
+  {
+    "id": 93,
+    "titre": "Simplement vivre",
+    "auteur": "Jacques Gaillard",
+    "annee": 2026,
+    "type": "livre",
+    "langue": "fr",
+    "themes": [
+      "pédagogie",
+      "corps & mouvement",
+      "phénoménologie",
+      "2ème génération"
+    ],
+    "urlDrive": "https://drive.google.com/file/d/1Fbkh16Dr7Wq_OMdEemyUFx9sMHa1xpau/view?usp=drivesdk",
+    "description": "Livre que Jacques Gaillard conseille pour le stage de l'automne 2026.",
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": "g1780318839064",
+    "annotations": []
   }
 ]
