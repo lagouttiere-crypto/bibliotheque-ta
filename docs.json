@@ -2005,5 +2005,25 @@
     "duree": null,
     "groupe_id": "g1780318839064",
     "annotations": []
+  },
+  {
+    "id": 94,
+    "titre": "Etaiements. Une phénoménologie du porté",
+    "auteur": "Emma Bigé",
+    "annee": 2020,
+    "type": "article",
+    "langue": "fr",
+    "themes": [
+      "phénoménologie",
+      "philosophie"
+    ],
+    "urlDrive": "https://drive.google.com/file/d/14RQjJg8n5zJXTAw_ZOhhDHnwFSXy_bES/view?usp=drivesdk",
+    "description": "Article philosophique sur le concept de support avec une approche féministe de l'époché.",
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": "g1780071211190",
+    "annotations": []
   }
 ]
