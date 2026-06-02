@@ -2025,5 +2025,26 @@
     "duree": null,
     "groupe_id": "g1780071211190",
     "annotations": []
+  },
+  {
+    "id": 95,
+    "titre": "L'accordage",
+    "auteur": "Bhenke",
+    "annee": 1988,
+    "type": "article",
+    "langue": "fr",
+    "themes": [
+      "pédagogie somatique",
+      "phénoménologie",
+      "philosophie"
+    ],
+    "urlDrive": "https://drive.google.com/file/d/1jiQogNc0DI27YJo7KK3O1_pybtox08o7/view?usp=drivesdk",
+    "description": "Source : Elizabeth A. Behnke, « Matching », Somatics, Spring/Summer 1988, pp.\n24-32. Traduction intégrale depuis l’anglais.",
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": null,
+    "annotations": []
   }
 ]
