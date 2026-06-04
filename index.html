@@ -1368,7 +1368,12 @@
       </div>
     </div>
     <button class="btn-group" style="margin-top:8px" onclick="document.getElementById('myspace-create-form').style.display=document.getElementById('myspace-create-form').style.display==='none'?'block':'none'">+ Créer un groupe</button>
-      </div>
+      <div style="margin-top:24px;padding-top:16px;border-top:1px solid var(--border)">
+  <div class="myspace-section-title" style="margin-bottom:8px">Indexation fulltext</div>
+  <button class="btn-group" onclick="indexerTousLesDocsScaleway()">Indexer tous les PDFs Scaleway</button>
+  <span id="index-status" style="font-size:11px;color:var(--ink-faint);font-style:italic;margin-left:8px"></span>
+</div>
+  </div>
     </div>
   </div>
 </div>
@@ -2228,6 +2233,54 @@ async function loadPdfJs(url) {
     pdfjsLib.GlobalWorkerOptions.workerSrc =
       'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
   }
+
+async function indexerDocScaleway(docId, url) {
+  if (!window.pdfjsLib) {
+    await new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  }
+  try {
+    const pdf = await pdfjsLib.getDocument(url).promise;
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const content = await page.getTextContent();
+      const texte = content.items.map(item => item.str).join(' ').trim();
+      if (!texte) continue;
+      await fetch(`${SHEET_URL}?sheet=fulltext&action=save&doc_id=${docId}&page=${i}&texte=${encodeURIComponent(texte)}`);
+    }
+    return { status: 'ok', pages: pdf.numPages };
+  } catch(e) {
+    console.warn("Erreur indexation", e);
+    return { status: 'error' };
+  }
+}
+
+async function indexerTousLesDocsScaleway() {
+  const docsScaleway = docs.filter(d =>
+    d.driveUrl &&
+    d.driveUrl.includes('scw.cloud') &&
+    d.type !== 'pad' &&
+    d.id !== 80 // exclure The Body Moveable
+  );
+  const statusEl = document.getElementById('index-status');
+  if (statusEl) statusEl.textContent = `0 / ${docsScaleway.length} indexés…`;
+  let count = 0;
+  for (const d of docsScaleway) {
+    if (statusEl) statusEl.textContent = `${count} / ${docsScaleway.length} — ${d.title}…`;
+    const result = await indexerDocScaleway(d.id, d.driveUrl);
+    if (result.status === 'ok') count++;
+    await new Promise(r => setTimeout(r, 300)); // pause entre chaque doc
+  }
+  if (statusEl) statusEl.textContent = `✓ ${count} documents indexés !`;
+}
+
 
   // Barre de recherche
   container.innerHTML = `
