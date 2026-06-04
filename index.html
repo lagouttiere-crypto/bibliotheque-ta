@@ -2611,6 +2611,37 @@ async function addGroupNoteAccordion(groupeId, docId) {
   } catch(e) { console.warn("Erreur envoi note groupe", e); }
 }
 
+/// supprssion des liens externes (pads) dans les groupes 
+
+async function deleteDocFromCatalogue(docId, groupeId) {
+  const d = docs.find(doc => doc.id === docId);
+  if (!d) return;
+
+  // Doc Drive : alerte bloquante
+  if (d.driveUrl && String(d.driveUrl).startsWith('https://drive.google.com')) {
+    alert("Ce document est hébergé sur Google Drive.\nPour le supprimer, utilisez l'interface admin.");
+    return;
+  }
+
+  // Confirmation
+  if (!confirm(`Êtes-vous sûr de vouloir supprimer "${d.title}" du catalogue ?\n\nCette action est irréversible.`)) return;
+
+  // Suppression locale immédiate
+  docs = docs.filter(doc => doc.id !== docId);
+  renderDocs();
+  renderMySpaceGroupes();
+
+  // Suppression dans le Sheet
+  try {
+    await fetch(`${SHEET_URL}?sheet=catalogue&action=delete&doc_id=${docId}&auteur=${encodeURIComponent(currentUser)}`);
+  } catch(e) { console.warn("Erreur suppression catalogue", e); }
+
+  // Retrait de la liste docs du groupe dans le Sheet
+  try {
+    await fetch(`${SHEET_URL}?sheet=groupes&action=remove_doc&groupe_id=${groupeId}&doc_id=${docId}`);
+  } catch(e) { console.warn("Erreur retrait doc groupe", e); }
+}
+
 function renderMySpaceGroupes() {
   const mesGroupes    = groupesState.filter(g => g.membres.includes(currentUser));
   const autresGroupes = groupesState.filter(g => !g.membres.includes(currentUser));
@@ -2634,10 +2665,11 @@ function renderMySpaceGroupes() {
           <div class="group-accordion-doc-title">${d.title}</div>
           <div class="group-accordion-doc-author">${d.author || '—'}</div>
         </div>
-        <div class="group-accordion-actions">
+          <div class="group-accordion-actions">
           <button class="group-accordion-notes-toggle" id="ga-notebtn-${g.id}-${d.id}"
             onclick="event.stopPropagation();toggleAccordionDocNotes('${g.id}',${d.id})">Notes</button>
           <button class="myspace-read-btn" onclick="event.stopPropagation();closeMySpace();openReader(${d.id})">Lire ↗</button>
+          <button class="btn-group danger" style="padding:3px 7px;font-size:10px" onclick="event.stopPropagation();deleteDocFromCatalogue(${d.id},'${g.id}')" title="Supprimer du catalogue">🗑</button>
         </div>
       </div>
       <div class="group-accordion-notes" id="ga-notes-${g.id}-${d.id}">
