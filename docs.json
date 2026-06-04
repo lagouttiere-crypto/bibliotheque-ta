@@ -397,7 +397,7 @@
       "enaction",
       "neurosciences"
     ],
-    "urlDrive": "https://drive.google.com/file/d/1LcWsg5AsxBedjH5K5-h0FAxOcdX73NyN/view?usp=drivesdk",
+    "urlDrive": "https://[nom-du-bucket].s3.fr-par.scw.cloud/1_1_Premier[1].pdf",
     "description": "Editorial (J. Chance) · The Garlick Report (D. Garlick) · Chorus to Extension the Fifth (D. Woodcock) · Psychophysical Unity and the Critical Moment (R. MacLeod)",
     "physique": false,
     "videoUrl": null,
