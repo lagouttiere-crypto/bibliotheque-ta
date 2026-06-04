@@ -2281,7 +2281,7 @@ async function loadNotesFromSheet() {
   } catch(e) { console.warn("Notes Sheet non chargées", e); }
 }
 
-let notesTagsState = {};
+let noteTagsLoaded = false;
 
 async function loadNotesTags() {
   try {
@@ -2295,6 +2295,7 @@ async function loadNotesTags() {
         if (r.tag) notesTagsState[id].push(r.tag);
       });
     }
+    noteTagsLoaded = true;
   } catch(e) { console.warn("Notes tags non chargés", e); }
 }
 
@@ -2687,16 +2688,24 @@ async function openMySpace() {
   const overlay = document.getElementById('myspaceOverlay');
   overlay.style.display = '';
   document.getElementById('myspaceName').textContent = currentUser;
-  await loadNotesTags();
+
+  // Ouverture immédiate avec les données déjà en mémoire
   renderMySpacePhrase();
   renderMySpaceBody();
   renderMySpaceGroupes();
-  // Revenir sur l'onglet Textes à chaque ouverture
   switchMySpaceTab('docs');
   document.getElementById('myspaceOverlay').classList.add('open');
   document.getElementById('myspacePanel').classList.add('open');
   document.body.style.overflow = 'hidden';
-}
+
+  // Rafraîchissement réseau en arrière-plan
+  await loadNotesTags();
+  renderMySpacePhrase();
+  // Re-rendu du graphe seulement si l'onglet Notes & Carte est visible
+  const activeTab = document.querySelector('.ms-tab-btn.active');
+  if (activeTab && activeTab.dataset.tab === 'notes') {
+    renderMySpaceBody();
+  }
 
 function closeMySpace() {
   const panel   = document.getElementById('myspacePanel');
