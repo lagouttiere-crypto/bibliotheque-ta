@@ -1159,9 +1159,10 @@
       <!-- PANEL CATALOGUE -->
       <div>
         <div class="search-wrap">
-          <span class="search-icon">⌕</span>
-          <input type="text" id="searchInput" placeholder="Rechercher..." oninput="renderDocs()" />
-        </div>
+  <span class="search-icon">⌕</span>
+  <input type="text" id="searchInput" placeholder="Rechercher..." oninput="renderDocs()" />
+</div>
+<button class="filter-btn" style="margin-bottom:1.5rem;color:var(--accent);border:1px solid var(--accent-light);background:var(--accent-light);text-align:center;letter-spacing:0.05em" onclick="openFulltextSearch()">⌕ Recherche dans les textes</button>
 
         <div class="sidebar-section">
           <div class="sidebar-label">Type</div>
@@ -1292,6 +1293,20 @@
   </div>
 </div>
 
+<!-- RECHERCHE FULLTEXT -->
+<div id="fulltextOverlay" style="display:none;position:fixed;inset:0;background:rgba(28,26,23,0.35);z-index:200" onclick="closeFulltextSearch()"></div>
+<div id="fulltextPanel" style="position:fixed;top:0;right:0;width:55%;height:100vh;background:var(--white);border-left:1px solid var(--border);z-index:201;display:flex;flex-direction:column;transform:translateX(100%);transition:transform 0.28s cubic-bezier(0.4,0,0.2,1)">
+  <div style="padding:0 1.25rem;height:52px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-shrink:0">
+    <input id="fulltextInput" type="text" placeholder="Rechercher dans tous les textes…"
+      style="flex:1;border:1px solid var(--border);background:var(--cream);padding:8px 12px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);outline:none;border-radius:3px"
+      oninput="searchFulltext()" />
+    <span id="fulltext-count" style="font-size:11px;color:var(--ink-faint);white-space:nowrap"></span>
+    <button onclick="closeFulltextSearch()" style="width:30px;height:30px;display:flex;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;color:var(--ink-faint);font-size:18px;flex-shrink:0">×</button>
+  </div>
+  <div id="fulltextResults" style="flex:1;overflow-y:auto;padding:1.25rem"></div>
+</div>
+
+
 <!-- MON ESPACE -->
 <div class="myspace-overlay" id="myspaceOverlay" onclick="closeMySpace()"></div>
 <div class="myspace-panel" id="myspacePanel">
@@ -1368,7 +1383,7 @@
       </div>
     </div>
     <button class="btn-group" style="margin-top:8px" onclick="document.getElementById('myspace-create-form').style.display=document.getElementById('myspace-create-form').style.display==='none'?'block':'none'">+ Créer un groupe</button>
-      <div style="margin-top:24px;padding-top:16px;border-top:1px solid var(--border)">
+      <div id="admin-indexation" style="margin-top:24px;padding-top:16px;border-top:1px solid var(--border);display:none">
   <div class="myspace-section-title" style="margin-bottom:8px">Indexation fulltext</div>
   <button class="btn-group" onclick="indexerTousLesDocsScaleway()">Indexer tous les PDFs Scaleway</button>
   <span id="index-status" style="font-size:11px;color:var(--ink-faint);font-style:italic;margin-left:8px"></span>
@@ -2334,6 +2349,87 @@ async function indexerTousLesDocsScaleway() {
   if (statusEl) statusEl.textContent = `✓ ${count} documents indexés !`;
 }
 
+let fulltextState = [];
+let fulltextDebounce = null;
+
+async function loadFulltextIndex() {
+  if (fulltextState.length > 0) return;
+  try {
+    const res = await fetch(`${SHEET_URL}?sheet=fulltext&v=${Date.now()}`);
+    const rows = await res.json();
+    if (Array.isArray(rows)) fulltextState = rows;
+  } catch(e) { console.warn("Fulltext non chargé", e); }
+}
+
+function openFulltextSearch() {
+  document.getElementById('fulltextOverlay').style.display = 'block';
+  document.getElementById('fulltextPanel').style.transform = 'translateX(0)';
+  document.body.style.overflow = 'hidden';
+  document.getElementById('fulltextInput').focus();
+  loadFulltextIndex();
+}
+
+function closeFulltextSearch() {
+  document.getElementById('fulltextOverlay').style.display = 'none';
+  document.getElementById('fulltextPanel').style.transform = 'translateX(100%)';
+  document.body.style.overflow = '';
+}
+
+function searchFulltext() {
+  clearTimeout(fulltextDebounce);
+  fulltextDebounce = setTimeout(() => {
+    const q = normalizeText(document.getElementById('fulltextInput').value.trim());
+    const countEl = document.getElementById('fulltext-count');
+    const resultsEl = document.getElementById('fulltextResults');
+    if (!q || q.length < 3) {
+      countEl.textContent = '';
+      resultsEl.innerHTML = '<span style="font-size:13px;color:var(--ink-faint);font-style:italic">Tapez au moins 3 caractères…</span>';
+      return;
+    }
+    // Grouper les résultats par doc
+    const byDoc = {};
+    fulltextState.forEach(row => {
+      const texte = normalizeText(String(row.texte || ''));
+      if (!texte.includes(q)) return;
+      const docId = String(row.doc_id).trim();
+      if (!byDoc[docId]) byDoc[docId] = [];
+      byDoc[docId].push({ page: row.page, texte: String(row.texte || '') });
+    });
+    const docIds = Object.keys(byDoc);
+    countEl.textContent = docIds.length + ' document' + (docIds.length !== 1 ? 's' : '');
+    if (docIds.length === 0) {
+      resultsEl.innerHTML = '<span style="font-size:13px;color:var(--ink-faint);font-style:italic">Aucun résultat.</span>';
+      return;
+    }
+    resultsEl.innerHTML = docIds.map(docId => {
+      const d = docs.find(doc => String(doc.id) === docId);
+      if (!d) return '';
+      const pages = byDoc[docId];
+      const pagesHtml = pages.slice(0, 3).map(p => {
+        // Extraire un extrait autour du mot cherché
+        const idx = normalizeText(p.texte).indexOf(q);
+        const start = Math.max(0, idx - 60);
+        const end = Math.min(p.texte.length, idx + q.length + 60);
+        const extrait = (start > 0 ? '…' : '') + p.texte.substring(start, end) + (end < p.texte.length ? '…' : '');
+        return `<div style="padding:6px 0;border-bottom:1px solid var(--border)">
+          <span style="font-size:10px;color:var(--accent);font-weight:500;letter-spacing:0.05em">PAGE ${p.page}</span>
+          <div style="font-size:12px;color:var(--ink-light);line-height:1.5;margin-top:3px">${extrait}</div>
+        </div>`;
+      }).join('');
+      return `<div style="margin-bottom:16px;border:1px solid var(--border);background:var(--white)">
+        <div style="padding:10px 14px;background:var(--cream);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+          <div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:400;color:var(--ink)">${d.title}</div>
+            <div style="font-size:11px;color:var(--ink-faint);font-style:italic">${d.author || ''} · ${pages.length} page${pages.length !== 1 ? 's' : ''} trouvée${pages.length !== 1 ? 's' : ''}</div>
+          </div>
+          <button onclick="closeFulltextSearch();openReader(${d.id})" style="font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-light);background:var(--accent-light);padding:4px 10px;cursor:pointer;font-family:'DM Sans',sans-serif;flex-shrink:0">Lire ↗</button>
+        </div>
+        <div style="padding:0 14px">${pagesHtml}</div>
+      </div>`;
+    }).join('');
+  }, 300);
+}
+
 let _pdfSearchDebounce = null;
 function pdfSearch() {
   clearTimeout(_pdfSearchDebounce);
@@ -2481,7 +2577,7 @@ function renderNotesPanel() {
 
 // Fermer avec Echap
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closeReader(); closeMySpace(); closeGroupPanel(); }
+  if (e.key === 'Escape') { closeReader(); closeMySpace(); closeGroupPanel(); closeFulltextSearch(); }
 });
 
 async function loadFavoritesFromSheet() {
@@ -2883,6 +2979,8 @@ async function openMySpace() {
   const overlay = document.getElementById('myspaceOverlay');
   overlay.style.display = '';
   document.getElementById('myspaceName').textContent = currentUser;
+  const adminEl = document.getElementById('admin-indexation');
+if (adminEl) adminEl.style.display = currentUser === 'Matthieu' ? 'block' : 'none';
 
   // Ouverture immédiate avec les données déjà en mémoire
   renderMySpacePhrase();
