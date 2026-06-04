@@ -2046,5 +2046,22 @@
     "duree": null,
     "groupe_id": null,
     "annotations": []
+  },
+  {
+    "id": 96,
+    "titre": "Pad AG du 02_06_26",
+    "auteur": "Collectif",
+    "annee": 2026,
+    "type": "pad",
+    "langue": "fr",
+    "themes": [],
+    "urlDrive": "https://mypads2.framapad.org/mypads/?/mypads/group/bureau-6x4g9e9mr/pad/view/compte-rendu-ag-02-06-26-0d4gae9ci",
+    "description": null,
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": "g1780558492758",
+    "annotations": []
   }
 ]
