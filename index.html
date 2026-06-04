@@ -2168,6 +2168,10 @@ function openReader(id) {
 
   if (d.type === 'pad' || isFramapadUrl(d.driveUrl || '')) {
     pdf.innerHTML = `<iframe src="${d.driveUrl}" width="100%" height="100%" frameborder="0" style="border:none"></iframe>`;
+  } else if (d.driveUrl && d.driveUrl.includes('scw.cloud')) {
+    // PDF.js pour les fichiers Scaleway
+    pdf.innerHTML = `<div id="pdfjs-container" style="width:100%;height:100%;overflow-y:auto;background:#525659"></div>`;
+    loadPdfJs(d.driveUrl);
   } else if (fileId) {
     pdf.innerHTML = `<iframe src="https://drive.google.com/file/d/${fileId}/preview" allowfullscreen></iframe>`;
   } else {
@@ -2205,6 +2209,107 @@ function closeReader() {
     document.getElementById('notesPreview').innerHTML = '<span class="notes-preview-empty">Le rendu apparaît ici…</span>';
     document.getElementById('notesSaveStatus').textContent = '';
   }, 300);
+}
+
+async function loadPdfJs(url) {
+  const container = document.getElementById('pdfjs-container');
+  if (!container) return;
+
+  // Charger PDF.js si pas encore chargé
+  if (!window.pdfjsLib) {
+    await new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  }
+
+  // Barre de recherche
+  container.innerHTML = `
+    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#3b3b3b;border-bottom:1px solid #222;flex-shrink:0">
+      <input id="pdf-search-input" type="text" placeholder="Rechercher dans le document…"
+        style="flex:1;padding:5px 10px;font-family:'DM Sans',sans-serif;font-size:13px;border:1px solid #555;background:#2a2a2a;color:#fff;outline:none;border-radius:2px"
+        oninput="pdfSearch()" />
+      <span id="pdf-search-count" style="font-size:11px;color:#aaa;white-space:nowrap"></span>
+      <button onclick="pdfSearchNav(-1)" style="background:none;border:1px solid #555;color:#aaa;padding:4px 8px;cursor:pointer;font-size:12px">▲</button>
+      <button onclick="pdfSearchNav(1)" style="background:none;border:1px solid #555;color:#aaa;padding:4px 8px;cursor:pointer;font-size:12px">▼</button>
+    </div>
+    <div id="pdf-pages" style="padding:16px;display:flex;flex-direction:column;gap:12px;overflow-y:auto;flex:1"></div>
+  `;
+  container.style.display = 'flex';
+  container.style.flexDirection = 'column';
+
+  try {
+    const loadingTask = pdfjsLib.getDocument(url);
+    const pdfDoc = await loadingTask.promise;
+    window._pdfDoc = pdfDoc;
+    window._pdfUrl = url;
+    window._pdfPages = [];
+    window._pdfSearchMatches = [];
+    window._pdfSearchIndex = 0;
+
+    const pagesContainer = document.getElementById('pdf-pages');
+    if (!pagesContainer) return;
+
+    for (let i = 1; i <= pdfDoc.numPages; i++) {
+      const page = await pdfDoc.getPage(i);
+      const scale = 1.5;
+      const viewport = page.getViewport({ scale });
+      const canvas = document.createElement('canvas');
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      canvas.style.width = '100%';
+      canvas.style.boxShadow = '0 2px 8px rgba(0,0,0,0.4)';
+      canvas.dataset.page = i;
+      const ctx = canvas.getContext('2d');
+      await page.render({ canvasContext: ctx, viewport }).promise;
+      pagesContainer.appendChild(canvas);
+      window._pdfPages.push({ page, canvas, viewport });
+    }
+  } catch(e) {
+    container.innerHTML = `<div class="reader-unavailable"><p>Erreur de chargement du PDF</p></div>`;
+    console.warn("PDF.js erreur", e);
+  }
+}
+
+let _pdfSearchDebounce = null;
+function pdfSearch() {
+  clearTimeout(_pdfSearchDebounce);
+  _pdfSearchDebounce = setTimeout(async () => {
+    const q = document.getElementById('pdf-search-input')?.value.trim().toLowerCase();
+    const countEl = document.getElementById('pdf-search-count');
+    if (!q || !window._pdfDoc) {
+      if (countEl) countEl.textContent = '';
+      return;
+    }
+    window._pdfSearchMatches = [];
+    for (let i = 0; i < window._pdfPages.length; i++) {
+      const { page } = window._pdfPages[i];
+      const content = await page.getTextContent();
+      const text = content.items.map(item => item.str).join(' ').toLowerCase();
+      if (text.includes(q)) {
+        window._pdfSearchMatches.push(i);
+      }
+    }
+    window._pdfSearchIndex = 0;
+    if (countEl) countEl.textContent = window._pdfSearchMatches.length + ' page(s)';
+    if (window._pdfSearchMatches.length > 0) pdfSearchNav(0);
+  }, 300);
+}
+
+function pdfSearchNav(dir) {
+  const matches = window._pdfSearchMatches;
+  if (!matches || matches.length === 0) return;
+  if (dir !== 0) window._pdfSearchIndex = (window._pdfSearchIndex + dir + matches.length) % matches.length;
+  const pageIndex = matches[window._pdfSearchIndex];
+  const canvas = window._pdfPages[pageIndex]?.canvas;
+  if (canvas) canvas.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const countEl = document.getElementById('pdf-search-count');
+  if (countEl) countEl.textContent = `${window._pdfSearchIndex + 1} / ${matches.length} page(s)`;
 }
 
 function renderNotePreview(text) {
