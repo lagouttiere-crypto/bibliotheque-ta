@@ -2433,8 +2433,19 @@ function toggleAdvancedSearch() {
   const btn = document.getElementById('advSearchBtn');
   const open = bar.classList.toggle('open');
   btn.style.color = open ? 'var(--accent)' : 'var(--ink-light)';
-  if (open) document.getElementById('adv-q').focus();
-  loadFulltextIndex();
+  if (open) {
+    const input = document.getElementById('adv-q');
+    if (fulltextState.length === 0) {
+      input.disabled = true;
+      input.placeholder = 'Chargement de l\'index…';
+    }
+    document.getElementById('adv-author').focus();
+    loadFulltextIndex().then(() => {
+      input.disabled = false;
+      input.placeholder = 'Mot, expression…';
+      input.focus();
+    });
+  }
 }
 
 function lancerRechercheAvancee() {
