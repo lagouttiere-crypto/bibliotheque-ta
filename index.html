@@ -2394,6 +2394,20 @@ function closeFulltextSearch() {
   document.body.style.overflow = '';
 }
 
+function renderFulltextPageResult(d, p, q) {
+  const idx = normalizeText(p.texte).indexOf(q);
+  const start = Math.max(0, idx - 60);
+  const end = Math.min(p.texte.length, idx + q.length + 60);
+  const extrait = (start > 0 ? '…' : '') + p.texte.substring(start, end) + (end < p.texte.length ? '…' : '');
+  return '<div style="padding:6px 0;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:8px">'
+    + '<div style="flex:1">'
+    + '<span style="font-size:10px;color:var(--accent);font-weight:500;letter-spacing:0.05em">PAGE ' + p.page + '</span>'
+    + '<div style="font-size:12px;color:var(--ink-light);line-height:1.5;margin-top:3px">' + extrait + '</div>'
+    + '</div>'
+    + '<button onclick="closeFulltextSearch();openReader(' + d.id + ',' + p.page + ')" style="font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-light);background:var(--accent-light);padding:3px 8px;cursor:pointer;font-family:\'DM Sans\',sans-serif;flex-shrink:0;margin-top:2px">p.' + p.page + ' ↗</button>'
+    + '</div>';
+}
+
 function searchFulltext() {
   clearTimeout(fulltextDebounce);
   fulltextDebounce = setTimeout(() => {
@@ -2405,7 +2419,6 @@ function searchFulltext() {
       resultsEl.innerHTML = '<span style="font-size:13px;color:var(--ink-faint);font-style:italic">Tapez au moins 3 caractères…</span>';
       return;
     }
-    // Grouper les résultats par doc
     const byDoc = {};
     fulltextState.forEach(row => {
       const texte = normalizeText(String(row.texte || ''));
@@ -2424,40 +2437,18 @@ function searchFulltext() {
       const d = docs.find(doc => String(doc.id) === docId);
       if (!d) return '';
       const pages = byDoc[docId];
-      const pagesHtml = pages.slice(0, 3).map(p => {
-        // Extraire un extrait autour du mot cherché
-        const idx = normalizeText(p.texte).indexOf(q);
-        const start = Math.max(0, idx - 60);
-        const end = Math.min(p.texte.length, idx + q.length + 60);
-        const extrait = (start > 0 ? '…' : '') + p.texte.substring(start, end) + (end < p.texte.length ? '…' : '');
-        return `<div style="padding:6px 0;border-bottom:1px solid var(--border)">
-          <span style="font-size:10px;color:var(--accent);font-weight:500;letter-spacing:0.05em">PAGE ${p.page}</span>
-          <div style="font-size:12px;color:var(--ink-light);line-height:1.5;margin-top:3px">${extrait}</div>
-        </div>`;
-      }).join('');
-      return `<div style="margin-bottom:16px;border:1px solid var(--border);background:var(--white)">
-  <div style="padding:10px 14px;background:var(--cream);border-bottom:1px solid var(--border)">
-    <div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:400;color:var(--ink)">${d.title}</div>
-    <div style="font-size:11px;color:var(--ink-faint);font-style:italic;margin-bottom:8px">${d.author || ''} · ${pages.length} page${pages.length !== 1 ? 's' : ''} trouvée${pages.length !== 1 ? 's' : ''}</div>
-    <button onclick="closeFulltextSearch();openReader(${d.id},${pages[0].page})" style="font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-light);background:var(--accent-light);padding:4px 10px;cursor:pointer;font-family:'DM Sans',sans-serif">Ouvrir le document ↗</button>
-  </div>
-  <div style="padding:0 14px">
-    ${pages.slice(0, 3).map(p => {
-      const idx = normalizeText(p.texte).indexOf(q);
-      const start = Math.max(0, idx - 60);
-      const end = Math.min(p.texte.length, idx + q.length + 60);
-      const extrait = (start > 0 ? '…' : '') + p.texte.substring(start, end) + (end < p.texte.length ? '…' : '');
-      return `<div style="padding:6px 0;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
-        <div style="flex:1">
-          <span style="font-size:10px;color:var(--accent);font-weight:500;letter-spacing:0.05em">PAGE ${p.page}</span>
-          <div style="font-size:12px;color:var(--ink-light);line-height:1.5;margin-top:3px">${extrait}</div>
-        </div>
-        <button onclick="closeFulltextSearch();openReader(${d.id},${p.page})" style="font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-light);background:var(--accent-light);padding:3px 8px;cursor:pointer;font-family:'DM Sans',sans-serif;flex-shrink:0;margin-top:2px">p.${p.page} ↗</button>
-      </div>`;
-    }).join('')}
-    </div>
-  </div>`;
-  }
+      const pagesHtml = pages.slice(0, 3).map(p => renderFulltextPageResult(d, p, q)).join('');
+      return '<div style="margin-bottom:16px;border:1px solid var(--border);background:var(--white)">'
+        + '<div style="padding:10px 14px;background:var(--cream);border-bottom:1px solid var(--border)">'
+        + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:16px;font-weight:400;color:var(--ink)">' + d.title + '</div>'
+        + '<div style="font-size:11px;color:var(--ink-faint);font-style:italic;margin-bottom:8px">' + (d.author || '') + ' · ' + pages.length + ' page' + (pages.length !== 1 ? 's' : '') + ' trouvée' + (pages.length !== 1 ? 's' : '') + '</div>'
+        + '<button onclick="closeFulltextSearch();openReader(' + d.id + ',' + pages[0].page + ')" style="font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-light);background:var(--accent-light);padding:4px 10px;cursor:pointer;font-family:\'DM Sans\',sans-serif">Ouvrir le document ↗</button>'
+        + '</div>'
+        + '<div style="padding:0 14px">' + pagesHtml + '</div>'
+        + '</div>';
+    }).join('');
+  }, 300);
+}
 
 let _pdfSearchDebounce = null;
 function pdfSearch() {
