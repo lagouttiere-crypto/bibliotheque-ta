@@ -2462,9 +2462,13 @@ async function pdfZoom(delta) {
   const zoomEl = document.getElementById('pdf-zoom-level');
   if (zoomEl) zoomEl.textContent = Math.round(newScale * 100) + '%';
   if (!window._pdfDoc || !window._pdfPages) return;
-  const pagesContainer = document.getElementById('pdf-pages');
-  if (!pagesContainer) return;
-  // Re-rendre toutes les pages au nouveau scale
+
+  // Annuler les renders en cours
+  if (window._pdfRenderTasks) {
+    window._pdfRenderTasks.forEach(t => { try { t.cancel(); } catch(e) {} });
+  }
+  window._pdfRenderTasks = [];
+
   for (let i = 0; i < window._pdfPages.length; i++) {
     const { page, canvas } = window._pdfPages[i];
     const viewport = page.getViewport({ scale: newScale });
@@ -2472,7 +2476,9 @@ async function pdfZoom(delta) {
     canvas.height = viewport.height;
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    await page.render({ canvasContext: ctx, viewport }).promise;
+    const task = page.render({ canvasContext: ctx, viewport });
+    window._pdfRenderTasks.push(task);
+    try { await task.promise; } catch(e) { if (e?.name !== 'RenderingCancelledException') console.warn(e); }
   }
 }
 
