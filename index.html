@@ -1120,6 +1120,79 @@
     .reader-pdf { min-height: 40vh; border-right: none; border-bottom: 1px solid var(--border); }
     .reader-notes-col { width: 100%; }
   }
+
+/* ── RECHERCHE AVANCÉE ── */
+#advSearchBar {
+  position: sticky;
+  top: 56px;
+  z-index: 99;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  display: none;
+  animation: slideDown 0.2s ease;
+}
+#advSearchBar.open { display: block; }
+.adv-search-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+.adv-field label {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.adv-field input, .adv-field select {
+  width: 100%;
+  border: 1px solid var(--border);
+  background: var(--cream);
+  padding: 7px 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.adv-field input:focus, .adv-field select:focus { border-color: var(--accent); background: var(--white); }
+.adv-active-filters {
+  padding: 0 2rem 10px;
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.adv-pill {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--accent-light);
+  color: var(--accent);
+  border: 1px solid var(--accent-light);
+  padding: 3px 10px;
+  font-size: 11px;
+  font-family: 'DM Sans', sans-serif;
+}
+.adv-pill button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--accent);
+  font-size: 14px;
+  line-height: 1;
+  padding: 0;
+}
+.adv-pill button:hover { color: var(--ink); }
+@media (max-width: 700px) {
+  .adv-search-inner { grid-template-columns: 1fr 1fr; }
+}
 </style>
 </head>
 <body>
@@ -1147,12 +1220,77 @@
       Bibliothèque TA
       <span>Collection ATI France</span>
     </div>
+    <button onclick="toggleAdvancedSearch()" id="advSearchBtn"
+      style="display:flex;align-items:center;gap:6px;background:none;border:1px solid var(--border);padding:6px 14px;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-light);cursor:pointer;transition:all 0.15s"
+      onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'"
+      onmouseout="if(!document.getElementById('advSearchBar').classList.contains('open')){this.style.borderColor='var(--border)';this.style.color='var(--ink-light)'}">
+      ⌕ Recherche avancée
+</button>
     <div class="header-user">
       <div class="avatar" id="userAvatar" onclick="openMySpace()" style="cursor:pointer" title="Mon espace"></div>
       <span id="userName" onclick="openMySpace()" style="cursor:pointer"></span>
       <button onclick="openMySpace()" style="background:none;border:1px solid var(--border);padding:5px 12px;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);cursor:pointer;transition:all 0.15s;" onmouseover="this.style.background='var(--accent-light)'" onmouseout="this.style.background='none'">Ma biblio</button>
     </div>
   </header>
+
+  <!-- RECHERCHE AVANCÉE -->
+<div id="advSearchBar">
+  <div class="adv-search-inner">
+    <div class="adv-field">
+      <label>Texte libre</label>
+      <input type="text" id="adv-q" placeholder="Titre, auteur, thème…" oninput="applyAdvSearch()" />
+    </div>
+    <div class="adv-field">
+      <label>Auteur</label>
+      <input type="text" id="adv-author" placeholder="ex: Carrington" oninput="applyAdvSearch()" />
+    </div>
+    <div class="adv-field">
+      <label>Année (de — à)</label>
+      <div style="display:flex;gap:6px">
+        <input type="number" id="adv-year-from" placeholder="1900" oninput="applyAdvSearch()" style="width:50%" />
+        <input type="number" id="adv-year-to" placeholder="2026" oninput="applyAdvSearch()" style="width:50%" />
+      </div>
+    </div>
+    <div class="adv-field">
+      <label>Type</label>
+      <select id="adv-type" onchange="applyAdvSearch()">
+        <option value="">Tous</option>
+        <option value="article">Article</option>
+        <option value="livre">Livre</option>
+        <option value="transcription">Transcription</option>
+        <option value="revue">Revue</option>
+        <option value="vidéo">Vidéo</option>
+        <option value="audio">Audio</option>
+        <option value="pad">Pad</option>
+      </select>
+    </div>
+    <div class="adv-field">
+      <label>Langue</label>
+      <select id="adv-lang" onchange="applyAdvSearch()">
+        <option value="">Toutes</option>
+        <option value="fr">Français</option>
+        <option value="en">English</option>
+      </select>
+    </div>
+    <div class="adv-field">
+      <label>Thème</label>
+      <select id="adv-theme" onchange="applyAdvSearch()">
+        <option value="">Tous</option>
+        <option value="fondements">Fondements</option>
+        <option value="pédagogie">Pédagogie</option>
+        <option value="pédagogie somatique">Péd. somatique</option>
+        <option value="corps & mouvement">Corps & mouvement</option>
+        <option value="phénoménologie">Phénoménologie</option>
+        <option value="enaction">Enaction</option>
+        <option value="neurosciences">Neurosciences</option>
+        <option value="physiologie">Physiologie</option>
+        <option value="arts">Arts</option>
+        <option value="philosophie">Philosophie</option>
+      </select>
+    </div>
+  </div>
+  <div class="adv-active-filters" id="advPills"></div>
+</div>
 
   <div class="main-layout">
     <aside>
@@ -1162,8 +1300,6 @@
   <span class="search-icon">⌕</span>
   <input type="text" id="searchInput" placeholder="Rechercher..." oninput="renderDocs()" />
 </div>
-<button class="filter-btn" style="margin-bottom:1.5rem;color:var(--accent);border:1px solid var(--accent-light);background:var(--accent-light);text-align:center;letter-spacing:0.05em" onclick="openFulltextSearch()">⌕ Recherche dans les textes</button>
-
         <div class="sidebar-section">
           <div class="sidebar-label">Type</div>
           <button class="filter-btn active" onclick="setFilter('type','tous',this)">Tous<span class="filter-count" id="cnt-type-tous"></span></button>
@@ -1479,6 +1615,13 @@ function normalizeText(v) {
   return String(v || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
 
+function truncateAuthors(authorStr, max = 3) {
+  if (!authorStr) return '—';
+  const parts = authorStr.split(',').map(s => s.trim()).filter(Boolean);
+  if (parts.length <= max) return authorStr;
+  return parts.slice(0, max).join(', ') + '…';
+}
+
 function sortDocs(list) {
   const mode = document.getElementById('sortSelect') ? document.getElementById('sortSelect').value : 'curated';
   const arr = [...list];
@@ -1705,17 +1848,7 @@ function setFilter(key, val, el) {
   renderDocs();
 }
 
-function getFiltered() {
-  const q = normalizeText(
-    document.getElementById('searchInput')?.value || ''
-  );
-   // Groupes dont l'utilisateur est membre
-  const mesGroupeIds = groupesState
-    .filter(g => g.membres.includes(currentUser))
-    .map(g => g.id);
-
-  return docs.filter(d => {
-    // Doc privé à un groupe → visible seulement si membre
+return docs.filter(d => {
     if (d.groupe_id && d.groupe_id !== '') {
       if (!mesGroupeIds.includes(String(d.groupe_id).trim())) return false;
     }
@@ -1725,21 +1858,27 @@ function getFiltered() {
     if (filters.gen !== 'tous' && !d.themes.includes(filters.gen)) return false;
     if (activeTag && !(tagsState[d.id]||[]).includes(activeTag)) return false;
 
-    if (q) {
+    // Filtres avancés
+    if (advFilters.type   && d.type !== advFilters.type) return false;
+    if (advFilters.lang   && d.lang !== advFilters.lang) return false;
+    if (advFilters.theme  && !d.themes.includes(advFilters.theme)) return false;
+    if (advFilters.author && !normalizeText(d.author||'').includes(normalizeText(advFilters.author))) return false;
+    if (advFilters.yearFrom && (d.year||0) < advFilters.yearFrom) return false;
+    if (advFilters.yearTo   && (d.year||0) > advFilters.yearTo)   return false;
+
+    if (advFilters.q || q) {
       const searchable = normalizeText([
-        d.title,
-        d.author,
-        d.description,
+        d.title, d.author, d.description,
         d.themes.join(' '),
         (tagsState[d.id]||[]).join(' '),
         (annotationsState[d.id]||[]).map(a => a.text).join(' ')
       ].join(' '));
-      if (!searchable.includes(q)) return false;
+      if (advFilters.q && !searchable.includes(normalizeText(advFilters.q))) return false;
+      if (q && !searchable.includes(q)) return false;
     }
 
     return true;
   });
-}
 
 /// FORMATGE DATE
 function formatDateFR(dateString) {
@@ -1877,7 +2016,7 @@ function renderDocs() {
           ${d.physique ? '<span class="badge" style="color:#8B6F47;border-color:#8B6F47;background:#F0E8DC">📚 physique</span>' : ''}
         </div>
         <div class="doc-title">${d.title}</div>
-        <div class="doc-author">${d.author || '—'}${yearStr}</div>
+        <div class="doc-author">${truncateAuthors(d.author)}${yearStr}</div>
         ${isVideo && d.duree ? `<div style="font-size:12px;color:var(--ink-light)">Durée : ${d.duree}</div>` : ''}
         ${empruntHtml}
         <div class="doc-themes">
@@ -1905,8 +2044,7 @@ function renderDocs() {
       <div class="doc-detail ${isOpen ? 'visible' : ''}" id="detail-${d.id}">
         <div class="detail-inner">
           <div class="detail-title">${d.title}</div>
-          <div class="detail-author">${d.author || 'Auteur inconnu'}${yearStr}</div>
-          <div style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:1.25rem">${d.type}${d.lang ? ' · ' + d.lang.toUpperCase() : ''}${d.year ? ' · ' + d.year : ''}</div>
+          <div class="detail-author">${truncateAuthors(d.author)}${yearStr}</div>          <div style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:1.25rem">${d.type}${d.lang ? ' · ' + d.lang.toUpperCase() : ''}${d.year ? ' · ' + d.year : ''}</div>
           ${d.description ? `<div style="font-size:13px;color:var(--ink-light);line-height:1.6;margin-bottom:1.25rem;padding:10px 16px;border-left:2px solid var(--border);font-style:italic">${d.description}</div>` : ''}
           ${isVideo ? getVideoDetailHtml(d) : ''}
           ${isAudio ? getAudioDetailHtml(d) : ''}
@@ -2254,6 +2392,78 @@ async function loadPdfJs(url) {
     pdfjsLib.GlobalWorkerOptions.workerSrc =
       'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
   }
+
+
+  /* ── RECHERCHE AVANCÉE ── */
+let advFilters = {};
+
+function toggleAdvancedSearch() {
+  const bar = document.getElementById('advSearchBar');
+  const btn = document.getElementById('advSearchBtn');
+  const open = bar.classList.toggle('open');
+  btn.style.borderColor = open ? 'var(--accent)' : 'var(--border)';
+  btn.style.color = open ? 'var(--accent)' : 'var(--ink-light)';
+  if (!open) {
+    clearAdvSearch();
+  } else {
+    document.getElementById('adv-q').focus();
+  }
+}
+
+function applyAdvSearch() {
+  advFilters = {
+    q:        document.getElementById('adv-q').value.trim(),
+    author:   document.getElementById('adv-author').value.trim(),
+    yearFrom: parseInt(document.getElementById('adv-year-from').value) || null,
+    yearTo:   parseInt(document.getElementById('adv-year-to').value) || null,
+    type:     document.getElementById('adv-type').value,
+    lang:     document.getElementById('adv-lang').value,
+    theme:    document.getElementById('adv-theme').value,
+  };
+  renderAdvPills();
+  renderDocs();
+}
+
+function clearAdvSearch() {
+  ['adv-q','adv-author','adv-year-from','adv-year-to'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  ['adv-type','adv-lang','adv-theme'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  advFilters = {};
+  renderAdvPills();
+  renderDocs();
+}
+
+function renderAdvPills() {
+  const container = document.getElementById('advPills');
+  if (!container) return;
+  const labels = {
+    q: 'Texte', author: 'Auteur', type: 'Type',
+    lang: 'Langue', theme: 'Thème',
+    yearFrom: 'Depuis', yearTo: "Jusqu'à"
+  };
+  const pills = Object.entries(advFilters)
+    .filter(([k, v]) => v)
+    .map(([k, v]) => `
+      <span class="adv-pill">
+        ${labels[k]} : <strong>${v}</strong>
+        <button onclick="clearAdvField('${k}')">×</button>
+      </span>`).join('');
+  container.innerHTML = pills;
+}
+
+function clearAdvField(key) {
+  const ids = { q:'adv-q', author:'adv-author', yearFrom:'adv-year-from', yearTo:'adv-year-to', type:'adv-type', lang:'adv-lang', theme:'adv-theme' };
+  const el = document.getElementById(ids[key]);
+  if (el) el.value = '';
+  delete advFilters[key];
+  renderAdvPills();
+  renderDocs();
+}
 
   // Barre de recherche
   container.innerHTML = `
