@@ -1238,21 +1238,33 @@
 
   <!-- RECHERCHE AVANCÉE -->
 <div id="advSearchBar">
-  <div class="adv-search-inner">
+  <div class="adv-search-inner" style="grid-template-columns:1fr 1fr 1fr auto;align-items:flex-end">
     <div class="adv-field">
       <label>Texte libre</label>
-      <input type="text" id="adv-q" placeholder="Titre, auteur, thème…" oninput="applyAdvSearch()" />
+      <input type="text" id="adv-q" placeholder="Mot, expression…" />
     </div>
     <div class="adv-field">
       <label>Auteur</label>
-      <input type="text" id="adv-author" placeholder="ex: Carrington" oninput="applyAdvSearch()" />
+      <input type="text" id="adv-author" placeholder="ex: Carrington" />
     </div>
     <div class="adv-field">
-      <label>Année (de — à)</label>
-      <div style="display:flex;gap:6px">
-        <input type="number" id="adv-year-from" placeholder="1900" oninput="applyAdvSearch()" style="width:50%" />
-        <input type="number" id="adv-year-to" placeholder="2026" oninput="applyAdvSearch()" style="width:50%" />
-      </div>
+      <label>Type</label>
+      <select id="adv-type">
+        <option value="">Tous</option>
+        <option value="article">Article</option>
+        <option value="livre">Livre</option>
+        <option value="transcription">Transcription</option>
+        <option value="revue">Revue</option>
+        <option value="audio">Audio</option>
+      </select>
+    </div>
+    <div class="adv-field">
+      <button onclick="lancerRechercheAvancee()"
+        style="width:100%;background:var(--accent);color:var(--white);border:none;padding:8px 16px;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer">
+        Rechercher
+      </button>
+    </div>
+  </div>
     </div>
     <div class="adv-field">
       <label>Type</label>
@@ -1866,16 +1878,9 @@ function getFiltered() {
     if (filters.theme !== 'tous' && !d.themes.includes(filters.theme)) return false;
     if (filters.gen !== 'tous' && !d.themes.includes(filters.gen)) return false;
     if (activeTag && !(tagsState[d.id]||[]).includes(activeTag)) return false;
-    if (advFilters.type  && d.type !== advFilters.type) return false;
-    if (advFilters.lang  && d.lang !== advFilters.lang) return false;
-    if (advFilters.theme && !d.themes.includes(advFilters.theme)) return false;
-    if (advFilters.author && !normalizeText(d.author||'').includes(normalizeText(advFilters.author))) return false;
-    if (advFilters.yearFrom && (d.year||0) < advFilters.yearFrom) return false;
-    if (advFilters.yearTo   && (d.year||0) > advFilters.yearTo)   return false;
-    if (advFilters.q || q) {
+    if (q) {
       const searchable = normalizeText([d.title, d.author, d.description, d.themes.join(' '), (tagsState[d.id]||[]).join(' '), (annotationsState[d.id]||[]).map(a => a.text).join(' ')].join(' '));
-      if (advFilters.q && !searchable.includes(normalizeText(advFilters.q))) return false;
-      if (q && !searchable.includes(q)) return false;
+      if (!searchable.includes(q)) return false;
     }
     return true;
   });
@@ -2466,68 +2471,26 @@ function toggleAdvancedSearch() {
   const bar = document.getElementById('advSearchBar');
   const btn = document.getElementById('advSearchBtn');
   const open = bar.classList.toggle('open');
-  btn.style.borderColor = open ? 'var(--accent)' : 'var(--border)';
   btn.style.color = open ? 'var(--accent)' : 'var(--ink-light)';
-  if (!open) {
-    clearAdvSearch();
-  } else {
-    document.getElementById('adv-q').focus();
-  }
+  if (open) document.getElementById('adv-q').focus();
 }
 
-function applyAdvSearch() {
-  advFilters = {
-    q:        document.getElementById('adv-q').value.trim(),
-    author:   document.getElementById('adv-author').value.trim(),
-    yearFrom: parseInt(document.getElementById('adv-year-from').value) || null,
-    yearTo:   parseInt(document.getElementById('adv-year-to').value) || null,
-    type:     document.getElementById('adv-type').value,
-    lang:     document.getElementById('adv-lang').value,
-    theme:    document.getElementById('adv-theme').value,
-  };
-  renderAdvPills();
-  renderDocs();
-}
+function lancerRechercheAvancee() {
+  const q      = document.getElementById('adv-q').value.trim();
+  const author = document.getElementById('adv-author').value.trim();
+  const type   = document.getElementById('adv-type').value;
 
-function clearAdvSearch() {
-  ['adv-q','adv-author','adv-year-from','adv-year-to'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.value = '';
-  });
-  ['adv-type','adv-lang','adv-theme'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.value = '';
-  });
-  advFilters = {};
-  renderAdvPills();
-  renderDocs();
-}
+  // Pré-remplir le champ fulltext avec le texte libre
+  if (q) document.getElementById('fulltextInput').value = q;
 
-function renderAdvPills() {
-  const container = document.getElementById('advPills');
-  if (!container) return;
-  const labels = {
-    q: 'Texte', author: 'Auteur', type: 'Type',
-    lang: 'Langue', theme: 'Thème',
-    yearFrom: 'Depuis', yearTo: "Jusqu'à"
-  };
-  const pills = Object.entries(advFilters)
-    .filter(([k, v]) => v)
-    .map(([k, v]) => `
-      <span class="adv-pill">
-        ${labels[k]} : <strong>${v}</strong>
-        <button onclick="clearAdvField('${k}')">×</button>
-      </span>`).join('');
-  container.innerHTML = pills;
-}
+  // Stocker les filtres pour searchFulltext
+  window._advAuthor = author.toLowerCase();
+  window._advType   = type;
 
-function clearAdvField(key) {
-  const ids = { q:'adv-q', author:'adv-author', yearFrom:'adv-year-from', yearTo:'adv-year-to', type:'adv-type', lang:'adv-lang', theme:'adv-theme' };
-  const el = document.getElementById(ids[key]);
-  if (el) el.value = '';
-  delete advFilters[key];
-  renderAdvPills();
-  renderDocs();
+  // Fermer le panneau avancé et ouvrir fulltext
+  document.getElementById('advSearchBar').classList.remove('open');
+  openFulltextSearch();
+  searchFulltext();
 }
 
 function getFiltered() {
@@ -2662,6 +2625,9 @@ function searchFulltext() {
     fulltextState.forEach(row => {
       const texte = normalizeText(String(row.texte || ''));
       if (!texte.includes(q)) return;
+      const docObj = docs.find(doc => String(doc.id) === String(row.doc_id).trim());
+      if (window._advAuthor && docObj && !normalizeText(docObj.author||'').includes(normalizeText(window._advAuthor))) return;
+      if (window._advType   && docObj && docObj.type !== window._advType) return;
       const docId = String(row.doc_id).trim();
       if (!byDoc[docId]) byDoc[docId] = [];
       byDoc[docId].push({ page: row.page, texte: String(row.texte || '') });
