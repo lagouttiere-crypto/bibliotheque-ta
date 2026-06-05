@@ -1848,7 +1848,13 @@ function setFilter(key, val, el) {
   renderDocs();
 }
 
-return docs.filter(d => {
+function getFiltered() {
+  const q = normalizeText(document.getElementById('searchInput')?.value || '');
+  const mesGroupeIds = groupesState
+    .filter(g => g.membres.includes(currentUser))
+    .map(g => g.id);
+
+  return docs.filter(d => {
     if (d.groupe_id && d.groupe_id !== '') {
       if (!mesGroupeIds.includes(String(d.groupe_id).trim())) return false;
     }
@@ -1857,28 +1863,21 @@ return docs.filter(d => {
     if (filters.theme !== 'tous' && !d.themes.includes(filters.theme)) return false;
     if (filters.gen !== 'tous' && !d.themes.includes(filters.gen)) return false;
     if (activeTag && !(tagsState[d.id]||[]).includes(activeTag)) return false;
-
-    // Filtres avancés
-    if (advFilters.type   && d.type !== advFilters.type) return false;
-    if (advFilters.lang   && d.lang !== advFilters.lang) return false;
-    if (advFilters.theme  && !d.themes.includes(advFilters.theme)) return false;
+    if (advFilters.type  && d.type !== advFilters.type) return false;
+    if (advFilters.lang  && d.lang !== advFilters.lang) return false;
+    if (advFilters.theme && !d.themes.includes(advFilters.theme)) return false;
     if (advFilters.author && !normalizeText(d.author||'').includes(normalizeText(advFilters.author))) return false;
     if (advFilters.yearFrom && (d.year||0) < advFilters.yearFrom) return false;
     if (advFilters.yearTo   && (d.year||0) > advFilters.yearTo)   return false;
-
     if (advFilters.q || q) {
-      const searchable = normalizeText([
-        d.title, d.author, d.description,
-        d.themes.join(' '),
-        (tagsState[d.id]||[]).join(' '),
-        (annotationsState[d.id]||[]).map(a => a.text).join(' ')
-      ].join(' '));
+      const searchable = normalizeText([d.title, d.author, d.description, d.themes.join(' '), (tagsState[d.id]||[]).join(' '), (annotationsState[d.id]||[]).map(a => a.text).join(' ')].join(' '));
       if (advFilters.q && !searchable.includes(normalizeText(advFilters.q))) return false;
       if (q && !searchable.includes(q)) return false;
     }
-
     return true;
   });
+}
+
 
 /// FORMATGE DATE
 function formatDateFR(dateString) {
@@ -2380,7 +2379,6 @@ async function loadPdfJs(url) {
   const container = document.getElementById('pdfjs-container');
   if (!container) return;
 
-  // Charger PDF.js si pas encore chargé
   if (!window.pdfjsLib) {
     await new Promise((resolve, reject) => {
       const script = document.createElement('script');
@@ -2393,8 +2391,72 @@ async function loadPdfJs(url) {
       'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
   }
 
+  // Barre de recherche
+  container.innerHTML = `
+  <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#3b3b3b;border-bottom:1px solid #222;flex-shrink:0">
+    <input id="pdf-search-input" type="text" placeholder="Rechercher dans le document…"
+      style="flex:1;padding:5px 10px;font-family:'DM Sans',sans-serif;font-size:13px;border:1px solid #555;background:#2a2a2a;color:#fff;outline:none;border-radius:2px"
+      oninput="pdfSearch()" />
+    <span id="pdf-search-count" style="font-size:11px;color:#aaa;white-space:nowrap"></span>
+    <button onclick="pdfSearchNav(-1)" style="background:none;border:1px solid #555;color:#aaa;padding:4px 8px;cursor:pointer;font-size:12px">▲</button>
+    <button onclick="pdfSearchNav(1)" style="background:none;border:1px solid #555;color:#aaa;padding:4px 8px;cursor:pointer;font-size:12px">▼</button>
+    <div style="width:1px;height:20px;background:#555;margin:0 4px"></div>
+    <button onclick="pdfZoom(-0.25)" style="background:none;border:1px solid #555;color:#aaa;padding:4px 10px;cursor:pointer;font-size:14px;line-height:1">−</button>
+    <span id="pdf-zoom-level" style="font-size:11px;color:#aaa;min-width:32px;text-align:center">150%</span>
+    <button onclick="pdfZoom(+0.25)" style="background:none;border:1px solid #555;color:#aaa;padding:4px 10px;cursor:pointer;font-size:14px;line-height:1">+</button>
+  </div>
+  <div id="pdf-pages" style="padding:16px;display:flex;flex-direction:column;gap:12px;overflow-y:auto;flex:1"></div>
+`;
+  container.style.display = 'flex';
+  container.style.flexDirection = 'column';
 
-  /* ── RECHERCHE AVANCÉE ── */
+  try {
+    const loadingTask = pdfjsLib.getDocument(url);
+    const pdfDoc = await loadingTask.promise;
+    window._pdfDoc = pdfDoc;
+    window._pdfUrl = url;
+    window._pdfPages = [];
+    window._pdfSearchMatches = [];
+    window._pdfSearchIndex = 0;
+
+    const pagesContainer = document.getElementById('pdf-pages');
+    if (!pagesContainer) return;
+
+    for (let i = 1; i <= pdfDoc.numPages; i++) {
+      const page = await pdfDoc.getPage(i);
+      const container = document.getElementById('pdfjs-container');
+      const containerWidth = container ? container.offsetWidth - 32 : 800;
+      const firstPage = await pdfDoc.getPage(1);
+      const firstViewport = firstPage.getViewport({ scale: 1 });
+      const scale = containerWidth / firstViewport.width;
+      window._pdfScale = scale;
+      const zoomEl = document.getElementById('pdf-zoom-level');
+      if (zoomEl) zoomEl.textContent = Math.round(scale * 100) + '%';
+      const viewport = page.getViewport({ scale });
+      const canvas = document.createElement('canvas');
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      canvas.style.width = viewport.width + 'px';
+      canvas.style.height = viewport.height + 'px';
+      canvas.style.boxShadow = '0 2px 8px rgba(0,0,0,0.4)';
+      canvas.dataset.page = i;
+      const ctx = canvas.getContext('2d');
+      await page.render({ canvasContext: ctx, viewport }).promise;
+      pagesContainer.appendChild(canvas);
+      window._pdfPages.push({ page, canvas, viewport });
+    }
+    if (window._pdfTargetPage) {
+      const idx = window._pdfTargetPage - 1;
+      const canvas = window._pdfPages[idx]?.canvas;
+      if (canvas) setTimeout(() => canvas.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+    }
+  } catch(e) {
+    container.innerHTML = `<div class="reader-unavailable"><p>Erreur de chargement du PDF</p></div>`;
+    console.warn("PDF.js erreur", e);
+  }
+}
+
+/* ── RECHERCHE AVANCÉE ── */
 let advFilters = {};
 
 function toggleAdvancedSearch() {
@@ -2465,70 +2527,34 @@ function clearAdvField(key) {
   renderDocs();
 }
 
-  // Barre de recherche
-  container.innerHTML = `
-  <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#3b3b3b;border-bottom:1px solid #222;flex-shrink:0">
-    <input id="pdf-search-input" type="text" placeholder="Rechercher dans le document…"
-      style="flex:1;padding:5px 10px;font-family:'DM Sans',sans-serif;font-size:13px;border:1px solid #555;background:#2a2a2a;color:#fff;outline:none;border-radius:2px"
-      oninput="pdfSearch()" />
-    <span id="pdf-search-count" style="font-size:11px;color:#aaa;white-space:nowrap"></span>
-    <button onclick="pdfSearchNav(-1)" style="background:none;border:1px solid #555;color:#aaa;padding:4px 8px;cursor:pointer;font-size:12px">▲</button>
-    <button onclick="pdfSearchNav(1)" style="background:none;border:1px solid #555;color:#aaa;padding:4px 8px;cursor:pointer;font-size:12px">▼</button>
-    <div style="width:1px;height:20px;background:#555;margin:0 4px"></div>
-    <button onclick="pdfZoom(-0.25)" style="background:none;border:1px solid #555;color:#aaa;padding:4px 10px;cursor:pointer;font-size:14px;line-height:1">−</button>
-    <span id="pdf-zoom-level" style="font-size:11px;color:#aaa;min-width:32px;text-align:center">150%</span>
-    <button onclick="pdfZoom(+0.25)" style="background:none;border:1px solid #555;color:#aaa;padding:4px 10px;cursor:pointer;font-size:14px;line-height:1">+</button>
-  </div>
-  <div id="pdf-pages" style="padding:16px;display:flex;flex-direction:column;gap:12px;overflow-y:auto;flex:1"></div>
-`;
-  container.style.display = 'flex';
-  container.style.flexDirection = 'column';
+function getFiltered() {
+  const q = normalizeText(document.getElementById('searchInput')?.value || '');
+  const mesGroupeIds = groupesState
+    .filter(g => g.membres.includes(currentUser))
+    .map(g => g.id);
 
-  try {
-    const loadingTask = pdfjsLib.getDocument(url);
-    const pdfDoc = await loadingTask.promise;
-    window._pdfDoc = pdfDoc;
-    window._pdfUrl = url;
-    window._pdfPages = [];
-    window._pdfSearchMatches = [];
-    window._pdfSearchIndex = 0;
-    //window._pdfScale = 1.5;
-
-    const pagesContainer = document.getElementById('pdf-pages');
-    if (!pagesContainer) return;
-
-    for (let i = 1; i <= pdfDoc.numPages; i++) {
-      const page = await pdfDoc.getPage(i);
-      const container = document.getElementById('pdfjs-container');
-      const containerWidth = container ? container.offsetWidth - 32 : 800; // 32 = padding
-      const firstPage = await pdfDoc.getPage(1);
-      const firstViewport = firstPage.getViewport({ scale: 1 });
-      const scale = containerWidth / firstViewport.width;
-      window._pdfScale = scale;
-      const zoomEl = document.getElementById('pdf-zoom-level');
-      if (zoomEl) zoomEl.textContent = Math.round(scale * 100) + '%';
-      const viewport = page.getViewport({ scale });
-      const canvas = document.createElement('canvas');
-      canvas.width = viewport.width;
-      canvas.height = viewport.height;
-      canvas.style.width = viewport.width + 'px';
-      canvas.style.height = viewport.height + 'px';
-      canvas.style.boxShadow = '0 2px 8px rgba(0,0,0,0.4)';
-      canvas.dataset.page = i;
-      const ctx = canvas.getContext('2d');
-      await page.render({ canvasContext: ctx, viewport }).promise;
-      pagesContainer.appendChild(canvas);
-      window._pdfPages.push({ page, canvas, viewport });
+  return docs.filter(d => {
+    if (d.groupe_id && d.groupe_id !== '') {
+      if (!mesGroupeIds.includes(String(d.groupe_id).trim())) return false;
     }
-    if (window._pdfTargetPage) {
-    const idx = window._pdfTargetPage - 1;
-    const canvas = window._pdfPages[idx]?.canvas;
-    if (canvas) setTimeout(() => canvas.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+    if (filters.type !== 'tous' && d.type !== filters.type) return false;
+    if (filters.lang !== 'tous' && d.lang !== filters.lang) return false;
+    if (filters.theme !== 'tous' && !d.themes.includes(filters.theme)) return false;
+    if (filters.gen !== 'tous' && !d.themes.includes(filters.gen)) return false;
+    if (activeTag && !(tagsState[d.id]||[]).includes(activeTag)) return false;
+    if (advFilters.type  && d.type !== advFilters.type) return false;
+    if (advFilters.lang  && d.lang !== advFilters.lang) return false;
+    if (advFilters.theme && !d.themes.includes(advFilters.theme)) return false;
+    if (advFilters.author && !normalizeText(d.author||'').includes(normalizeText(advFilters.author))) return false;
+    if (advFilters.yearFrom && (d.year||0) < advFilters.yearFrom) return false;
+    if (advFilters.yearTo   && (d.year||0) > advFilters.yearTo)   return false;
+    if (advFilters.q || q) {
+      const searchable = normalizeText([d.title, d.author, d.description, d.themes.join(' '), (tagsState[d.id]||[]).join(' '), (annotationsState[d.id]||[]).map(a => a.text).join(' ')].join(' '));
+      if (advFilters.q && !searchable.includes(normalizeText(advFilters.q))) return false;
+      if (q && !searchable.includes(q)) return false;
     }
-  } catch(e) {
-    container.innerHTML = `<div class="reader-unavailable"><p>Erreur de chargement du PDF</p></div>`;
-    console.warn("PDF.js erreur", e);
-  }
+    return true;
+  });
 }
 
 async function indexerDocScaleway(docId, url) {
