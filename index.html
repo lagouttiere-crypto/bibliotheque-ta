@@ -2172,7 +2172,7 @@ let currentReaderId = null;
 let noteDebounce    = null;
 let freeNoteDebounce = null;
 
-function openReader(id) {
+function openReader(id, targetPage = null) {
   const d = docs.find(doc => doc.id === id);
   if (!d) return;
   currentReaderId = id;
@@ -2213,6 +2213,12 @@ function openReader(id) {
   overlay.classList.add('open');
   panel.classList.add('open');
   document.body.style.overflow = 'hidden';
+  if (targetPage) {
+  window._pdfTargetPage = targetPage;
+  } else {
+  window._pdfTargetPage = null;
+  }
+
 }
 
 function closeReader() {
@@ -2303,6 +2309,11 @@ async function loadPdfJs(url) {
       await page.render({ canvasContext: ctx, viewport }).promise;
       pagesContainer.appendChild(canvas);
       window._pdfPages.push({ page, canvas, viewport });
+    }
+    if (window._pdfTargetPage) {
+    const idx = window._pdfTargetPage - 1;
+    const canvas = window._pdfPages[idx]?.canvas;
+    if (canvas) setTimeout(() => canvas.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
     }
   } catch(e) {
     container.innerHTML = `<div class="reader-unavailable"><p>Erreur de chargement du PDF</p></div>`;
@@ -2430,8 +2441,7 @@ function searchFulltext() {
             <div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:400;color:var(--ink)">${d.title}</div>
             <div style="font-size:11px;color:var(--ink-faint);font-style:italic">${d.author || ''} · ${pages.length} page${pages.length !== 1 ? 's' : ''} trouvée${pages.length !== 1 ? 's' : ''}</div>
           </div>
-          <button onclick="closeFulltextSearch();openReader(${d.id})" style="font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-light);background:var(--accent-light);padding:4px 10px;cursor:pointer;font-family:'DM Sans',sans-serif;flex-shrink:0">Lire ↗</button>
-        </div>
+          <button onclick="closeFulltextSearch();openReader(${d.id},${pages[0].page})" ...>Lire ↗</button>
         <div style="padding:0 14px">${pagesHtml}</div>
       </div>`;
     }).join('');
