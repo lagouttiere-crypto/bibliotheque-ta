@@ -2434,6 +2434,7 @@ function toggleAdvancedSearch() {
   const open = bar.classList.toggle('open');
   btn.style.color = open ? 'var(--accent)' : 'var(--ink-light)';
   if (open) document.getElementById('adv-q').focus();
+  loadFulltextIndex();
 }
 
 function lancerRechercheAvancee() {
