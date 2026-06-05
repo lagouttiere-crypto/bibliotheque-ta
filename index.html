@@ -2717,7 +2717,6 @@ function pdfSearch() {
     const q = document.getElementById('pdf-search-input')?.value.trim().toLowerCase();
     const countEl = document.getElementById('pdf-search-count');
 
-    // Effacer les anciens highlights search
     document.querySelectorAll('.pdfjs-hl-search').forEach(el => el.remove());
 
     if (!q || !window._pdfDoc) {
@@ -2726,26 +2725,12 @@ function pdfSearch() {
     }
     window._pdfSearchMatches = [];
     for (let i = 0; i < window._pdfPages.length; i++) {
-      const { page, hlOverlay, viewport } = window._pdfPages[i];
+      const { page } = window._pdfPages[i];
       const content = await page.getTextContent();
       const text = content.items.map(item => item.str).join(' ').toLowerCase();
-      if (!text.includes(q)) continue;
-      window._pdfSearchMatches.push(i);
-      if (!hlOverlay) continue;
-
-      // Surligner les spans de la textLayer qui contiennent le terme
-      const textLayerDiv = window._pdfPages[i].textLayerDiv;
-      if (!textLayerDiv) continue;
-      textLayerDiv.querySelectorAll('span').forEach(span => {
-        if (!span.textContent.toLowerCase().includes(q)) return;
-        const div = document.createElement('div');
-        div.className = 'pdfjs-hl-search';
-        div.style.left   = span.offsetLeft + 'px';
-        div.style.top    = span.offsetTop  + 'px';
-        div.style.width  = span.offsetWidth  + 'px';
-        div.style.height = span.offsetHeight + 'px';
-        hlOverlay.appendChild(div);
-      });
+      if (text.includes(q)) {
+        window._pdfSearchMatches.push(i);
+      }
     }
     window._pdfSearchIndex = 0;
     if (countEl) countEl.textContent = window._pdfSearchMatches.length + ' page(s)';
