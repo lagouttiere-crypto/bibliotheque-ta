@@ -2112,5 +2112,22 @@
     "duree": null,
     "groupe_id": null,
     "annotations": []
+  },
+  {
+    "id": 99,
+    "titre": "Barad-essai",
+    "auteur": null,
+    "annee": null,
+    "type": "article",
+    "langue": "fr",
+    "themes": [],
+    "urlDrive": "https://bibliotheque-ati.s3.fr-par.scw.cloud/bibliotheque/Barad-No_Small_Matter-including_last_minute_changes_copy_edited_version_fr.pdf",
+    "description": null,
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": null,
+    "annotations": []
   }
 ]
