@@ -1220,12 +1220,15 @@
       Bibliothèque TA
       <span>Collection ATI France</span>
     </div>
-    <button onclick="toggleAdvancedSearch()" id="advSearchBtn"
-      style="display:flex;align-items:center;gap:6px;background:none;border:1px solid var(--border);padding:6px 14px;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-light);cursor:pointer;transition:all 0.15s"
-      onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'"
-      onmouseout="if(!document.getElementById('advSearchBar').classList.contains('open')){this.style.borderColor='var(--border)';this.style.color='var(--ink-light)'}">
-      ⌕ Recherche avancée
-</button>
+    <div style="display:flex;align-items:center;gap:0;flex:1;margin:0 2rem">
+      <div style="width:1px;height:24px;background:var(--border);margin:0 1.5rem"></div>
+      <button onclick="toggleAdvancedSearch()" id="advSearchBtn"
+        style="background:none;border:none;padding:0;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-light);cursor:pointer;transition:all 0.15s;white-space:nowrap"
+        onmouseover="this.style.color='var(--accent)'"
+        onmouseout="if(!document.getElementById('advSearchBar').classList.contains('open')){this.style.color='var(--ink-light)'}">
+        ⌕ Recherche avancée
+      </button>
+    </div>
     <div class="header-user">
       <div class="avatar" id="userAvatar" onclick="openMySpace()" style="cursor:pointer" title="Mon espace"></div>
       <span id="userName" onclick="openMySpace()" style="cursor:pointer"></span>
@@ -1773,7 +1776,7 @@ function renderHeroLastDocs() {
       onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
       <span style="color:var(--ink-faint)">→</span>
       <span><em style="font-family:'Cormorant Garamond',serif;font-size:13px">${d.title}</em>
-      <span style="color:var(--ink-faint)"> — ${d.author || '—'}</span></span>
+      <span style="color:var(--ink-faint)"> — ${truncateAuthors(d.author)}</span>
     </div>`).join('');
 }
 
