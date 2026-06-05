@@ -2090,5 +2090,27 @@
     "duree": null,
     "groupe_id": null,
     "annotations": []
+  },
+  {
+    "id": 98,
+    "titre": "Training in the 1960s at the Constructive Teaching Centre in London",
+    "auteur": "Chariclia Gounaris",
+    "annee": 2017,
+    "type": "mémoire/thèse",
+    "langue": "en",
+    "themes": [
+      "pédagogie",
+      "fondements",
+      "1ère génération",
+      "2ème génération"
+    ],
+    "urlDrive": "https://bibliotheque-ati.s3.fr-par.scw.cloud/bibliotheque/Alexander_Technique_Teacher_Training_in_th_-_Chariclia_Gounaris.pdf",
+    "description": "Ce mémoire couvre la période de mon formation au CTC (Constructive Teaching Centre, alors situé au 18 Lansdowne Rd., Holland Park), de septembre 1964 à décembre 1967, et répond à la demande de Jean Fischer concernant des matériaux historiques sur la formation dans les années 1960. Au moment où j’ai reçu la demande de Jean (octobre 2016), Jean était encore responsable des Archives Walter Carrington au CTC. Plus précisément, sa demande visait des mémoires généraux, des observations et des impressions sur ce que représentait la formation à cette époque, et il m’a demandé de préciser si nous avions ou non des cours sur l’anatomie ou la physiologie, et, si des « jeux » étaient utilisés, de décrire ce qu’ils comprenaient.",
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": null,
+    "annotations": []
   }
 ]
