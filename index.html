@@ -1193,6 +1193,7 @@
 @media (max-width: 700px) {
   .adv-search-inner { grid-template-columns: 1fr 1fr; }
 }
+@keyframes spin { to { transform: rotate(360deg); } }
 </style>
 </head>
 <body>
@@ -2535,10 +2536,13 @@ let fulltextDebounce = null;
 
 async function loadFulltextIndex() {
   if (fulltextState.length > 0) return;
+  document.getElementById('fulltext-count').textContent = 'Chargement…';
   try {
     const res = await fetch(`${SHEET_URL}?sheet=fulltext&v=${Date.now()}`);
     const rows = await res.json();
     if (Array.isArray(rows)) fulltextState = rows;
+    document.getElementById('fulltext-count').textContent = '';
+    document.getElementById('fulltextResults').innerHTML = '<span style="font-size:13px;color:var(--ink-faint);font-style:italic">Index prêt, tapez votre recherche…</span>';
   } catch(e) { console.warn("Fulltext non chargé", e); }
 }
 
@@ -2547,6 +2551,9 @@ function openFulltextSearch() {
   document.getElementById('fulltextPanel').style.transform = 'translateX(0)';
   document.body.style.overflow = 'hidden';
   document.getElementById('fulltextInput').focus();
+  if (fulltextState.length === 0) {
+    document.getElementById('fulltextResults').innerHTML = '<div style="display:flex;align-items:center;gap:10px;padding:1rem;color:var(--ink-faint);font-size:13px"><span style="display:inline-block;width:16px;height:16px;border:2px solid var(--accent-light);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite;flex-shrink:0"></span>Chargement de l\'index…</div>';
+  }
   loadFulltextIndex();
 }
 
