@@ -2561,14 +2561,17 @@ function renderFulltextPageResult(d, p, q) {
   const start = Math.max(0, idx - 60);
   const end = Math.min(p.texte.length, idx + q.length + 60);
   const extraitBrut = (start > 0 ? '…' : '') + p.texte.substring(start, end) + (end < p.texte.length ? '…' : '');
-  const extrait = extraitBrut.replace(new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi'), '<mark style="background:#FFF3B0;color:var(--ink);padding:0 2px;border-radius:2px">$1</mark>');
-  return '<div style="padding:6px 0;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:8px">'
-    + '<div style="flex:1">'
-    + '<span style="font-size:10px;color:var(--accent);font-weight:500;letter-spacing:0.05em">PAGE ' + p.page + '</span>'
-    + '<div style="font-size:12px;color:var(--ink-light);line-height:1.5;margin-top:3px">' + extrait + '</div>'
-    + '</div>'
-    + '<button onclick="closeFulltextSearch();openReader(' + d.id + ',' + p.page + ')" style="font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-light);background:var(--accent-light);padding:3px 8px;cursor:pointer;font-family:\'DM Sans\',sans-serif;flex-shrink:0;margin-top:2px">p.' + p.page + ' ↗</button>'
-    + '</div>';
+  const extrait = extraitBrut.replace(
+    new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi'),
+    '<mark style="background:#FFF3B0;color:var(--ink);padding:0 2px;border-radius:2px">$1</mark>'
+  );
+  return `<div style="padding:6px 0;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
+    <div style="flex:1">
+      <span style="font-size:10px;color:var(--accent);font-weight:500;letter-spacing:0.05em">PAGE ${p.page}</span>
+      <div style="font-size:12px;color:var(--ink-light);line-height:1.5;margin-top:3px">${extrait}</div>
+    </div>
+    <button onclick="closeFulltextSearch();openReader(${d.id},${p.page})" style="font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-light);background:var(--accent-light);padding:3px 8px;cursor:pointer;font-family:'DM Sans',sans-serif;flex-shrink:0;margin-top:2px">p.${p.page} ↗</button>
+  </div>`;
 }
 
 function searchFulltext() {
