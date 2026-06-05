@@ -2738,15 +2738,12 @@ function pdfSearch() {
       if (!textLayerDiv) continue;
       textLayerDiv.querySelectorAll('span').forEach(span => {
         if (!span.textContent.toLowerCase().includes(q)) return;
-        const spanRect = span.getBoundingClientRect();
-        const wrapRect = span.closest('[data-page-index]')?.getBoundingClientRect();
-        if (!wrapRect) return;
         const div = document.createElement('div');
         div.className = 'pdfjs-hl-search';
-        div.style.left   = (spanRect.left - wrapRect.left) + 'px';
-        div.style.top    = (spanRect.top  - wrapRect.top)  + 'px';
-        div.style.width  = spanRect.width  + 'px';
-        div.style.height = spanRect.height + 'px';
+        div.style.left   = span.offsetLeft + 'px';
+        div.style.top    = span.offsetTop  + 'px';
+        div.style.width  = span.offsetWidth  + 'px';
+        div.style.height = span.offsetHeight + 'px';
         hlOverlay.appendChild(div);
       });
     }
