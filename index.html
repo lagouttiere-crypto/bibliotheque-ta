@@ -1194,6 +1194,49 @@
   .adv-search-inner { grid-template-columns: 1fr 1fr; }
 }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── PDF.JS TEXT LAYER + HIGHLIGHTS ── */
+.pdfjs-text-layer span {
+  position: absolute;
+  white-space: pre;
+  cursor: text;
+  transform-origin: 0% 0%;
+  color: transparent;
+}
+.pdfjs-text-layer ::selection {
+  background: rgba(27, 58, 92, 0.25);
+}
+.pdfjs-hl-search {
+  position: absolute;
+  background: rgba(255, 230, 0, 0.45);
+  border-radius: 2px;
+  pointer-events: none;
+}
+.pdfjs-hl-manual {
+  position: absolute;
+  background: rgba(255, 180, 0, 0.35);
+  border: 1px solid rgba(255, 160, 0, 0.5);
+  border-radius: 2px;
+  pointer-events: auto;
+  cursor: pointer;
+}
+.pdfjs-hl-manual:hover::after {
+  content: '×';
+  position: absolute;
+  top: -8px;
+  right: -6px;
+  font-size: 11px;
+  color: #c0392b;
+  background: white;
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
 </style>
 </head>
 <body>
@@ -2393,8 +2436,8 @@ async function loadPdfJs(url) {
 
     for (let i = 1; i <= pdfDoc.numPages; i++) {
       const page = await pdfDoc.getPage(i);
-      const container = document.getElementById('pdfjs-container');
-      const containerWidth = container ? container.offsetWidth - 32 : 800;
+      const containerEl = document.getElementById('pdfjs-container');
+      const containerWidth = containerEl ? containerEl.offsetWidth - 32 : 800;
       const firstPage = await pdfDoc.getPage(1);
       const firstViewport = firstPage.getViewport({ scale: 1 });
       const scale = containerWidth / firstViewport.width;
@@ -2402,17 +2445,46 @@ async function loadPdfJs(url) {
       const zoomEl = document.getElementById('pdf-zoom-level');
       if (zoomEl) zoomEl.textContent = Math.round(scale * 100) + '%';
       const viewport = page.getViewport({ scale });
+
+      // Wrapper par page
+      const pageWrap = document.createElement('div');
+      pageWrap.style.cssText = 'position:relative;display:inline-block;line-height:0';
+      pageWrap.dataset.pageIndex = i - 1;
+
+      // Canvas
       const canvas = document.createElement('canvas');
       canvas.width = viewport.width;
       canvas.height = viewport.height;
-      canvas.style.width = viewport.width + 'px';
-      canvas.style.height = viewport.height + 'px';
-      canvas.style.boxShadow = '0 2px 8px rgba(0,0,0,0.4)';
+      canvas.style.cssText = `display:block;width:${viewport.width}px;height:${viewport.height}px;box-shadow:0 2px 8px rgba(0,0,0,0.4)`;
       canvas.dataset.page = i;
       const ctx = canvas.getContext('2d');
       await page.render({ canvasContext: ctx, viewport }).promise;
-      pagesContainer.appendChild(canvas);
-      window._pdfPages.push({ page, canvas, viewport });
+
+      // TextLayer (pour sélection et surlignage)
+      const textLayerDiv = document.createElement('div');
+      textLayerDiv.className = 'pdfjs-text-layer';
+      textLayerDiv.style.cssText = `position:absolute;top:0;left:0;width:${viewport.width}px;height:${viewport.height}px;overflow:hidden;opacity:1;line-height:1`;
+      const textContent = await page.getTextContent();
+      pdfjsLib.renderTextLayer({
+        textContentSource: textContent,
+        container: textLayerDiv,
+        viewport: viewport,
+        textDivs: [],
+      });
+
+      // Overlay pour les highlights
+      const hlOverlay = document.createElement('div');
+      hlOverlay.className = 'pdfjs-hl-overlay';
+      hlOverlay.dataset.pageIndex = i - 1;
+      hlOverlay.style.cssText = `position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:10`;
+
+      pageWrap.appendChild(canvas);
+      pageWrap.appendChild(textLayerDiv);
+      pageWrap.appendChild(hlOverlay);
+      pagesContainer.appendChild(pageWrap);
+      window._pdfPages.push({ page, canvas, viewport, textLayerDiv, hlOverlay, pageWrap });
+      attachSelectionListener();
+      loadHighlights();
     }
     if (window._pdfTargetPage) {
       const idx = window._pdfTargetPage - 1;
@@ -2644,18 +2716,39 @@ function pdfSearch() {
   _pdfSearchDebounce = setTimeout(async () => {
     const q = document.getElementById('pdf-search-input')?.value.trim().toLowerCase();
     const countEl = document.getElementById('pdf-search-count');
+
+    // Effacer les anciens highlights search
+    document.querySelectorAll('.pdfjs-hl-search').forEach(el => el.remove());
+
     if (!q || !window._pdfDoc) {
       if (countEl) countEl.textContent = '';
       return;
     }
     window._pdfSearchMatches = [];
     for (let i = 0; i < window._pdfPages.length; i++) {
-      const { page } = window._pdfPages[i];
+      const { page, hlOverlay, viewport } = window._pdfPages[i];
       const content = await page.getTextContent();
       const text = content.items.map(item => item.str).join(' ').toLowerCase();
-      if (text.includes(q)) {
-        window._pdfSearchMatches.push(i);
-      }
+      if (!text.includes(q)) continue;
+      window._pdfSearchMatches.push(i);
+      if (!hlOverlay) continue;
+
+      // Surligner les spans de la textLayer qui contiennent le terme
+      const textLayerDiv = window._pdfPages[i].textLayerDiv;
+      if (!textLayerDiv) continue;
+      textLayerDiv.querySelectorAll('span').forEach(span => {
+        if (!span.textContent.toLowerCase().includes(q)) return;
+        const spanRect = span.getBoundingClientRect();
+        const wrapRect = span.closest('[data-page-index]')?.getBoundingClientRect();
+        if (!wrapRect) return;
+        const div = document.createElement('div');
+        div.className = 'pdfjs-hl-search';
+        div.style.left   = (spanRect.left - wrapRect.left) + 'px';
+        div.style.top    = (spanRect.top  - wrapRect.top)  + 'px';
+        div.style.width  = spanRect.width  + 'px';
+        div.style.height = spanRect.height + 'px';
+        hlOverlay.appendChild(div);
+      });
     }
     window._pdfSearchIndex = 0;
     if (countEl) countEl.textContent = window._pdfSearchMatches.length + ' page(s)';
@@ -3460,6 +3553,93 @@ function renderMySpaceBody() {
   const gc = document.getElementById('ms-graph-container');
   if (gc) { gc.innerHTML = ''; gc.dataset.rendered = ''; }
 }
+
+/* =========================================================
+   PDF HIGHLIGHTS
+========================================================= */
+
+function hlStorageKey() {
+  return `ta_highlights_${currentUser}_${window._pdfUrl || ''}`;
+}
+
+function saveHighlights() {
+  localStorage.setItem(hlStorageKey(), JSON.stringify(window._pdfHighlights || []));
+}
+
+function loadHighlights() {
+  try {
+    const saved = localStorage.getItem(hlStorageKey());
+    window._pdfHighlights = saved ? JSON.parse(saved) : [];
+  } catch(e) {
+    window._pdfHighlights = [];
+  }
+  renderHighlights();
+}
+
+function renderHighlights() {
+  if (!window._pdfPages) return;
+  window._pdfPages.forEach((p, idx) => {
+    if (!p.hlOverlay) return;
+    // Garder les highlights search, effacer seulement les manuels
+    p.hlOverlay.querySelectorAll('.pdfjs-hl-manual').forEach(el => el.remove());
+  });
+  (window._pdfHighlights || []).forEach(hl => {
+    const p = window._pdfPages[hl.pageIndex];
+    if (!p || !p.hlOverlay) return;
+    const div = document.createElement('div');
+    div.className = 'pdfjs-hl-manual';
+    div.style.left   = hl.left   + 'px';
+    div.style.top    = hl.top    + 'px';
+    div.style.width  = hl.width  + 'px';
+    div.style.height = hl.height + 'px';
+    div.title = hl.text || '';
+    div.onclick = () => {
+      if (!confirm('Supprimer ce surlignage ?')) return;
+      window._pdfHighlights = (window._pdfHighlights || []).filter(h => h !== hl);
+      saveHighlights();
+      renderHighlights();
+    };
+    p.hlOverlay.appendChild(div);
+  });
+}
+
+// Attacher la détection de sélection après chargement des pages
+function attachSelectionListener() {
+  const pagesContainer = document.getElementById('pdf-pages');
+  if (!pagesContainer) return;
+  pagesContainer.addEventListener('mouseup', () => {
+    const sel = window.getSelection();
+    if (!sel || sel.isCollapsed || !sel.rangeCount) return;
+    const range = sel.getRangeAt(0);
+    const rect = range.getBoundingClientRect();
+    if (rect.width < 2 || rect.height < 2) return;
+
+    // Trouver dans quel pageWrap on est
+    let node = range.commonAncestorContainer;
+    while (node && node !== pagesContainer) {
+      if (node.dataset && node.dataset.pageIndex !== undefined) break;
+      node = node.parentElement;
+    }
+    if (!node || node.dataset.pageIndex === undefined) return;
+    const pageIndex = parseInt(node.dataset.pageIndex);
+    const wrapRect  = node.getBoundingClientRect();
+
+    const hl = {
+      pageIndex,
+      left:   rect.left   - wrapRect.left,
+      top:    rect.top    - wrapRect.top,
+      width:  rect.width,
+      height: rect.height,
+      text:   sel.toString().trim().substring(0, 200),
+    };
+    if (!window._pdfHighlights) window._pdfHighlights = [];
+    window._pdfHighlights.push(hl);
+    saveHighlights();
+    renderHighlights();
+    sel.removeAllRanges();
+  });
+}
+
 </script>
 </body>
 </html>
