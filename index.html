@@ -2251,21 +2251,20 @@ async function loadPdfJs(url) {
 
   // Barre de recherche
   container.innerHTML = `
-    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#3b3b3b;border-bottom:1px solid #222;flex-shrink:0">
-      <input id="pdf-search-input" type="text" placeholder="Rechercher dans le document…"
-        style="flex:1;padding:5px 10px;font-family:'DM Sans',sans-serif;font-size:13px;border:1px solid #555;background:#2a2a2a;color:#fff;outline:none;border-radius:2px"
-        oninput="pdfSearch()" />
-      <span id="pdf-search-count" style="font-size:11px;color:#aaa;white-space:nowrap">
-    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#3b3b3b;border-bottom:1px solid #222;flex-shrink:0">
-      <input id="pdf-search-input" type="text" placeholder="Rechercher dans le document…"
-        style="flex:1;padding:5px 10px;font-family:'DM Sans',sans-serif;font-size:13px;border:1px solid #555;background:#2a2a2a;color:#fff;outline:none;border-radius:2px"
-        oninput="pdfSearch()" />
-      <span id="pdf-search-count" style="font-size:11px;color:#aaa;white-space:nowrap"></span>
-      <button onclick="pdfSearchNav(-1)" style="background:none;border:1px solid #555;color:#aaa;padding:4px 8px;cursor:pointer;font-size:12px">▲</button>
-      <button onclick="pdfSearchNav(1)" style="background:none;border:1px solid #555;color:#aaa;padding:4px 8px;cursor:pointer;font-size:12px">▼</button>
-    </div>
-    <div id="pdf-pages" style="padding:16px;display:flex;flex-direction:column;gap:12px;overflow-y:auto;flex:1"></div>
-  `;
+  <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#3b3b3b;border-bottom:1px solid #222;flex-shrink:0">
+    <input id="pdf-search-input" type="text" placeholder="Rechercher dans le document…"
+      style="flex:1;padding:5px 10px;font-family:'DM Sans',sans-serif;font-size:13px;border:1px solid #555;background:#2a2a2a;color:#fff;outline:none;border-radius:2px"
+      oninput="pdfSearch()" />
+    <span id="pdf-search-count" style="font-size:11px;color:#aaa;white-space:nowrap"></span>
+    <button onclick="pdfSearchNav(-1)" style="background:none;border:1px solid #555;color:#aaa;padding:4px 8px;cursor:pointer;font-size:12px">▲</button>
+    <button onclick="pdfSearchNav(1)" style="background:none;border:1px solid #555;color:#aaa;padding:4px 8px;cursor:pointer;font-size:12px">▼</button>
+    <div style="width:1px;height:20px;background:#555;margin:0 4px"></div>
+    <button onclick="pdfZoom(-0.25)" style="background:none;border:1px solid #555;color:#aaa;padding:4px 10px;cursor:pointer;font-size:14px;line-height:1">−</button>
+    <span id="pdf-zoom-level" style="font-size:11px;color:#aaa;min-width:32px;text-align:center">150%</span>
+    <button onclick="pdfZoom(+0.25)" style="background:none;border:1px solid #555;color:#aaa;padding:4px 10px;cursor:pointer;font-size:14px;line-height:1">+</button>
+  </div>
+  <div id="pdf-pages" style="padding:16px;display:flex;flex-direction:column;gap:12px;overflow-y:auto;flex:1"></div>
+`;
   container.style.display = 'flex';
   container.style.flexDirection = 'column';
 
@@ -2277,6 +2276,7 @@ async function loadPdfJs(url) {
     window._pdfPages = [];
     window._pdfSearchMatches = [];
     window._pdfSearchIndex = 0;
+    window._pdfScale = 1.5;
 
     const pagesContainer = document.getElementById('pdf-pages');
     if (!pagesContainer) return;
@@ -2454,6 +2454,28 @@ function pdfSearch() {
     if (window._pdfSearchMatches.length > 0) pdfSearchNav(0);
   }, 300);
 }
+/// bouton +/- reader pdf ////
+async function pdfZoom(delta) {
+  const newScale = Math.max(0.5, Math.min(3, (window._pdfScale || 1.5) + delta));
+  if (newScale === window._pdfScale) return;
+  window._pdfScale = newScale;
+  const zoomEl = document.getElementById('pdf-zoom-level');
+  if (zoomEl) zoomEl.textContent = Math.round(newScale * 100) + '%';
+  if (!window._pdfDoc || !window._pdfPages) return;
+  const pagesContainer = document.getElementById('pdf-pages');
+  if (!pagesContainer) return;
+  // Re-rendre toutes les pages au nouveau scale
+  for (let i = 0; i < window._pdfPages.length; i++) {
+    const { page, canvas } = window._pdfPages[i];
+    const viewport = page.getViewport({ scale: newScale });
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    await page.render({ canvasContext: ctx, viewport }).promise;
+  }
+}
+
 
 function pdfSearchNav(dir) {
   const matches = window._pdfSearchMatches;
