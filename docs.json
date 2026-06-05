@@ -2063,5 +2063,32 @@
     "duree": null,
     "groupe_id": "g1780558492758",
     "annotations": []
+  },
+  {
+    "id": 97,
+    "titre": "The congress papers - exploring the principles - from the -- International Congress of the F_ M_ Alexander Technique (7th -- London, England)",
+    "auteur": "Peter Ribeaux, Meade Andrews, Beret Arcaya, Glenna Batson, Anne Battye, Michael Bloch, John Brown, Lawrence Bruce, Walter Carrington, Brigitte Cavadias, Jeremy Chance, Jean Clark, Rivka Cohen, Jonathan Cole, Diana Devitt-Dawson, Penelope Easten, Janet Madelle Feindel, Terry Fitzgerald, Robin Gilmore, Avi Granit, Peter Grunwald, Jane R. Heirich, Martyn Jones, Kate Kelly-Tanguay, Frank Kennedy, Barbara Kent, Joan Frost, Catherine Kettrick, Nadia Kevan, Judith Kleinman, Elizabeth Langford, Jamie McDowell, Ilana Machover, Vivien Mackie, Cathy Madden, David M Mills, Robin Möckli, Shmuel Nelken, Carolyn Nicholls, Penny O'Connor, Patricia O'Neill, Glen Park, Ellie Ribeaux, Jane Staggs, Chloe Stallibrass, Judith C. Stern, Alun Thomas, Ken Thompson, Judith Youett Muir, Rachel Zahn.",
+    "annee": 2005,
+    "type": "article",
+    "langue": "en",
+    "themes": [
+      "pédagogie",
+      "fondements",
+      "corps & mouvement",
+      "physiologie",
+      "phénoménologie",
+      "enaction",
+      "neurosciences",
+      "philosophie",
+      "2ème génération"
+    ],
+    "urlDrive": "https://bibliotheque-ati.s3.fr-par.scw.cloud/bibliotheque/The_congress_papers_-_exploring_the_principles_-_from_the_--_International_Congress_of_the_F_M_Alexander_Technique_7th_--_London_England_.pdf",
+    "description": null,
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": null,
+    "annotations": []
   }
 ]
