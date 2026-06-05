@@ -2288,7 +2288,7 @@ async function loadPdfJs(url) {
       const canvas = document.createElement('canvas');
       canvas.width = viewport.width;
       canvas.height = viewport.height;
-      canvas.style.width = '100%';
+      canvas.style.maxWidth = '100%';
       canvas.style.boxShadow = '0 2px 8px rgba(0,0,0,0.4)';
       canvas.dataset.page = i;
       const ctx = canvas.getContext('2d');
@@ -2474,6 +2474,8 @@ async function pdfZoom(delta) {
     const viewport = page.getViewport({ scale: newScale });
     canvas.width = viewport.width;
     canvas.height = viewport.height;
+    canvas.style.width = '';
+    canvas.style.maxWidth = '100%';
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     const task = page.render({ canvasContext: ctx, viewport });
