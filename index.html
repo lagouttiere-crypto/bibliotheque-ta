@@ -2655,15 +2655,32 @@ async function indexerTousLesDocsScaleway() {
     d.id !== 80
   );
   const statusEl = document.getElementById('index-status');
-  if (statusEl) statusEl.textContent = `0 / ${docsScaleway.length} indexés…`;
+  if (statusEl) statusEl.textContent = 'Chargement de l\'index…';
+  
+  // Charger l'index existant d'abord
+  await loadFulltextIndex();
+  
+  const aIndexer = docsScaleway.filter(d =>
+    !fulltextState.some(row => String(row.doc_id).trim() === String(d.id).trim())
+  );
+  
+  if (statusEl) statusEl.textContent = `${aIndexer.length} document(s) à indexer sur ${docsScaleway.length}…`;
+  if (aIndexer.length === 0) {
+    if (statusEl) statusEl.textContent = '✓ Tout est déjà indexé !';
+    return;
+  }
+  
   let count = 0;
-  for (const d of docsScaleway) {
-    if (statusEl) statusEl.textContent = `${count} / ${docsScaleway.length} — ${d.title}…`;
+  for (const d of aIndexer) {
+    if (statusEl) statusEl.textContent = `${count} / ${aIndexer.length} — ${d.title}…`;
     const result = await indexerDocScaleway(d.id, d.driveUrl);
     if (result.status === 'ok') count++;
     await new Promise(r => setTimeout(r, 300));
   }
   if (statusEl) statusEl.textContent = `✓ ${count} documents indexés !`;
+  // Recharger l'index
+  fulltextState = [];
+  await loadFulltextIndex();
 }
 
 let fulltextState = [];
