@@ -2276,5 +2276,22 @@
     "duree": null,
     "groupe_id": null,
     "annotations": []
+  },
+  {
+    "id": 107,
+    "titre": "Direction - Vol.2 N°10-The-Future-It’s-in-Our-Hands",
+    "auteur": "Jeremy Chance (éd.)",
+    "annee": 2002,
+    "type": "revue",
+    "langue": "en",
+    "themes": [],
+    "urlDrive": "https://bibliotheque-ati.s3.fr-par.scw.cloud/bibliotheque/documents/2-10-future.pdf",
+    "description": "Direction — Volume 2 Number 10 — The Future.Direction — Volume 2 Number 10 — The Future. It's in Our Hands\nDescription :\nCover Story (Various authors) · Editorial (Jeremy Chance and Paul Cook) · The Garlick Report (Dr David Garlick on the future of science & AT) · The Rounder We Go, the Samer We Get Part II (David Gorman on circular habits) · Snapshots (Grant Ragsdale) · In All Directions",
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": null,
+    "annotations": []
   }
 ]
