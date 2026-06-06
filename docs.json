@@ -2112,5 +2112,68 @@
     "duree": null,
     "groupe_id": null,
     "annotations": []
+  },
+  {
+    "id": 99,
+    "titre": "Direction - Vol.3 N°1-Yoga",
+    "auteur": "Jeremy Chance (éd.)",
+    "annee": 2002,
+    "type": "revue",
+    "langue": "fr",
+    "themes": [
+      "pédagogie",
+      "corps & mouvement",
+      "physiologie",
+      "2ème génération"
+    ],
+    "urlDrive": null,
+    "description": "Thème : Yoga, the Lotus and the Rose · Cover Story (Various Authors) · Editorial (Paul Cook) · The Science Report (Chris Stevens) · The Formulation of an Alexander Lesson (Mervyn Waldman) · Alexander Teacher Education Part II (Terry Fitzgerald) · ViewPoint (Thomas Myers) · In All Directions",
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": null,
+    "annotations": []
+  },
+  {
+    "id": 100,
+    "titre": "Direction - Vol.3 N°2-Performance",
+    "auteur": "Jeremy Chance (éd.)",
+    "annee": 2003,
+    "type": "revue",
+    "langue": "en",
+    "themes": [
+      "corps & mouvement",
+      "arts",
+      "1ère génération",
+      "2ème génération"
+    ],
+    "urlDrive": "https://bibliotheque-ati.s3.fr-par.scw.cloud/bibliotheque/documents/3-2-performance.pdf",
+    "description": "Cover Story (Various Authors) · Editorial (Paul Cook) · The Science Report (Chris Stevens on science and control trials) · Exploring the Space of Inhibition (Cathy Pollock, in the context of Aikido) · The Formulation of an Alexander Lesson Part II (Mervyn Waldman) · Professionalism (Marcus Sly on compromising principles) · In All Directions",
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": null,
+    "annotations": []
+  },
+  {
+    "id": 101,
+    "titre": "Direction - Vol.3 N°3-Business-and-Marketing",
+    "auteur": "Jeremy Chance (éd.)",
+    "annee": 2004,
+    "type": "article",
+    "langue": "en",
+    "themes": [
+      "2ème génération"
+    ],
+    "urlDrive": "https://bibliotheque-ati.s3.fr-par.scw.cloud/bibliotheque/documents/3-3-business.pdf",
+    "description": null,
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": null,
+    "annotations": []
   }
 ]
