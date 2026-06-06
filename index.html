@@ -2344,7 +2344,8 @@ function openReader(id, targetPage = null) {
   if (d.type === 'pad' || isFramapadUrl(d.driveUrl || '')) {
     pdf.innerHTML = `<iframe src="${d.driveUrl}" width="100%" height="100%" frameborder="0" style="border:none"></iframe>`;
   } else if (d.driveUrl && d.driveUrl.includes('scw.cloud')) {
-    pdf.innerHTML = `<iframe src="viewer/viewer.html?file=${encodeURIComponent(d.driveUrl)}" width="100%" height="100%" frameborder="0" style="border:none"></iframe>`;
+    const pageHash = targetPage ? '#page=' + targetPage : '';
+    pdf.innerHTML = `<iframe src="viewer/viewer.html?file=${encodeURIComponent(d.driveUrl)}${pageHash}" width="100%" height="100%" frameborder="0" style="border:none"></iframe>`;
   } else if (fileId) {
     pdf.innerHTML = `<iframe src="https://drive.google.com/file/d/${fileId}/preview" allowfullscreen></iframe>`;
   } else {
