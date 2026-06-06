@@ -2345,7 +2345,15 @@ function openReader(id, targetPage = null) {
     pdf.innerHTML = `<iframe src="${d.driveUrl}" width="100%" height="100%" frameborder="0" style="border:none"></iframe>`;
   } else if (d.driveUrl && d.driveUrl.includes('scw.cloud')) {
     const pageHash = targetPage ? '#page=' + targetPage : '';
-    pdf.innerHTML = `<iframe src="viewer/viewer.html?file=${encodeURIComponent(d.driveUrl)}${pageHash}" width="100%" height="100%" frameborder="0" style="border:none"></iframe>`;
+    const iframeSrc = `viewer/viewer.html?file=${encodeURIComponent(d.driveUrl)}${pageHash}`;
+    pdf.innerHTML = `<iframe id="pdfViewerIframe" src="${iframeSrc}" width="100%" height="100%" frameborder="0" style="border:none"></iframe>`;
+
+    if (window._pdfSearchTerm) {
+    const iframe = document.getElementById('pdfViewerIframe');
+    iframe.addEventListener('load', () => {
+    iframe.contentWindow.postMessage({ type: 'find', query: window._pdfSearchTerm }, '*');
+  });
+}
   } else if (fileId) {
     pdf.innerHTML = `<iframe src="https://drive.google.com/file/d/${fileId}/preview" allowfullscreen></iframe>`;
   } else {
