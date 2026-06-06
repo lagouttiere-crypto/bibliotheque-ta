@@ -2380,6 +2380,7 @@ function closeReader() {
   document.body.style.overflow = '';
   currentReaderId = null;
   setTimeout(() => {
+    window._pdfSearchTerm = null;
     document.getElementById('readerPdf').innerHTML = '';
     document.getElementById('notesTextarea').value = '';
     document.getElementById('notesPreview').innerHTML = '<span class="notes-preview-empty">Le rendu apparaît ici…</span>';
@@ -2472,11 +2473,18 @@ async function loadPdfJs(url) {
         textDivs: [],
       });
 
+
       // Overlay pour les highlights
       const hlOverlay = document.createElement('div');
       hlOverlay.className = 'pdfjs-hl-overlay';
       hlOverlay.dataset.pageIndex = i - 1;
       hlOverlay.style.cssText = `position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:10`;
+      textLayerDiv.addEventListener('textlayerrendered', () => {
+      if (window._pdfSearchTerm) {
+          highlightWordInPage(textLayerDiv, hlOverlay, window._pdfSearchTerm);
+        }
+      }, { once: true });
+      
 
       pageWrap.appendChild(canvas);
       pageWrap.appendChild(textLayerDiv);
@@ -2494,6 +2502,33 @@ async function loadPdfJs(url) {
   } catch(e) {
     container.innerHTML = `<div class="reader-unavailable"><p>Erreur de chargement du PDF</p></div>`;
     console.warn("PDF.js erreur", e);
+  }
+}
+
+/*--- SURLIGNAGE DU TEXTE ----*/
+function highlightWordInPage(textLayerDiv, overlay, query) {
+  overlay.innerHTML = '';
+  if (!query || !query.trim()) return;
+  const queryLower = query.toLowerCase();
+  const spans = textLayerDiv.querySelectorAll('span');
+  const parentRect = textLayerDiv.getBoundingClientRect();
+
+  for (const span of spans) {
+    const text = (span.textContent || '').toLowerCase();
+    if (!text.includes(queryLower)) continue;
+
+    const rect = span.getBoundingClientRect();
+    const hl = document.createElement('div');
+    hl.style.cssText = `
+      position:absolute;
+      left:${rect.left - parentRect.left}px;
+      top:${rect.top - parentRect.top}px;
+      width:${rect.width}px;
+      height:${rect.height}px;
+      background:rgba(255,200,0,0.4);
+      pointer-events:none;
+    `;
+    overlay.appendChild(hl);
   }
 }
 
@@ -2661,8 +2696,7 @@ function renderFulltextPageResult(d, p, q) {
       <span style="font-size:10px;color:var(--accent);font-weight:500;letter-spacing:0.05em">PAGE ${p.page}</span>
       <div style="font-size:12px;color:var(--ink-light);line-height:1.5;margin-top:3px">${extrait}</div>
     </div>
-    <button onclick="closeFulltextSearch();openReader(${d.id},${p.page})" style="font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-light);background:var(--accent-light);padding:3px 8px;cursor:pointer;font-family:'DM Sans',sans-serif;flex-shrink:0;margin-top:2px">p.${p.page} ↗</button>
-  </div>`;
+    <button onclick="closeFulltextSearch();window._pdfSearchTerm=document.getElementById('fulltextInput').value.trim();openReader(${d.id},${p.page})"  </div>`;
 }
 
 function searchFulltext() {
@@ -2702,8 +2736,7 @@ function searchFulltext() {
         + '<div style="padding:10px 14px;background:var(--cream);border-bottom:1px solid var(--border)">'
         + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:16px;font-weight:400;color:var(--ink)">' + d.title + '</div>'
         + '<div style="font-size:11px;color:var(--ink-faint);font-style:italic;margin-bottom:8px">' + (d.author || '') + ' · ' + pages.length + ' page' + (pages.length !== 1 ? 's' : '') + ' trouvée' + (pages.length !== 1 ? 's' : '') + '</div>'
-        + '<button onclick="closeFulltextSearch();openReader(' + d.id + ',' + pages[0].page + ')" style="font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-light);background:var(--accent-light);padding:4px 10px;cursor:pointer;font-family:\'DM Sans\',sans-serif">Ouvrir le document ↗</button>'
-        + '</div>'
+        + '<button onclick="closeFulltextSearch();window._pdfSearchTerm=document.getElementById(\'fulltextInput\').value.trim();openReader(' + d.id + ',' + pages[0].page + ')"        + '</div>'
         + '<div style="padding:0 14px">' + pagesHtml + '</div>'
         + '</div>';
     }).join('');
