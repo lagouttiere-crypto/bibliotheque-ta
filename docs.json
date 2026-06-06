@@ -1729,23 +1729,6 @@
     "annotations": []
   },
   {
-    "id": 81,
-    "titre": "",
-    "auteur": null,
-    "annee": null,
-    "type": "article",
-    "langue": "fr",
-    "themes": [],
-    "urlDrive": "https://drive.google.com/file/d/124QMqmxUwMvlVwI8ID6GK05W0ocgfoAT/view?usp=drivesdk",
-    "description": null,
-    "physique": false,
-    "videoUrl": null,
-    "videoPassword": null,
-    "duree": null,
-    "groupe_id": null,
-    "annotations": []
-  },
-  {
     "id": 82,
     "titre": "The Actor and the Alexander Technique",
     "auteur": "Kelly McEvenue; David  Gorman; Patsy Rodenburg",
