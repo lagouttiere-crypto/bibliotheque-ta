@@ -2634,7 +2634,11 @@ async function indexerDocScaleway(docId, url) {
       const content = await page.getTextContent();
       const texte = content.items.map(item => item.str).join(' ').trim();
       if (!texte) continue;
-      await fetch(`${SHEET_URL}?sheet=fulltext&action=save&doc_id=${docId}&page=${i}&texte=${encodeURIComponent(texte)}`);
+      await fetch(SHEET_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sheet: 'fulltext', action: 'save', doc_id: docId, page: i, texte: texte })
+      });
     }
     return { status: 'ok', pages: pdf.numPages };
   } catch(e) {
