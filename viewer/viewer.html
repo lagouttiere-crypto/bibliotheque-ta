@@ -482,5 +482,21 @@ See https://github.com/adobe-type-tools/cmap-resources
     <div id="printContainer"></div>
 
     <input type="file" id="fileInput" class="hidden">
+        <script>
+    window.addEventListener("message", function(e) {
+    if (e.data && e.data.type === "find") {
+    PDFViewerApplication.initializedPromise.then(function() {
+      PDFViewerApplication.eventBus.dispatch("find", {
+        query: e.data.query,
+        type: "",
+        caseSensitive: false,
+        highlightAll: true,
+        findPrevious: false
+      });
+    });
+  }
+});
+</script>
+
   </body>
 </html>
