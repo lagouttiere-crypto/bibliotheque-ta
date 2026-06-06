@@ -2344,10 +2344,7 @@ function openReader(id, targetPage = null) {
   if (d.type === 'pad' || isFramapadUrl(d.driveUrl || '')) {
     pdf.innerHTML = `<iframe src="${d.driveUrl}" width="100%" height="100%" frameborder="0" style="border:none"></iframe>`;
   } else if (d.driveUrl && d.driveUrl.includes('scw.cloud')) {
-    // PDF.js pour les fichiers Scaleway
-    pdf.innerHTML = `<div id="pdfjs-container" style="width:100%;height:100%;overflow-y:auto;background:#525659"></div>`;
-    console.log('URL Scaleway:', d.driveUrl);
-    loadPdfJs(d.driveUrl);
+    pdf.innerHTML = `<iframe src="viewer/viewer.html?file=${encodeURIComponent(d.driveUrl)}" width="100%" height="100%" frameborder="0" style="border:none"></iframe>`;
   } else if (fileId) {
     pdf.innerHTML = `<iframe src="https://drive.google.com/file/d/${fileId}/preview" allowfullscreen></iframe>`;
   } else {
