@@ -2697,7 +2697,7 @@ function searchFulltext() {
       const d = docs.find(doc => String(doc.id) === docId);
       if (!d) return '';
       const pages = byDoc[docId];
-      const pagesHtml = pages.slice(0, 10).map(p => renderFulltextPageResult(d, p, q)).join('');
+      const pagesHtml = pages.slice(0, 20).map(p => renderFulltextPageResult(d, p, q)).join('');
       return '<div style="margin-bottom:16px;border:1px solid var(--border);background:var(--white)">'
         + '<div style="padding:10px 14px;background:var(--cream);border-bottom:1px solid var(--border)">'
         + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:16px;font-weight:400;color:var(--ink)">' + d.title + '</div>'
