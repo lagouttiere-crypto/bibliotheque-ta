@@ -2276,27 +2276,5 @@
     "duree": null,
     "groupe_id": null,
     "annotations": []
-  },
-  {
-    "id": 108,
-    "titre": "1965-1975 Alexander Technique teacher training in retrospect",
-    "auteur": "Joe Armstrong",
-    "annee": 2017,
-    "type": "livre",
-    "langue": "en",
-    "themes": [
-      "fondements",
-      "pédagogie",
-      "2ème génération",
-      "1ère génération"
-    ],
-    "urlDrive": "https://bibliotheque-ati.s3.fr-par.scw.cloud/bibliotheque/documents/1965-1975-alexander-technique-teacher-trai-joe-armstrong.pdf",
-    "description": null,
-    "physique": false,
-    "videoUrl": null,
-    "videoPassword": null,
-    "duree": null,
-    "groupe_id": null,
-    "annotations": []
   }
 ]
