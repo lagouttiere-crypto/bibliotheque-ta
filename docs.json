@@ -2119,7 +2119,7 @@
     "auteur": "Jeremy Chance (éd.)",
     "annee": 2002,
     "type": "revue",
-    "langue": "fr",
+    "langue": "en",
     "themes": [
       "pédagogie",
       "corps & mouvement",
@@ -2162,7 +2162,7 @@
     "titre": "Direction - Vol.3 N°3-Business-and-Marketing",
     "auteur": "Jeremy Chance (éd.)",
     "annee": 2004,
-    "type": "article",
+    "type": "revue",
     "langue": "en",
     "themes": [
       "2ème génération"
@@ -2211,6 +2211,46 @@
     ],
     "urlDrive": "https://bibliotheque-ati.s3.fr-par.scw.cloud/bibliotheque/documents/2-6-spirituality.pdf",
     "description": "Direction — Volume 2 Number 6\nDescription :\nSpirituality Issue · Editorial (Jeremy Chance) · Issue Editorial (Betsy Polatin) · The Garlick Report (Dr. David Garlick) · Aphorisms of Marjory Barlow (compiled by Bob Britton) · Making FM Reader Friendly (Michael Holt) · CounterPoint (Letters to the Editor) · ViewPoint (Robert Rickover) · Friends of Alexander (compiled by Margaret Long) · In All Directions",
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": null,
+    "annotations": []
+  },
+  {
+    "id": 104,
+    "titre": "Direction - Vol.2 N°7 - Eye-See-Vision-issue",
+    "auteur": "Jeremy Chance (éd.)",
+    "annee": 1999,
+    "type": "revue",
+    "langue": "en",
+    "themes": [
+      "2ème génération"
+    ],
+    "urlDrive": "https://bibliotheque-ati.s3.fr-par.scw.cloud/bibliotheque/documents/2-7-vision.pdf",
+    "description": "Direction — Volume 2 Number 7\nDescription : \nEditorial (Jeremy Chance) · Issue Editorial (Peter Grunwald) · The Garlick Report (Dr. David Garlick) · Have a Ball (Cathy Pollock) · Counterpoint (Letters to the Editor) · Viewpoint (Robert Rickover) · Friends of Alexander (compiled by Margaret Long) · In All Directions",
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": null,
+    "annotations": []
+  },
+  {
+    "id": 105,
+    "titre": "Direction - Vol.2 N°8-Multiculturalism",
+    "auteur": "Jeremy Chance (éd.)",
+    "annee": 2000,
+    "type": "revue",
+    "langue": "en",
+    "themes": [
+      "arts",
+      "corps & mouvement",
+      "2ème génération"
+    ],
+    "urlDrive": "https://bibliotheque-ati.s3.fr-par.scw.cloud/bibliotheque/documents/2-8-multiculturalism.pdf",
+    "description": "Direction — Volume 2 Number 8 - Multiculturalism\nDescription :\nEditorial (Jeremy Chance on cars with attitude) · Issue Editorial (Robin Gilmore) · A Classical Use of the Front Hand (Mervyn Waldman on a well-known \"McDonald\" Technique) · Living in the Present (Hella Linkmeyer on African Bushmen) · The Garlick Report (Dr David Garlick on new research) · ViewPoint (Michael Holt on Alexander's racism) · Hands (Nicola Hanefeld's photo essay from 6.99 Congress) · In All Directions",
     "physique": false,
     "videoUrl": null,
     "videoPassword": null,
