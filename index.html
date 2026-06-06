@@ -2333,8 +2333,14 @@ function openReader(id, targetPage = null) {
 
   document.getElementById('readerTitle').textContent  = d.title;
   document.getElementById('readerAuthor').textContent = d.author || '';
-  document.getElementById('readerExtLink').href       = d.driveUrl;
-
+  const extLink = document.getElementById('readerExtLink');
+  if (d.driveUrl && d.driveUrl.includes('scw.cloud')) {
+  extLink.href = 'viewer/viewer.html?file=' + encodeURIComponent(d.driveUrl);
+  extLink.textContent = 'Plein écran ↗';
+  } else {
+  extLink.href = d.driveUrl || '#';
+  extLink.textContent = 'Ouvrir dans Drive ↗';
+  }
   if (d.type === 'pad' || isFramapadUrl(d.driveUrl || '')) {
     pdf.innerHTML = `<iframe src="${d.driveUrl}" width="100%" height="100%" frameborder="0" style="border:none"></iframe>`;
   } else if (d.driveUrl && d.driveUrl.includes('scw.cloud')) {
