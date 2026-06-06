@@ -2297,5 +2297,27 @@
     "duree": null,
     "groupe_id": null,
     "annotations": []
+  },
+  {
+    "id": 109,
+    "titre": "Taking Time (sold out)",
+    "auteur": "Crissman Taylor and Carmen Tarnowski",
+    "annee": 2003,
+    "type": "livre",
+    "langue": "en",
+    "themes": [
+      "fondements",
+      "pédagogie",
+      "1ère génération",
+      "2ème génération"
+    ],
+    "urlDrive": "https://bibliotheque-ati.s3.fr-par.scw.cloud/bibliotheque/documents/taking-time-six-interviews-with-first-generation-teachers.pdf",
+    "description": null,
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": null,
+    "annotations": []
   }
 ]
