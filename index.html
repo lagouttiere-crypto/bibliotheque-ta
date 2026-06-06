@@ -2736,7 +2736,8 @@ function searchFulltext() {
         + '<div style="padding:10px 14px;background:var(--cream);border-bottom:1px solid var(--border)">'
         + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:16px;font-weight:400;color:var(--ink)">' + d.title + '</div>'
         + '<div style="font-size:11px;color:var(--ink-faint);font-style:italic;margin-bottom:8px">' + (d.author || '') + ' · ' + pages.length + ' page' + (pages.length !== 1 ? 's' : '') + ' trouvée' + (pages.length !== 1 ? 's' : '') + '</div>'
-        + '<button onclick="closeFulltextSearch();window._pdfSearchTerm=document.getElementById(\'fulltextInput\').value.trim();openReader(' + d.id + ',' + pages[0].page + ')"        + '</div>'
+        + '<button onclick="closeFulltextSearch();window._pdfSearchTerm=document.getElementById(&quot;fulltextInput&quot;).value.trim();openReader(' + d.id + ',' + pages[0].page + ')"'
+        + ' style="font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-light);background:var(--accent-light);padding:4px 10px;cursor:pointer;font-family:\'DM Sans\',sans-serif">Ouvrir le document ↗</button>'
         + '<div style="padding:0 14px">' + pagesHtml + '</div>'
         + '</div>';
     }).join('');
