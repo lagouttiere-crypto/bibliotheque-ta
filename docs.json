@@ -2168,7 +2168,7 @@
       "2ème génération"
     ],
     "urlDrive": "https://bibliotheque-ati.s3.fr-par.scw.cloud/bibliotheque/documents/3-3-business.pdf",
-    "description": null,
+    "description": "Direction — Volume 3 Number 3 — Business and Marketing\nDédié à la mémoire du Dr Chris Stevens.\nDescription :\nEditorials (Paul Cook, David Horsman) · The Science Report (Chris Stevens) · Leadership as Movement (David Horsman) · What Role can the Alexander Technique have in Business (Michael Gelb interviewed by Michael Frederick) · Exploring Experience as Brand (Andrea Matthews) · Success as an Alexander Teacher (Paul Cook) · Teaching Alexander Technique in the Business World (Philippe Cotton) · Professionalism: Compromising Principles? (David Moore) · Letters to the Editor · In All Directions",
     "physique": false,
     "videoUrl": null,
     "videoPassword": null,
@@ -2178,7 +2178,7 @@
   },
   {
     "id": 102,
-    "titre": "Direction - Vol.3 N°3-Paradigme-of-self.pdf",
+    "titre": "Direction - Vol.3 N°4-Paradigme-of-self.pdf",
     "auteur": "Jeremy Chance (éd.)",
     "annee": 2005,
     "type": "revue",
@@ -2189,7 +2189,7 @@
       "2ème génération"
     ],
     "urlDrive": "https://bibliotheque-ati.s3.fr-par.scw.cloud/bibliotheque/documents/3-4-paradigms.pdf",
-    "description": null,
+    "description": "Description : Direction - Vol.3 N°4-Paradigme-of-self\nEditorials (Paul Cook, Cathy Madden) · Myth and Metaphor (Lawrence Bruce) · Refurbishing Image-making in Actors and Others (Cathy Madden) · How Does Alexander Teaching Work? (Grant Dillon) · From Good Use to Adequate Use (Philippe Cotton) · The Man who Mistook his Brain for his Self (Glenna Batson) · The Formulation of an Alexander Lesson Part 3 (Mervyn Waldman) · Creating New Neurological Pathways to find Freedom from Post Traumatic Stress Disorder (Mary Gallagher) · Self-Management in the Workplace (Peter Ribeaux) · Letters to the Editor · In All Directions",
     "physique": false,
     "videoUrl": null,
     "videoPassword": null,
@@ -2251,6 +2251,25 @@
     ],
     "urlDrive": "https://bibliotheque-ati.s3.fr-par.scw.cloud/bibliotheque/documents/2-8-multiculturalism.pdf",
     "description": "Direction — Volume 2 Number 8 - Multiculturalism\nDescription :\nEditorial (Jeremy Chance on cars with attitude) · Issue Editorial (Robin Gilmore) · A Classical Use of the Front Hand (Mervyn Waldman on a well-known \"McDonald\" Technique) · Living in the Present (Hella Linkmeyer on African Bushmen) · The Garlick Report (Dr David Garlick on new research) · ViewPoint (Michael Holt on Alexander's racism) · Hands (Nicola Hanefeld's photo essay from 6.99 Congress) · In All Directions",
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": null,
+    "annotations": []
+  },
+  {
+    "id": 106,
+    "titre": "Direction - Vol.2 N°9-Arms of Compassion, Spirituality-2000",
+    "auteur": "Jeremy Chance (éd.)",
+    "annee": 2000,
+    "type": "revue",
+    "langue": "en",
+    "themes": [
+      "2ème génération"
+    ],
+    "urlDrive": "https://bibliotheque-ati.s3.fr-par.scw.cloud/bibliotheque/documents/2-9-spirituality.pdf",
+    "description": "Direction — Volume 2 Number 9 — Arms of Compassion / Spirituality 2000\nDescription :\nEditorial (Jeremy Chance) · The Rounder We Go, the Samer We Get (David Gorman on circular habits) · Counterpoint (Letters to the Editor) · The Garlick Report (Dr David Garlick on future research) · ViewPoint (Cathy Madden on the most important person) · Alexander Moments (Nicola Hanefeld: encounters at Freiburg) · In All Directions",
     "physique": false,
     "videoUrl": null,
     "videoPassword": null,
