@@ -2196,5 +2196,26 @@
     "duree": null,
     "groupe_id": null,
     "annotations": []
+  },
+  {
+    "id": 103,
+    "titre": "Direction - Vol.2 N°6-Spirituality-Issue",
+    "auteur": "Jeremy Chance (éd.)",
+    "annee": 1998,
+    "type": "revue",
+    "langue": "en",
+    "themes": [
+      "fondements",
+      "1ère génération",
+      "2ème génération"
+    ],
+    "urlDrive": "https://bibliotheque-ati.s3.fr-par.scw.cloud/bibliotheque/documents/2-6-spirituality.pdf",
+    "description": "Direction — Volume 2 Number 6\nDescription :\nSpirituality Issue · Editorial (Jeremy Chance) · Issue Editorial (Betsy Polatin) · The Garlick Report (Dr. David Garlick) · Aphorisms of Marjory Barlow (compiled by Bob Britton) · Making FM Reader Friendly (Michael Holt) · CounterPoint (Letters to the Editor) · ViewPoint (Robert Rickover) · Friends of Alexander (compiled by Margaret Long) · In All Directions",
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": null,
+    "annotations": []
   }
 ]
