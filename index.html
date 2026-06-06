@@ -2660,9 +2660,10 @@ async function indexerTousLesDocsScaleway() {
   // Charger l'index existant d'abord
   await loadFulltextIndex();
   
-  const aIndexer = docsScaleway.filter(d =>
-    !fulltextState.some(row => String(row.doc_id).trim() === String(d.id).trim())
-  );
+  const aIndexer = docsScaleway.filter(d => {
+  const pages = fulltextState.filter(row => String(row.doc_id).trim() === String(d.id).trim());
+  return pages.length < 3;
+  });
   
   if (statusEl) statusEl.textContent = `${aIndexer.length} document(s) à indexer sur ${docsScaleway.length}…`;
   if (aIndexer.length === 0) {
