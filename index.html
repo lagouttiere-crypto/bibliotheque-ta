@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
 <style>
   :root {
     --cream: #FAFAF8;
@@ -2747,7 +2748,8 @@ function renderFulltextPageResult(d, p, q) {
 function searchFulltext() {
   clearTimeout(fulltextDebounce);
   fulltextDebounce = setTimeout(() => {
-    const q = normalizeText(document.getElementById('fulltextInput').value.trim());
+    const qRaw = document.getElementById('fulltextInput').value.trim();
+    const q = normalizeText(qRaw);
     const countEl = document.getElementById('fulltext-count');
     const resultsEl = document.getElementById('fulltextResults');
     if (!q || q.length < 3) {
@@ -2755,34 +2757,56 @@ function searchFulltext() {
       resultsEl.innerHTML = '<span style="font-size:13px;color:var(--ink-faint);font-style:italic">Tapez au moins 3 caractères…</span>';
       return;
     }
+
+    // Fuse.js sur titres et auteurs
+    const fuse = new Fuse(docs, {
+      keys: ['title', 'author'],
+      threshold: 0.35,
+      ignoreLocation: true
+    });
+    const fuseDocIds = new Set(fuse.search(qRaw).map(r => String(r.item.id)));
+
+    // includes() sur le texte des pages
     const byDoc = {};
     fulltextState.forEach(row => {
       const texte = normalizeText(String(row.texte || ''));
-      if (!texte.includes(q)) return;
-      const docObj = docs.find(doc => String(doc.id) === String(row.doc_id).trim());
+      const docId = String(row.doc_id).trim();
+      const docObj = docs.find(doc => String(doc.id) === docId);
       if (window._advAuthor && docObj && !normalizeText(docObj.author||'').includes(normalizeText(window._advAuthor))) return;
       if (window._advType   && docObj && docObj.type !== window._advType) return;
-      const docId = String(row.doc_id).trim();
-      if (!byDoc[docId]) byDoc[docId] = [];
-      byDoc[docId].push({ page: row.page, texte: String(row.texte || '') });
+      if (texte.includes(q)) {
+        if (!byDoc[docId]) byDoc[docId] = [];
+        byDoc[docId].push({ page: row.page, texte: String(row.texte || '') });
+      }
     });
+
+    // Fusionner : docs trouvés par Fuse sans extraits de pages
+    fuseDocIds.forEach(docId => {
+      if (!byDoc[docId]) byDoc[docId] = [];
+    });
+
     const docIds = Object.keys(byDoc);
     countEl.textContent = docIds.length + ' document' + (docIds.length !== 1 ? 's' : '');
     if (docIds.length === 0) {
       resultsEl.innerHTML = '<span style="font-size:13px;color:var(--ink-faint);font-style:italic">Aucun résultat.</span>';
       return;
     }
+
     resultsEl.innerHTML = docIds.map(docId => {
       const d = docs.find(doc => String(doc.id) === docId);
       if (!d) return '';
       const pages = byDoc[docId];
       const pagesHtml = pages.slice(0, 20).map(p => renderFulltextPageResult(d, p, q)).join('');
+      const label = pages.length > 0
+        ? pages.length + ' page' + (pages.length !== 1 ? 's' : '') + ' trouvée' + (pages.length !== 1 ? 's' : '')
+        : 'trouvé via titre ou auteur';
       return '<div style="margin-bottom:16px;border:1px solid var(--border);background:var(--white)">'
         + '<div style="padding:10px 14px;background:var(--cream);border-bottom:1px solid var(--border)">'
         + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:16px;font-weight:400;color:var(--ink)">' + d.title + '</div>'
-        + '<div style="font-size:11px;color:var(--ink-faint);font-style:italic;margin-bottom:8px">' + (d.author || '') + ' · ' + pages.length + ' page' + (pages.length !== 1 ? 's' : '') + ' trouvée' + (pages.length !== 1 ? 's' : '') + '</div>'
-        + '<button onclick="closeFulltextSearch();window._pdfSearchTerm=document.getElementById(&quot;fulltextInput&quot;).value.trim();openReader(' + d.id + ',' + pages[0].page + ')"'
+        + '<div style="font-size:11px;color:var(--ink-faint);font-style:italic;margin-bottom:8px">' + (d.author || '') + ' · ' + label + '</div>'
+        + '<button onclick="closeFulltextSearch();window._pdfSearchTerm=document.getElementById(&quot;fulltextInput&quot;).value.trim();openReader(' + d.id + ',' + (pages[0] ? pages[0].page : 1) + ')"'
         + ' style="font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-light);background:var(--accent-light);padding:4px 10px;cursor:pointer;font-family:\'DM Sans\',sans-serif">Ouvrir le document ↗</button>'
+        + '</div>'
         + '<div style="padding:0 14px">' + pagesHtml + '</div>'
         + '</div>';
     }).join('');
