@@ -2798,8 +2798,7 @@ function searchFulltext() {
       const d = docs.find(doc => String(doc.id) === docId);
       if (!d) return '';
       const pages = byDoc[docId];
-      const pagesHtml = pages.slice(0, 20).map(p => renderFulltextPageResult(d, p, q)).join('');
-      const label = pages.length > 0
+      const pagesHtml = q ? pages.slice(0, 20).map(p => renderFulltextPageResult(d, p, q)).join('') : '';      const label = pages.length > 0
         ? pages.length + ' page' + (pages.length !== 1 ? 's' : '') + ' trouvée' + (pages.length !== 1 ? 's' : '')
         : 'trouvé via titre ou auteur';
       return '<div style="margin-bottom:16px;border:1px solid var(--border);background:var(--white)">'
