@@ -496,6 +496,13 @@ See https://github.com/adobe-type-tools/cmap-resources
     });
   }
 });
+
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const icon = document.getElementById('sidebarToggleIcon');
+  const isOpen = sidebar.classList.toggle('sidebar-collapsed');
+  icon.textContent = isOpen ? '→' : '←';
+}
 </script>
 
   </body>
