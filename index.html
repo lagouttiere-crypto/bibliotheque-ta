@@ -354,14 +354,14 @@
     border: 1px solid var(--border);
   }
   .doc-card {
-    background: var(--white);
-    padding: 1.25rem;
-    cursor: pointer;
-    transition: background 0.15s;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
+  background: var(--white);
+  padding: 1.75rem 1.5rem;
+  cursor: pointer;
+  transition: background 0.15s;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+ }
   .doc-card:hover { background: var(--accent-light); }
   .doc-card.is-open { background: var(--accent-light); }
 
@@ -383,11 +383,11 @@
   .badge-transc { color: #6B7280; }
 
   .doc-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 1.35;
-    color: var(--ink);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--ink);
   }
   .doc-author {
     font-size: 12px;
@@ -2029,15 +2029,14 @@ function renderDocs() {
     const empruntHtml = d.physique
       ? (
           emprunt
-              ? `<div style="font-size:12px;color:#8B5E34;margin-top:4px">
-             Emprunté par ${emprunt.emprunteur}
-             ${emprunt.date_emprunt ? `depuis le ${formatDateFR(emprunt.date_emprunt)}` : ''}
-             ${emprunt.date_retour_prevue ? `<br>Retour prévu : ${formatDateFR(emprunt.date_retour_prevue)}` : ''}
-           </div>`
-              : `<div style="font-size:12px;color:#4F7A52;margin-top:4px">
-             Disponible à l'emprunt
-           </div>`
-        )
+              ? `<div style="padding:6px 10px;background:#FBF6F4;border-left:2px solid #B75D4A;display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+                   <span style="font-size:11px;color:#B75D4A;">📚 Emprunté par ${emprunt.emprunteur}</span>
+                   ${emprunt.date_retour_prevue ? `<span style="font-size:10px;color:#D8D3C9;">·</span><span style="font-size:10px;color:#B75D4A;font-style:italic">retour prévu ${formatDateFR(emprunt.date_retour_prevue)}</span>` : ''}
+                 </div>`
+              : `<div style="padding:6px 10px;background:#F0F5F0;border-left:2px solid #4F7A52">
+                   <span style="font-size:11px;color:#4F7A52;">Disponible à l'emprunt</span>
+                 </div>`
+          )
       : '';
     return `
       <div class="doc-card ${isOpen ? 'is-open' : ''}" id="card-${d.id}" onclick="toggleCard(${d.id})">
@@ -2049,7 +2048,6 @@ function renderDocs() {
         <div class="doc-title">${d.title}</div>
         <div class="doc-author">${truncateAuthors(d.author)}${yearStr}</div>
         ${isVideo && d.duree ? `<div style="font-size:12px;color:var(--ink-light)">Durée : ${d.duree}</div>` : ''}
-        ${empruntHtml}
         <div class="doc-themes">
           ${d.themes.map(t => `<span class="theme-tag">${t}</span>`).join('')}
           ${(tagsState[d.id]||[]).map(t => `<span class="member-tag" onclick="event.stopPropagation();setActiveTag('${t}')">${t}</span>`).join('')}
@@ -2071,11 +2069,13 @@ function renderDocs() {
         <div class="trefles-row" onclick="event.stopPropagation()">
           ${[1,2,3].map(n => `<button class="trefle-btn ${(favoritesState[d.id]||0) >= n ? 'active' : ''}" onclick="toggleTrefle(${d.id},${n},event)">☘</button>`).join('')}
         </div>
+        ${empruntHtml}
       </div>
       <div class="doc-detail ${isOpen ? 'visible' : ''}" id="detail-${d.id}">
         <div class="detail-inner">
           <div class="detail-title">${d.title}</div>
-          <div class="detail-author">${truncateAuthors(d.author)}${yearStr}</div>          <div style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:1.25rem">${d.type}${d.lang ? ' · ' + d.lang.toUpperCase() : ''}${d.year ? ' · ' + d.year : ''}</div>
+          <div class="detail-author">${truncateAuthors(d.author)}${yearStr}</div>
+          <div style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:1.25rem">${d.type}${d.lang ? ' · ' + d.lang.toUpperCase() : ''}${d.year ? ' · ' + d.year : ''}</div>
           ${d.description ? `<div style="font-size:13px;color:var(--ink-light);line-height:1.6;margin-bottom:1.25rem;padding:10px 16px;border-left:2px solid var(--border);font-style:italic">${d.description}</div>` : ''}
           ${isVideo ? getVideoDetailHtml(d) : ''}
           ${isAudio ? getAudioDetailHtml(d) : ''}
