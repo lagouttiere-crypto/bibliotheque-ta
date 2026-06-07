@@ -1240,6 +1240,20 @@
   line-height: 1;
 }
 
+#sidebar.sidebar-collapsed {
+  width: 32px;
+  padding: 1rem 6px;
+  overflow: hidden;
+}
+#sidebar.sidebar-collapsed > *:not(#sidebarToggle) {
+  display: none;
+}
+#sidebar.sidebar-collapsed #sidebarToggle {
+  writing-mode: vertical-rl;
+  padding: 0;
+}
+
+
 </style>
 </head>
 <body>
@@ -1315,7 +1329,10 @@
 </div>
    
   <div class="main-layout">
-    <aside>
+    <aside id="sidebar">
+  <button id="sidebarToggle" onclick="toggleSidebar()" style="display:flex;align-items:center;gap:6px;background:none;border:none;padding:0 0 1rem;font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink-faint);cursor:pointer;transition:color 0.15s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--ink-faint)'">
+    <span id="sidebarToggleIcon">←</span> Filtres
+  </button>
       <!-- PANEL CATALOGUE -->
       <div>
         <div class="search-wrap">
