@@ -2747,11 +2747,12 @@ function searchFulltext() {
     const q = normalizeText(qRaw);
     const countEl = document.getElementById('fulltext-count');
     const resultsEl = document.getElementById('fulltextResults');
-    if (!q || q.length < 3) {
-      countEl.textContent = '';
-      resultsEl.innerHTML = '<span style="font-size:13px;color:var(--ink-faint);font-style:italic">Tapez au moins 3 caractères…</span>';
-      return;
-    }
+    const hasAuthor = !!(window._advAuthor && window._advAuthor.length >= 2);
+  if ((!q || q.length < 3) && !hasAuthor) {
+  countEl.textContent = '';
+  resultsEl.innerHTML = '<span style="font-size:13px;color:var(--ink-faint);font-style:italic">Tapez au moins 3 caractères…</span>';
+  return;
+}
 
     // Fuse.js sur titres et auteurs
     const fuse = new Fuse(docs, {
