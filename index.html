@@ -2743,7 +2743,8 @@ function renderFulltextPageResult(d, p, q) {
 function searchFulltext() {
   clearTimeout(fulltextDebounce);
   fulltextDebounce = setTimeout(() => {
-    const qRaw = window._advQ || document.getElementById('adv-q').value.trim();    const q = normalizeText(qRaw);
+    const qRaw = window._advQ || document.getElementById('adv-q').value.trim();
+    const q = normalizeText(qRaw);
     const countEl = document.getElementById('fulltext-count');
     const resultsEl = document.getElementById('fulltextResults');
     if (!q || q.length < 3) {
@@ -2760,14 +2761,20 @@ function searchFulltext() {
     });
     const fuseDocIds = new Set(fuse.search(qRaw).map(r => String(r.item.id)));
 
+    // Fuse.js sur auteur pour le filtre _advAuthor
+    const fuseAuteurIds = window._advAuthor
+      ? new Set(new Fuse(docs, { keys: ['auteur'], threshold: 0.35, ignoreLocation: true })
+          .search(window._advAuthor).map(r => String(r.item.id)))
+      : null;
+
     // includes() sur le texte des pages
     const byDoc = {};
     fulltextState.forEach(row => {
       const texte = normalizeText(String(row.texte || ''));
       const docId = String(row.doc_id).trim();
       const docObj = docs.find(doc => String(doc.id) === docId);
-      if (window._advAuthor && docObj && !normalizeText(docObj.author||'').includes(normalizeText(window._advAuthor))) return;
-      if (window._advType   && docObj && docObj.type !== window._advType) return;
+      if (fuseAuteurIds && !fuseAuteurIds.has(docId)) return;
+      if (window._advType && docObj && docObj.type !== window._advType) return;
       if (texte.includes(q)) {
         if (!byDoc[docId]) byDoc[docId] = [];
         byDoc[docId].push({ page: row.page, texte: String(row.texte || '') });
