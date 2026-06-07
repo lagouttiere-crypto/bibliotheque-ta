@@ -470,27 +470,6 @@
     "annotations": []
   },
   {
-    "id": 22,
-    "titre": "Direction - Vol.1 N°4",
-    "auteur": "Jeremy Chance (éd.)",
-    "annee": 1986,
-    "type": "revue",
-    "langue": "en",
-    "themes": [
-      "themes",
-      "fondements",
-      "arts"
-    ],
-    "urlDrive": "https://bibliotheque-ati.s3.fr-par.scw.cloud/bibliotheque/documents/1-4-walter-carrington-special-1.pdf",
-    "description": "Editorial · New Editorial (W. Carrington) · The Garlick Report · Head at the End of its Tether (J.M. Wynhausen) · Respiratory Re-Education (F.M. Alexander)",
-    "physique": true,
-    "videoUrl": null,
-    "videoPassword": null,
-    "duree": null,
-    "groupe_id": null,
-    "annotations": []
-  },
-  {
     "id": 23,
     "titre": "Direction - Vol.1 N°5",
     "auteur": "Jeremy Chance (éd.)",
@@ -2358,6 +2337,48 @@
     "urlDrive": "https://bibliotheque-ati.s3.fr-par.scw.cloud/bibliotheque/documents/ne-pas-faire.pdf",
     "description": null,
     "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": null,
+    "annotations": []
+  },
+  {
+    "id": 111,
+    "titre": "Direction - Vol.1 N°4",
+    "auteur": "Jeremy Chance (éd.)",
+    "annee": 1986,
+    "type": "revue",
+    "langue": "en",
+    "themes": [
+      "themes",
+      "fondements",
+      "arts"
+    ],
+    "urlDrive": "https://bibliotheque-ati.s3.fr-par.scw.cloud/bibliotheque/documents/1-4-walter-carrington-special-1.pdf",
+    "description": "Editorial · New Editorial (W. Carrington) · The Garlick Report · Head at the End of its Tether (J.M. Wynhausen) · Respiratory Re-Education (F.M. Alexander)",
+    "physique": true,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": null,
+    "annotations": []
+  },
+  {
+    "id": 112,
+    "titre": "Technique Alexander pour les musiciens",
+    "auteur": "Pedro De Alcantara",
+    "annee": null,
+    "type": "livre",
+    "langue": "fr",
+    "themes": [
+      "themes",
+      "fondements",
+      "2ème génération"
+    ],
+    "urlDrive": null,
+    "description": null,
+    "physique": true,
     "videoUrl": null,
     "videoPassword": null,
     "duree": null,
