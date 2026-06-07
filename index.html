@@ -334,15 +334,21 @@
     align-items: center;
     gap: 12px;
   }
-  #sortSelect {
-    border: 1px solid var(--border);
-    background: var(--white);
-    padding: 8px 10px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 12px;
-    color: var(--ink);
-    outline: none;
-  }
+ #sortSelect {
+  border: 1px solid var(--border);
+  background: var(--white);
+  padding: 6px 28px 6px 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--ink-light);
+  outline: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23B8B4AC'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  cursor: pointer;
+}
   #sortSelect:focus { border-color: var(--accent); }
 
   /* ── DOC GRID ── */
@@ -1456,7 +1462,7 @@
         <div class="toolbar-right">
           <div class="content-count" id="contentCount"></div>
           <select id="sortSelect" onchange="renderDocs()" aria-label="Trier les documents">
-            <option value="curated">Commencer par Alexander</option>
+            <option value="curated">Ordre éditorial</option>
             <option value="author">Auteur A → Z</option>
             <option value="title">Titre A → Z</option>
             <option value="recent">Ajouts récents</option>
