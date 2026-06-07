@@ -2760,7 +2760,7 @@ function searchFulltext() {
 
     // Fuse.js sur titres et auteurs
     const fuse = new Fuse(docs, {
-      keys: ['title', 'author'],
+      keys: ['titre', 'auteur'],
       threshold: 0.35,
       ignoreLocation: true
     });
