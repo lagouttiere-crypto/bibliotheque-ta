@@ -3748,8 +3748,10 @@ function attachSelectionListener() {
 function toggleSidebar() {
   const sidebar = document.getElementById('sidebar');
   const icon = document.getElementById('sidebarToggleIcon');
-  const isOpen = sidebar.classList.toggle('sidebar-collapsed');
-  icon.textContent = isOpen ? '→' : '←';
+  const layout = document.querySelector('.main-layout');
+  const collapsed = sidebar.classList.toggle('sidebar-collapsed');
+  icon.textContent = collapsed ? '→' : '←';
+  layout.style.gridTemplateColumns = collapsed ? '32px 1fr' : '220px 1fr';
 }
 
 </script>
