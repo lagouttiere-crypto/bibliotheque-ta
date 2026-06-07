@@ -1810,11 +1810,9 @@ function renderHeroLastDocs() {
 
   el.innerHTML = last.map(d => `
     <div onclick="openCard=${d.id};renderDocs();setTimeout(()=>{document.getElementById('detail-${d.id}')?.scrollIntoView({behavior:'smooth',block:'nearest'})},80)"
-      style="font-size:12px;color:var(--accent);cursor:pointer;padding:3px 0;display:flex;align-items:baseline;gap:6px;transition:opacity 0.15s"
-      onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
-      <span style="color:var(--ink-faint)">→</span>
-      <span><em style="font-family:'Cormorant Garamond',serif;font-size:13px">${d.title}</em>
-      <span style="color:var(--ink-faint)"> — ${truncateAuthors(d.author)}</span>
+      style="font-size:12px;color:rgba(255,255,255,0.85);cursor:pointer;      onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
+      <span style="color:rgba(255,255,255,0.5)">→</span>      <span><em style="font-family:'Cormorant Garamond',serif;font-size:13px">${d.title}</em>
+      <span style="color:rgba(255,255,255,0.6)"> — ${truncateAuthors(d.author)}</span>
     </div>`).join('');
 }
 
