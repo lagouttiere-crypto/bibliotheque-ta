@@ -2573,14 +2573,10 @@ function lancerRechercheAvancee() {
   const author = document.getElementById('adv-author').value.trim();
   const type   = document.getElementById('adv-type').value;
 
-  // Pré-remplir le champ fulltext avec le texte libre
-  if (q) document.getElementById('fulltextInput').value = q;
-
-  // Stocker les filtres pour searchFulltext
+  window._advQ      = q;
   window._advAuthor = author.toLowerCase();
   window._advType   = type;
 
-  // Fermer le panneau avancé et ouvrir fulltext
   document.getElementById('advSearchBar').classList.remove('open');
   openFulltextSearch();
   searchFulltext();
@@ -2716,8 +2712,7 @@ function openFulltextSearch() {
   document.body.style.overflow = 'hidden';
   document.getElementById('fulltextInput').focus();
   if (fulltextState.length === 0) {
-    document.getElementById('fulltextResults').innerHTML = '<div style="display:flex;align-items:center;gap:10px;padding:1rem;color:var(--ink-faint);font-size:13px"><span style="display:inline-block;width:16px;height:16px;border:2px solid var(--accent-light);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite;flex-shrink:0"></span>Chargement de l\'index…</div>';
-  }
+  document.getElementById('adv-q').focus();  }
   loadFulltextIndex();
 }
 
@@ -2748,8 +2743,7 @@ function renderFulltextPageResult(d, p, q) {
 function searchFulltext() {
   clearTimeout(fulltextDebounce);
   fulltextDebounce = setTimeout(() => {
-    const qRaw = document.getElementById('adv-q').value.trim();
-    const q = normalizeText(qRaw);
+    const qRaw = window._advQ || document.getElementById('adv-q').value.trim();    const q = normalizeText(qRaw);
     const countEl = document.getElementById('fulltext-count');
     const resultsEl = document.getElementById('fulltextResults');
     if (!q || q.length < 3) {
