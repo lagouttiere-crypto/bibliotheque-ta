@@ -3745,6 +3745,13 @@ function attachSelectionListener() {
   });
 }
 
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const icon = document.getElementById('sidebarToggleIcon');
+  const isOpen = sidebar.classList.toggle('sidebar-collapsed');
+  icon.textContent = isOpen ? '→' : '←';
+}
+
 </script>
 </body>
 </html>
