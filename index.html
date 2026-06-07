@@ -2691,12 +2691,22 @@ async function loadFulltextIndex() {
   if (fulltextState.length > 0) return;
   document.getElementById('fulltext-count').textContent = 'Chargement…';
   try {
-    const res = await fetch(`${SHEET_URL}?sheet=fulltext&v=${Date.now()}`);
+    const res = await fetch(`https://lagouttiere-crypto.github.io/bibliotheque-ta/fulltext.json?v=${Date.now()}`);
+    if (!res.ok) throw new Error('GitHub indisponible');
     const rows = await res.json();
     if (Array.isArray(rows)) fulltextState = rows;
     document.getElementById('fulltext-count').textContent = '';
     document.getElementById('fulltextResults').innerHTML = '<span style="font-size:13px;color:var(--ink-faint);font-style:italic">Index prêt, tapez votre recherche…</span>';
-  } catch(e) { console.warn("Fulltext non chargé", e); }
+  } catch(e) {
+    console.warn("Fallback sur le Sheet", e);
+    try {
+      const res2 = await fetch(`${SHEET_URL}?sheet=fulltext&v=${Date.now()}`);
+      const rows2 = await res2.json();
+      if (Array.isArray(rows2)) fulltextState = rows2;
+      document.getElementById('fulltext-count').textContent = '';
+      document.getElementById('fulltextResults').innerHTML = '<span style="font-size:13px;color:var(--ink-faint);font-style:italic">Index prêt, tapez votre recherche…</span>';
+    } catch(e2) { console.warn("Fulltext non chargé", e2); }
+  }
 }
 
 function openFulltextSearch() {
