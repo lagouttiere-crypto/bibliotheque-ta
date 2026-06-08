@@ -1625,6 +1625,14 @@ const featuredIds = [
   35
 ];
 
+
+
+// Fonctionnalités avancées (recherche dans les notes, citations) :
+// réservées à Matthieu et JulietteF
+function isAdvancedUser() {
+  return currentUser === 'Matthieu' || currentUser === 'JulietteF';
+}
+
 function normalizeText(v) {
   return String(v || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
@@ -2759,7 +2767,7 @@ async function loadNotesTags() {
 }
 
 function filterMyNotes() {
-  if (currentUser !== 'Matthieu') return;
+  if (!isAdvancedUser()) return;
   const q = document.getElementById('ms-notes-search')?.value.trim().toLowerCase() || '';
   const noteDocs = docs
     .map(d => ({ d, text: localStorage.getItem(lsKey('note_' + d.id)) || '' }))
@@ -2796,7 +2804,7 @@ function filterMyNotes() {
 }
 
 function renderMyCitations() {
-  if (currentUser !== 'Matthieu') return;
+  if (!isAdvancedUser()) return;
   const wrap = document.getElementById('ms-citations-wrap');
   if (!wrap) return;
 
@@ -3439,7 +3447,7 @@ function switchMySpaceTab(tab) {
   });
   if (tab === 'notes') {
     const wrap = document.getElementById('ms-notes-search-wrap');
-    if (wrap) wrap.style.display = currentUser === 'Matthieu' ? 'block' : 'none';
+    if (wrap) wrap.style.display = isAdvancedUser() ? 'block' : 'none';
     
     const container = document.getElementById('ms-graph-container');
     if (container && !container.dataset.rendered) {
