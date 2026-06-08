@@ -2828,8 +2828,7 @@ function renderMyCitations() {
 
   wrap.style.display = 'block';
   document.getElementById('ms-citations-list').innerHTML = citations.map(c => `
-    <div class="myspace-note-card" onclick="closeMySpace();openReader(${c.doc.id})"
-      style="border-left-color:var(--editorial);margin-bottom:6px">
+      <div class="myspace-note-card" onclick="closeMySpace();window._pdfSearchTerm='${c.text.split(' ').slice(0,7).join(' ').replace(/'/g,'')}';openReader(${c.doc.id})"      style="border-left-color:var(--editorial);margin-bottom:6px">
       <div class="myspace-note-doc" style="color:var(--editorial)">${c.doc.title}</div>
       <div class="myspace-note-text" style="font-style:italic">"${c.text}"</div>
     </div>`).join('');
