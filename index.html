@@ -2800,7 +2800,9 @@ function renderMyCitations() {
 
   const citations = [];
   docs.forEach(d => {
-    const text = localStorage.getItem('ta_note_' + d.id + '_' + currentUser) || '';
+    let raw = localStorage.getItem('ta_note_' + d.id + '_' + currentUser) || '';
+    try { raw = JSON.parse(raw); } catch(e) {}
+    const text = raw;
     if (!text.trim()) return;
     const lines = text.split('\n');
     let current = [];
