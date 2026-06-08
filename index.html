@@ -2800,13 +2800,12 @@ function renderMyCitations() {
 
   const citations = [];
   docs.forEach(d => {
-    const text = localStorage.getItem(lsKey('note_' + d.id)) || '';
-    if (!text.trim()) return;
-    const lines = text.split('\n');
-    lines.forEach(line => {
-      const match = line.match(/^>\s+(.+)/);
-      if (match && match[1].trim()) {
-        citations.push({ doc: d, text: match[1].trim() });
+    const text = localStorage.getItem('ta_note_' + d.id + '_' + currentUser) || '';    if (!text.trim()) return;
+    const blocks = text.split(/\n(?!>)/);
+    blocks.forEach(block => {
+      if (block.trimStart().startsWith('>')) {
+        const citation = block.replace(/^>\s*/gm, '').trim();
+        if (citation) citations.push({ doc: d, text: citation });
       }
     });
   });
@@ -3429,12 +3428,13 @@ function switchMySpaceTab(tab) {
   if (tab === 'notes') {
     const wrap = document.getElementById('ms-notes-search-wrap');
     if (wrap) wrap.style.display = currentUser === 'Matthieu' ? 'block' : 'none';
-    renderMyCitations();
+    
     const container = document.getElementById('ms-graph-container');
     if (container && !container.dataset.rendered) {
       container.innerHTML = renderNotesGraph();
       container.dataset.rendered = '1';
     }
+    renderMyCitations();
   }
 }
 
