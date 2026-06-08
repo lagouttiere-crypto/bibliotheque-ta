@@ -1489,6 +1489,15 @@
       <div class="myspace-notes-grid">
         <div>
           <div class="myspace-section-title">Mes notes</div>
+
+          <div id="ms-notes-search-wrap" style="display:none">
+            <input type="text" id="ms-notes-search"
+              placeholder="Rechercher dans mes notes…"
+              oninput="filterMyNotes()"
+              style="width:100%;border:1px solid var(--border);background:var(--white);padding:7px 10px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink);outline:none;margin-bottom:12px" />
+          </div>
+          <div id="ms-notes-list">...
+          
           <div id="ms-notes-list"><span class="myspace-empty">Aucune note pour l'instant.</span></div>
         </div>
         <div>
@@ -2748,6 +2757,43 @@ async function loadNotesTags() {
   } catch(e) { console.warn("Notes tags non chargés", e); }
 }
 
+function filterMyNotes() {
+  if (currentUser !== 'Matthieu') return;
+  const q = document.getElementById('ms-notes-search')?.value.trim().toLowerCase() || '';
+  const noteDocs = docs
+    .map(d => ({ d, text: localStorage.getItem(lsKey('note_' + d.id)) || '' }))
+    .filter(({ text }) => text.trim())
+    .filter(({ text }) => !q || text.toLowerCase().includes(q));
+  const freeNote = localStorage.getItem(lsKey('note_free')) || '';
+  const container = document.getElementById('ms-notes-list');
+  if (!container) return;
+
+  let html = '';
+  if (!q && freeNote.trim()) {
+    html += `<div class="myspace-note-card" style="margin-bottom:8px">
+      <div class="myspace-note-doc">Note libre</div>
+      <div class="myspace-note-text">${freeNote.replace(/[#*>_]/g,'').substring(0,120)}…</div>
+    </div>`;
+  }
+  if (noteDocs.length === 0 && !html) {
+    container.innerHTML = `<span class="myspace-empty">Aucune note trouvée.</span>`;
+    return;
+  }
+  html += noteDocs.map(({ d, text }) => {
+    const extrait = q
+      ? text.replace(/[#*>_]/g,'').substring(0,200).replace(
+          new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ')', 'gi'),
+          '<mark style="background:#FFF3B0;padding:0 2px">$1</mark>'
+        )
+      : text.replace(/[#*>_]/g,'').substring(0,120) + '…';
+    return `<div class="myspace-note-card" onclick="closeMySpace();openReader(${d.id})">
+      <div class="myspace-note-doc">${d.title}</div>
+      <div class="myspace-note-text">${extrait}</div>
+    </div>`;
+  }).join('');
+  container.innerHTML = html;
+}
+
 function renderNotesPanel() {
   const container = document.getElementById('mb-list-notes');
   if (!container) return;
@@ -3349,8 +3395,9 @@ function switchMySpaceTab(tab) {
     document.getElementById('ms-tab-btn-' + t).classList.toggle('active', t === tab);
     document.getElementById('ms-panel-' + t).classList.toggle('active', t === tab);
   });
-  // Le graphe est rendu à la demande seulement (coûteux)
   if (tab === 'notes') {
+    const wrap = document.getElementById('ms-notes-search-wrap');
+    if (wrap) wrap.style.display = currentUser === 'Matthieu' ? 'block' : 'none';
     const container = document.getElementById('ms-graph-container');
     if (container && !container.dataset.rendered) {
       container.innerHTML = renderNotesGraph();
@@ -3393,7 +3440,12 @@ function renderMySpaceBody() {
     : rdDocs.map(d => docCardHtml(d, false)).join('');
 
   // ── Onglet Notes (liste seulement, graphe chargé à l'ouverture de l'onglet) ──
+  // ── Onglet Notes (liste seulement, graphe chargé à l'ouverture de l'onglet) ──
   const notesList = document.getElementById('ms-notes-list');
+  if (currentUser === 'Matthieu') {
+    const searchNotes = document.getElementById('ms-notes-search');
+    if (searchNotes) searchNotes.value = '';
+  }
   notesList.innerHTML = freeNote.trim()
     ? `<div class="myspace-note-card" style="margin-bottom:8px"><div class="myspace-note-doc">Note libre</div><div class="myspace-note-text">${freeNote.replace(/[#*>_]/g,'').substring(0,120)}…</div></div>`
     : '';
