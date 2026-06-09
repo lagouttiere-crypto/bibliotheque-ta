@@ -1468,9 +1468,6 @@
     <button class="myspace-tab-btn" id="ms-tab-btn-groupes" onclick="switchMySpaceTab('groupes')">
       Groupes <span class="tab-count" id="ms-tab-count-groupes">0</span>
     </button>
-    <button class="myspace-tab-btn" id="ms-tab-btn-ateliers" onclick="switchMySpaceTab('ateliers')" style="display:none">
-      Ateliers
-    </button>
   </div>
 
   <div class="myspace-body">
@@ -1485,8 +1482,7 @@
         <div id="ms-lus-list"><span class="myspace-empty">Aucun document marqué comme lu.</span></div>
       </div>
     </div>
-
-    <!-- Onglet 2 : Notes & Carte -->
+<!-- Onglet 2 : Notes & Carte -->
     <div class="myspace-tab-panel" id="ms-panel-notes">
       <div class="myspace-notes-grid">
         <div>
@@ -1517,38 +1513,35 @@
         <div id="myspace-groupes"></div>
         <div id="myspace-autres-groupes" style="margin-top:12px"></div>
         <div id="myspace-create-form" style="display:none">
-          <div class="group-form">
-            <label class="group-form-label">Nom du groupe</label>
-            <input type="text" id="new-group-name" placeholder="ex: Phénoménologie, Stage 2026…" />
-            <label class="group-form-label">Mot de passe (optionnel)</label>
-            <input type="password" id="new-group-mdp" placeholder="Laisser vide pour un groupe ouvert…" />
-            <label class="group-form-label">Ajouter des documents</label>
-            <div class="doc-selected-list" id="new-group-docs-tags"></div>
-            <div class="doc-autocomplete-wrap">
-              <input type="text" class="doc-autocomplete-input" id="new-group-docs-search"
-                placeholder="Tapez un titre ou un auteur…"
-                oninput="onGroupDocSearch()" autocomplete="off" />
-              <div class="doc-autocomplete-dropdown" id="new-group-docs-dropdown"></div>
-            </div>
-            <div style="display:flex;gap:6px">
-              <button class="btn-group primary" onclick="createGroupe()">Créer</button>
-              <button class="btn-group" onclick="document.getElementById('myspace-create-form').style.display='none'">Annuler</button>
-            </div>
-          </div>
+      <div class="group-form">
+        <label class="group-form-label">Nom du groupe</label>
+        <input type="text" id="new-group-name" placeholder="ex: Phénoménologie, Stage 2026…" />
+        <label class="group-form-label">Mot de passe (optionnel)</label>
+        <input type="password" id="new-group-mdp" placeholder="Laisser vide pour un groupe ouvert…" />
+        <label class="group-form-label">Ajouter des documents</label>
+        <div class="doc-selected-list" id="new-group-docs-tags"></div>
+        <div class="doc-autocomplete-wrap">
+          <input type="text" class="doc-autocomplete-input" id="new-group-docs-search"
+            placeholder="Tapez un titre ou un auteur…"
+            oninput="onGroupDocSearch()" autocomplete="off" />
+          <div class="doc-autocomplete-dropdown" id="new-group-docs-dropdown"></div>
         </div>
-        <button class="btn-group" style="margin-top:8px" onclick="document.getElementById('myspace-create-form').style.display=document.getElementById('myspace-create-form').style.display==='none'?'block':'none'">+ Créer un groupe</button>
-        <div id="admin-indexation" style="margin-top:24px;padding-top:16px;border-top:1px solid var(--border);display:none">
-          <div class="myspace-section-title" style="margin-bottom:8px">Indexation fulltext</div>
-          <button class="btn-group" onclick="indexerTousLesDocsScaleway()">Indexer tous les PDFs Scaleway</button>
-          <span id="index-status" style="font-size:11px;color:var(--ink-faint);font-style:italic;margin-left:8px"></span>
+        <div style="display:flex;gap:6px">
+          <button class="btn-group primary" onclick="createGroupe()">Créer</button>
+          <button class="btn-group" onclick="document.getElementById('myspace-create-form').style.display='none'">Annuler</button>
         </div>
       </div>
     </div>
-
-    <!-- Onglet 4 : Ateliers -->
-    <div class="myspace-tab-panel" id="ms-panel-ateliers"></div>
-
+    <button class="btn-group" style="margin-top:8px" onclick="document.getElementById('myspace-create-form').style.display=document.getElementById('myspace-create-form').style.display==='none'?'block':'none'">+ Créer un groupe</button>
+      <div id="admin-indexation" style="margin-top:24px;padding-top:16px;border-top:1px solid var(--border);display:none">
+  <div class="myspace-section-title" style="margin-bottom:8px">Indexation fulltext</div>
+  <button class="btn-group" onclick="indexerTousLesDocsScaleway()">Indexer tous les PDFs Scaleway</button>
+  <span id="index-status" style="font-size:11px;color:var(--ink-faint);font-style:italic;margin-left:8px"></span>
+</div>
   </div>
+    </div>
+  </div>
+</div>
 
 <!-- PANNEAU GROUPE -->
 <div class="group-panel-overlay" id="groupPanelOverlay" onclick="closeGroupPanel()"></div>
@@ -1631,14 +1624,6 @@ const featuredIds = [
   38,
   35
 ];
-
-
-
-// Fonctionnalités avancées (recherche dans les notes, citations) :
-// réservées à Matthieu et JulietteF
-function isAdvancedUser() {
-  return currentUser === 'Matthieu' || currentUser === 'JulietteF';
-}
 
 function normalizeText(v) {
   return String(v || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
@@ -1812,7 +1797,7 @@ function setActiveTag(tag) {
 }
 
 async function showApp(nom) {
-  currentUser = nom;  
+  currentUser = nom;
   localStorage.setItem('ta_user', nom);
   document.getElementById('lockScreen').style.display = 'none';
   document.getElementById('app').style.display = 'block';
@@ -1836,9 +1821,6 @@ async function showApp(nom) {
   } catch(e) {
     console.warn("Impossible de charger docs.json", e);
   }
-  window.docs = docs;
-  window.currentUser = currentUser;
-  window.SHEET_URL = SHEET_URL; 
   const heroCount = document.getElementById('heroCount');
   if (heroCount) heroCount.textContent = docs.length;
   updateFilterCounts();
@@ -1854,10 +1836,6 @@ async function showApp(nom) {
   loadNotesTags();
   loadGroupes();
   loadFavoritesFromSheet();
-  if (currentUser === 'Matthieu') {
-  document.getElementById('ms-tab-btn-ateliers').style.display = 'block';
-  import('./ateliers.js').then(m => { window.SHEET_URL = SHEET_URL; m.loadAteliers(); });
-}
 }
 
 function tryLogin() {
@@ -2364,11 +2342,9 @@ function openReader(id, targetPage = null) {
     pdf.innerHTML = `<iframe id="pdfViewerIframe" src="${iframeSrc}" width="100%" height="100%" frameborder="0" style="border:none"></iframe>`;
 
     if (window._pdfSearchTerm) {
-  const iframe = document.getElementById('pdfViewerIframe');
-  iframe.addEventListener('load', () => {
-    setTimeout(() => {
-      iframe.contentWindow.postMessage({ type: 'find', query: window._pdfSearchTerm }, '*');
-    }, 500);
+    const iframe = document.getElementById('pdfViewerIframe');
+    iframe.addEventListener('load', () => {
+    iframe.contentWindow.postMessage({ type: 'find', query: window._pdfSearchTerm }, '*');
   });
 }
   } else if (fileId) {
@@ -2781,7 +2757,7 @@ async function loadNotesTags() {
 }
 
 function filterMyNotes() {
-  if (!isAdvancedUser()) return;
+  if (currentUser !== 'Matthieu') return;
   const q = document.getElementById('ms-notes-search')?.value.trim().toLowerCase() || '';
   const noteDocs = docs
     .map(d => ({ d, text: localStorage.getItem(lsKey('note_' + d.id)) || '' }))
@@ -2809,41 +2785,22 @@ function filterMyNotes() {
           '<mark style="background:#FFF3B0;padding:0 2px">$1</mark>'
         )
       : text.replace(/[#*>_]/g,'').substring(0,120) + '…';
-    return `<div class="myspace-note-card" style="position:relative">
-      <div onclick="closeMySpace();openReader(${d.id})" style="cursor:pointer">
-        <div class="myspace-note-doc">${d.title}</div>
-        <div class="myspace-note-text">${extrait}</div>
-      </div>
-      <button onclick="event.stopPropagation();deleteNote(${d.id})"
-        style="position:absolute;top:6px;right:6px;background:none;border:none;cursor:pointer;font-size:12px;color:var(--ink-faint);padding:2px 5px"
-        title="Supprimer cette note">✕</button>
+    return `<div class="myspace-note-card" onclick="closeMySpace();openReader(${d.id})">
+      <div class="myspace-note-doc">${d.title}</div>
+      <div class="myspace-note-text">${extrait}</div>
     </div>`;
   }).join('');
   container.innerHTML = html;
 }
 
-async function deleteNote(docId) {
-  const d = docs.find(doc => doc.id === docId);
-  const titre = d ? d.title : 'cette note';
-  if (!confirm('Supprimer la note sur "' + titre + '" ?')) return;
-  localStorage.removeItem(lsKey('note_' + docId));
-  try {
-    await fetch(`${SHEET_URL}?sheet=notes&action=delete&doc_id=${docId}&auteur=${encodeURIComponent(currentUser)}`);
-  } catch(e) { console.warn("Erreur suppression note", e); }
-  renderMySpaceBody();
-  if (isAdvancedUser()) filterMyNotes();
-}
-
 function renderMyCitations() {
-  if (!isAdvancedUser()) return;
+  if (currentUser !== 'Matthieu') return;
   const wrap = document.getElementById('ms-citations-wrap');
   if (!wrap) return;
 
   const citations = [];
   docs.forEach(d => {
-    let raw = localStorage.getItem('ta_note_' + d.id + '_' + currentUser) || '';
-    try { raw = JSON.parse(raw); } catch(e) {}
-    const text = raw;
+    const text = localStorage.getItem('ta_note_' + d.id + '_' + currentUser) || '';
     if (!text.trim()) return;
     const lines = text.split('\n');
     let current = [];
@@ -2869,7 +2826,8 @@ function renderMyCitations() {
 
   wrap.style.display = 'block';
   document.getElementById('ms-citations-list').innerHTML = citations.map(c => `
-      <div class="myspace-note-card" onclick="closeMySpace();window._pdfSearchTerm='${c.text.split(' ').slice(0,7).join(' ').replace(/'/g,'')}';openReader(${c.doc.id})"      style="border-left-color:var(--editorial);margin-bottom:6px">
+    <div class="myspace-note-card" onclick="closeMySpace();openReader(${c.doc.id})"
+      style="border-left-color:var(--editorial);margin-bottom:6px">
       <div class="myspace-note-doc" style="color:var(--editorial)">${c.doc.title}</div>
       <div class="myspace-note-text" style="font-style:italic">"${c.text}"</div>
     </div>`).join('');
@@ -3472,13 +3430,13 @@ function initGraph(svg, nodes, edges, W, H) {
 ========================================================= */
 
 function switchMySpaceTab(tab) {
-  ['docs','notes','groupes','ateliers'].forEach(t => {
+  ['docs','notes','groupes'].forEach(t => {
     document.getElementById('ms-tab-btn-' + t).classList.toggle('active', t === tab);
     document.getElementById('ms-panel-' + t).classList.toggle('active', t === tab);
   });
   if (tab === 'notes') {
     const wrap = document.getElementById('ms-notes-search-wrap');
-    if (wrap) wrap.style.display = isAdvancedUser() ? 'block' : 'none';
+    if (wrap) wrap.style.display = currentUser === 'Matthieu' ? 'block' : 'none';
     
     const container = document.getElementById('ms-graph-container');
     if (container && !container.dataset.rendered) {
@@ -3536,15 +3494,10 @@ function renderMySpaceBody() {
     notesList.innerHTML = `<span class="myspace-empty">Aucune note pour l'instant.</span>`;
   } else {
     notesList.innerHTML += noteDocs.map(({ d, text }) =>
-  `<div class="myspace-note-card" style="position:relative">
-    <div onclick="closeMySpace();openReader(${d.id})" style="cursor:pointer">
-      <div class="myspace-note-doc">${d.title}</div>
-      <div class="myspace-note-text">${text.replace(/[#*>_]/g,'').substring(0,120)}…</div>
-    </div>
-    <button onclick="event.stopPropagation();deleteNote(${d.id})"
-      style="position:absolute;top:6px;right:6px;background:none;border:none;cursor:pointer;font-size:12px;color:var(--ink-faint);padding:2px 5px"
-      title="Supprimer cette note">✕</button>
-  </div>`).join('');
+      `<div class="myspace-note-card" onclick="closeMySpace();openReader(${d.id})">
+        <div class="myspace-note-doc">${d.title}</div>
+        <div class="myspace-note-text">${text.replace(/[#*>_]/g,'').substring(0,120)}…</div>
+      </div>`).join('');
   }
 
   // Réinitialiser le graphe pour forcer un re-rendu si on revient sur l'onglet
@@ -3563,7 +3516,5 @@ function toggleSidebar() {
 }
 
 </script>
-</body>
-
 </body>
 </html>
