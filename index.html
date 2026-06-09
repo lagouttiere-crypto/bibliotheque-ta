@@ -1468,6 +1468,9 @@
     <button class="myspace-tab-btn" id="ms-tab-btn-groupes" onclick="switchMySpaceTab('groupes')">
       Groupes <span class="tab-count" id="ms-tab-count-groupes">0</span>
     </button>
+    <button class="myspace-tab-btn" id="ms-tab-btn-ateliers" onclick="switchMySpaceTab('ateliers')" style="display:none">
+      Ateliers
+    </button>
   </div>
 
   <div class="myspace-body">
@@ -1482,7 +1485,8 @@
         <div id="ms-lus-list"><span class="myspace-empty">Aucun document marqué comme lu.</span></div>
       </div>
     </div>
-<!-- Onglet 2 : Notes & Carte -->
+
+    <!-- Onglet 2 : Notes & Carte -->
     <div class="myspace-tab-panel" id="ms-panel-notes">
       <div class="myspace-notes-grid">
         <div>
@@ -1513,33 +1517,37 @@
         <div id="myspace-groupes"></div>
         <div id="myspace-autres-groupes" style="margin-top:12px"></div>
         <div id="myspace-create-form" style="display:none">
-      <div class="group-form">
-        <label class="group-form-label">Nom du groupe</label>
-        <input type="text" id="new-group-name" placeholder="ex: Phénoménologie, Stage 2026…" />
-        <label class="group-form-label">Mot de passe (optionnel)</label>
-        <input type="password" id="new-group-mdp" placeholder="Laisser vide pour un groupe ouvert…" />
-        <label class="group-form-label">Ajouter des documents</label>
-        <div class="doc-selected-list" id="new-group-docs-tags"></div>
-        <div class="doc-autocomplete-wrap">
-          <input type="text" class="doc-autocomplete-input" id="new-group-docs-search"
-            placeholder="Tapez un titre ou un auteur…"
-            oninput="onGroupDocSearch()" autocomplete="off" />
-          <div class="doc-autocomplete-dropdown" id="new-group-docs-dropdown"></div>
+          <div class="group-form">
+            <label class="group-form-label">Nom du groupe</label>
+            <input type="text" id="new-group-name" placeholder="ex: Phénoménologie, Stage 2026…" />
+            <label class="group-form-label">Mot de passe (optionnel)</label>
+            <input type="password" id="new-group-mdp" placeholder="Laisser vide pour un groupe ouvert…" />
+            <label class="group-form-label">Ajouter des documents</label>
+            <div class="doc-selected-list" id="new-group-docs-tags"></div>
+            <div class="doc-autocomplete-wrap">
+              <input type="text" class="doc-autocomplete-input" id="new-group-docs-search"
+                placeholder="Tapez un titre ou un auteur…"
+                oninput="onGroupDocSearch()" autocomplete="off" />
+              <div class="doc-autocomplete-dropdown" id="new-group-docs-dropdown"></div>
+            </div>
+            <div style="display:flex;gap:6px">
+              <button class="btn-group primary" onclick="createGroupe()">Créer</button>
+              <button class="btn-group" onclick="document.getElementById('myspace-create-form').style.display='none'">Annuler</button>
+            </div>
+          </div>
         </div>
-        <div style="display:flex;gap:6px">
-          <button class="btn-group primary" onclick="createGroupe()">Créer</button>
-          <button class="btn-group" onclick="document.getElementById('myspace-create-form').style.display='none'">Annuler</button>
+        <button class="btn-group" style="margin-top:8px" onclick="document.getElementById('myspace-create-form').style.display=document.getElementById('myspace-create-form').style.display==='none'?'block':'none'">+ Créer un groupe</button>
+        <div id="admin-indexation" style="margin-top:24px;padding-top:16px;border-top:1px solid var(--border);display:none">
+          <div class="myspace-section-title" style="margin-bottom:8px">Indexation fulltext</div>
+          <button class="btn-group" onclick="indexerTousLesDocsScaleway()">Indexer tous les PDFs Scaleway</button>
+          <span id="index-status" style="font-size:11px;color:var(--ink-faint);font-style:italic;margin-left:8px"></span>
         </div>
       </div>
     </div>
-    <button class="btn-group" style="margin-top:8px" onclick="document.getElementById('myspace-create-form').style.display=document.getElementById('myspace-create-form').style.display==='none'?'block':'none'">+ Créer un groupe</button>
-      <div id="admin-indexation" style="margin-top:24px;padding-top:16px;border-top:1px solid var(--border);display:none">
-  <div class="myspace-section-title" style="margin-bottom:8px">Indexation fulltext</div>
-  <button class="btn-group" onclick="indexerTousLesDocsScaleway()">Indexer tous les PDFs Scaleway</button>
-  <span id="index-status" style="font-size:11px;color:var(--ink-faint);font-style:italic;margin-left:8px"></span>
-</div>
-  </div>
-    </div>
+
+    <!-- Onglet 4 : Ateliers -->
+    <div class="myspace-tab-panel" id="ms-panel-ateliers"></div>
+
   </div>
 </div>
 
@@ -1581,7 +1589,6 @@
     </div>
   </div>
 </div>
-
 <script>
 const PASSWORD = "_BibliothequeAlexander2026";
 const SHEET_URL = "https://script.google.com/macros/s/AKfycbw3KqB-9zc06Mhc7TBvIJp9sFgmgpZbKOsxSH-Rhl2WqFvptZB7SplyzKq0YEV4_nrmlw/exec";
@@ -1783,8 +1790,10 @@ function renderHeroLastDocs() {
 
   el.innerHTML = last.map(d => `
     <div onclick="openCard=${d.id};renderDocs();setTimeout(()=>{document.getElementById('detail-${d.id}')?.scrollIntoView({behavior:'smooth',block:'nearest'})},80)"
-      style="font-size:12px;color:rgba(255,255,255,0.85);cursor:pointer;      onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
-      <span style="color:rgba(255,255,255,0.5)">→</span>      <span><em style="font-family:'Cormorant Garamond',serif;font-size:13px">${d.title}</em>
+      onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'"
+      style="font-size:12px;color:rgba(255,255,255,0.85);cursor:pointer;margin-bottom:4px">
+      <span style="color:rgba(255,255,255,0.5)">→</span>
+      <em style="font-family:'Cormorant Garamond',serif;font-size:13px">${d.title}</em>
       <span style="color:rgba(255,255,255,0.6)"> — ${truncateAuthors(d.author)}</span>
     </div>`).join('');
 }
@@ -1818,8 +1827,15 @@ async function showApp(nom) {
       duree:     d.duree || d.duration || "",
       groupe_id: d.groupe_id || null
     }));
-  } catch(e) {
+ } catch(e) {
     console.warn("Impossible de charger docs.json", e);
+  }
+  window.docs = docs;
+  window.currentUser = currentUser;
+  window.SHEET_URL = SHEET_URL;
+  if (currentUser === 'Matthieu') {
+    document.getElementById('ms-tab-btn-ateliers').style.display = 'block';
+    import('./ateliers.js').then(m => { m.loadAteliers(); });
   }
   const heroCount = document.getElementById('heroCount');
   if (heroCount) heroCount.textContent = docs.length;
@@ -1860,28 +1876,6 @@ function setFilter(key, val, el) {
   renderDocs();
 }
 
-function getFiltered() {
-  const q = normalizeText(document.getElementById('searchInput')?.value || '');
-  const mesGroupeIds = groupesState
-    .filter(g => g.membres.includes(currentUser))
-    .map(g => g.id);
-
-  return docs.filter(d => {
-    if (d.groupe_id && d.groupe_id !== '') {
-      if (!mesGroupeIds.includes(String(d.groupe_id).trim())) return false;
-    }
-    if (filters.type !== 'tous' && d.type !== filters.type) return false;
-    if (filters.lang !== 'tous' && d.lang !== filters.lang) return false;
-    if (filters.theme !== 'tous' && !d.themes.includes(filters.theme)) return false;
-    if (filters.gen !== 'tous' && !d.themes.includes(filters.gen)) return false;
-    if (activeTag && !(tagsState[d.id]||[]).includes(activeTag)) return false;
-    if (q) {
-      const searchable = normalizeText([d.title, d.author, d.description, d.themes.join(' '), (tagsState[d.id]||[]).join(' '), (annotationsState[d.id]||[]).map(a => a.text).join(' ')].join(' '));
-      if (!searchable.includes(q)) return false;
-    }
-    return true;
-  });
-}
 
 
 /// FORMATGE DATE
@@ -2140,6 +2134,7 @@ async function addTag(id) {
   if (tagsState[id].includes(tag)) { input.value = ''; return; }
   tagsState[id].push(tag);
   input.value = '';
+  openCard = id;
   renderDocs();
   renderSidebarTags();
   try {
@@ -2569,6 +2564,9 @@ function closeFulltextSearch() {
   document.getElementById('fulltextOverlay').style.display = 'none';
   document.getElementById('fulltextPanel').style.transform = 'translateX(100%)';
   document.body.style.overflow = '';
+  window._advQ = null;
+  window._advAuthor = null;
+  window._advType = null;
 }
 
 function renderFulltextPageResult(d, p, q) {
@@ -2785,12 +2783,31 @@ function filterMyNotes() {
           '<mark style="background:#FFF3B0;padding:0 2px">$1</mark>'
         )
       : text.replace(/[#*>_]/g,'').substring(0,120) + '…';
-    return `<div class="myspace-note-card" onclick="closeMySpace();openReader(${d.id})">
-      <div class="myspace-note-doc">${d.title}</div>
-      <div class="myspace-note-text">${extrait}</div>
+    return `<div class="myspace-note-card" style="position:relative">
+      <div onclick="closeMySpace();openReader(${d.id})" style="cursor:pointer">
+        <div class="myspace-note-doc">${d.title}</div>
+        <div class="myspace-note-text">${extrait}</div>
+      </div>
+      <button onclick="event.stopPropagation();deleteNote(${d.id})"
+        style="position:absolute;top:6px;right:6px;background:none;border:none;cursor:pointer;font-size:12px;color:var(--ink-faint);padding:2px 5px"
+        title="Supprimer cette note">✕</button>
     </div>`;
   }).join('');
   container.innerHTML = html;
+}
+
+// SUPPRESSION DES NOTES //// 
+
+async function deleteNote(docId) {
+  const d = docs.find(doc => doc.id === docId);
+  const titre = d ? d.title : 'cette note';
+  if (!confirm('Supprimer la note sur "' + titre + '" ?')) return;
+  localStorage.removeItem(lsKey('note_' + docId));
+  try {
+    await fetch(`${SHEET_URL}?sheet=notes&action=delete&doc_id=${docId}&auteur=${encodeURIComponent(currentUser)}`);
+  } catch(e) { console.warn("Erreur suppression note", e); }
+  renderMySpaceBody();
+  if (currentUser === 'Matthieu') filterMyNotes();
 }
 
 function renderMyCitations() {
@@ -3430,9 +3447,11 @@ function initGraph(svg, nodes, edges, W, H) {
 ========================================================= */
 
 function switchMySpaceTab(tab) {
-  ['docs','notes','groupes'].forEach(t => {
-    document.getElementById('ms-tab-btn-' + t).classList.toggle('active', t === tab);
-    document.getElementById('ms-panel-' + t).classList.toggle('active', t === tab);
+  ['docs','notes','groupes','ateliers'].forEach(t => {
+    const btn = document.getElementById('ms-tab-btn-' + t);
+    const panel = document.getElementById('ms-panel-' + t);
+    if (btn) btn.classList.toggle('active', t === tab);
+    if (panel) panel.classList.toggle('active', t === tab);
   });
   if (tab === 'notes') {
     const wrap = document.getElementById('ms-notes-search-wrap');
@@ -3494,9 +3513,14 @@ function renderMySpaceBody() {
     notesList.innerHTML = `<span class="myspace-empty">Aucune note pour l'instant.</span>`;
   } else {
     notesList.innerHTML += noteDocs.map(({ d, text }) =>
-      `<div class="myspace-note-card" onclick="closeMySpace();openReader(${d.id})">
-        <div class="myspace-note-doc">${d.title}</div>
-        <div class="myspace-note-text">${text.replace(/[#*>_]/g,'').substring(0,120)}…</div>
+      `<div class="myspace-note-card" style="position:relative">
+        <div onclick="closeMySpace();openReader(${d.id})" style="cursor:pointer">
+          <div class="myspace-note-doc">${d.title}</div>
+          <div class="myspace-note-text">${text.replace(/[#*>_]/g,'').substring(0,120)}…</div>
+        </div>
+        <button onclick="event.stopPropagation();deleteNote(${d.id})"
+          style="position:absolute;top:6px;right:6px;background:none;border:none;cursor:pointer;font-size:12px;color:var(--ink-faint);padding:2px 5px"
+          title="Supprimer cette note">✕</button>
       </div>`).join('');
   }
 
