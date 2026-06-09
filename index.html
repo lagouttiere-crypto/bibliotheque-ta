@@ -1468,6 +1468,9 @@
     <button class="myspace-tab-btn" id="ms-tab-btn-groupes" onclick="switchMySpaceTab('groupes')">
       Groupes <span class="tab-count" id="ms-tab-count-groupes">0</span>
     </button>
+    <button class="myspace-tab-btn" id="ms-tab-btn-ateliers" onclick="switchMySpaceTab('ateliers')" style="display:none">
+      Ateliers
+    </button>
   </div>
 
   <div class="myspace-body">
@@ -1508,6 +1511,7 @@
 
     <!-- Onglet 3 : Groupes -->
     <div class="myspace-tab-panel" id="ms-panel-groupes">
+    <div class="myspace-tab-panel" id="ms-panel-ateliers"></div>  
       <div>
         <div class="myspace-section-title" style="margin-bottom:10px">Mes groupes de lecture</div>
         <div id="myspace-groupes"></div>
@@ -1806,6 +1810,9 @@ function setActiveTag(tag) {
 
 async function showApp(nom) {
   currentUser = nom;
+  window.docs = docs;
+  window.currentUser = currentUser;
+  window.SHEET_URL = SHEET_URL;   
   localStorage.setItem('ta_user', nom);
   document.getElementById('lockScreen').style.display = 'none';
   document.getElementById('app').style.display = 'block';
@@ -1844,6 +1851,10 @@ async function showApp(nom) {
   loadNotesTags();
   loadGroupes();
   loadFavoritesFromSheet();
+  if (currentUser === 'Matthieu') {
+  document.getElementById('ms-tab-btn-ateliers').style.display = 'block';
+  import('./ateliers.js').then(m => { window.SHEET_URL = SHEET_URL; m.loadAteliers(); });
+}
 }
 
 function tryLogin() {
@@ -3441,7 +3452,7 @@ function initGraph(svg, nodes, edges, W, H) {
 ========================================================= */
 
 function switchMySpaceTab(tab) {
-  ['docs','notes','groupes'].forEach(t => {
+  ['docs','notes','groupes','ateliers'].forEach(t => {
     document.getElementById('ms-tab-btn-' + t).classList.toggle('active', t === tab);
     document.getElementById('ms-panel-' + t).classList.toggle('active', t === tab);
   });
@@ -3526,10 +3537,6 @@ function toggleSidebar() {
   layout.style.gridTemplateColumns = collapsed ? '32px 1fr' : '220px 1fr';
 }
 
-</script>
-<script type="module">
-  import { hello } from './test-module.js';
-  hello();
 </script>
 </body>
 
