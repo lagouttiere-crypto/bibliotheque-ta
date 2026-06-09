@@ -2567,6 +2567,12 @@ function closeFulltextSearch() {
   window._advQ = null;
   window._advAuthor = null;
   window._advType = null;
+  document.getElementById('adv-q').value = '';
+  document.getElementById('adv-author').value = '';
+  document.getElementById('adv-type').value = '';
+  document.getElementById('fulltextInput').value = '';
+  document.getElementById('fulltextResults').innerHTML = '';
+  document.getElementById('fulltext-count').textContent = '';
 }
 
 function renderFulltextPageResult(d, p, q) {
