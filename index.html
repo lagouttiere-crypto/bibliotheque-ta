@@ -2809,12 +2809,29 @@ function filterMyNotes() {
           '<mark style="background:#FFF3B0;padding:0 2px">$1</mark>'
         )
       : text.replace(/[#*>_]/g,'').substring(0,120) + '…';
-    return `<div class="myspace-note-card" onclick="closeMySpace();openReader(${d.id})">
-      <div class="myspace-note-doc">${d.title}</div>
-      <div class="myspace-note-text">${extrait}</div>
+    return `<div class="myspace-note-card" style="position:relative">
+      <div onclick="closeMySpace();openReader(${d.id})" style="cursor:pointer">
+        <div class="myspace-note-doc">${d.title}</div>
+        <div class="myspace-note-text">${extrait}</div>
+      </div>
+      <button onclick="event.stopPropagation();deleteNote(${d.id})"
+        style="position:absolute;top:6px;right:6px;background:none;border:none;cursor:pointer;font-size:12px;color:var(--ink-faint);padding:2px 5px"
+        title="Supprimer cette note">✕</button>
     </div>`;
   }).join('');
   container.innerHTML = html;
+}
+
+async function deleteNote(docId) {
+  const d = docs.find(doc => doc.id === docId);
+  const titre = d ? d.title : 'cette note';
+  if (!confirm('Supprimer la note sur "' + titre + '" ?')) return;
+  localStorage.removeItem(lsKey('note_' + docId));
+  try {
+    await fetch(`${SHEET_URL}?sheet=notes&action=delete&doc_id=${docId}&auteur=${encodeURIComponent(currentUser)}`);
+  } catch(e) { console.warn("Erreur suppression note", e); }
+  renderMySpaceBody();
+  if (isAdvancedUser()) filterMyNotes();
 }
 
 function renderMyCitations() {
@@ -3519,10 +3536,15 @@ function renderMySpaceBody() {
     notesList.innerHTML = `<span class="myspace-empty">Aucune note pour l'instant.</span>`;
   } else {
     notesList.innerHTML += noteDocs.map(({ d, text }) =>
-      `<div class="myspace-note-card" onclick="closeMySpace();openReader(${d.id})">
-        <div class="myspace-note-doc">${d.title}</div>
-        <div class="myspace-note-text">${text.replace(/[#*>_]/g,'').substring(0,120)}…</div>
-      </div>`).join('');
+  `<div class="myspace-note-card" style="position:relative">
+    <div onclick="closeMySpace();openReader(${d.id})" style="cursor:pointer">
+      <div class="myspace-note-doc">${d.title}</div>
+      <div class="myspace-note-text">${text.replace(/[#*>_]/g,'').substring(0,120)}…</div>
+    </div>
+    <button onclick="event.stopPropagation();deleteNote(${d.id})"
+      style="position:absolute;top:6px;right:6px;background:none;border:none;cursor:pointer;font-size:12px;color:var(--ink-faint);padding:2px 5px"
+      title="Supprimer cette note">✕</button>
+  </div>`).join('');
   }
 
   // Réinitialiser le graphe pour forcer un re-rendu si on revient sur l'onglet
