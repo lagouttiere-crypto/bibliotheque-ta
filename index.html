@@ -1485,7 +1485,8 @@
         <div id="ms-lus-list"><span class="myspace-empty">Aucun document marqué comme lu.</span></div>
       </div>
     </div>
-<!-- Onglet 2 : Notes & Carte -->
+
+    <!-- Onglet 2 : Notes & Carte -->
     <div class="myspace-tab-panel" id="ms-panel-notes">
       <div class="myspace-notes-grid">
         <div>
@@ -1511,41 +1512,43 @@
 
     <!-- Onglet 3 : Groupes -->
     <div class="myspace-tab-panel" id="ms-panel-groupes">
-    <div class="myspace-tab-panel" id="ms-panel-ateliers"></div>  
       <div>
         <div class="myspace-section-title" style="margin-bottom:10px">Mes groupes de lecture</div>
         <div id="myspace-groupes"></div>
         <div id="myspace-autres-groupes" style="margin-top:12px"></div>
         <div id="myspace-create-form" style="display:none">
-      <div class="group-form">
-        <label class="group-form-label">Nom du groupe</label>
-        <input type="text" id="new-group-name" placeholder="ex: Phénoménologie, Stage 2026…" />
-        <label class="group-form-label">Mot de passe (optionnel)</label>
-        <input type="password" id="new-group-mdp" placeholder="Laisser vide pour un groupe ouvert…" />
-        <label class="group-form-label">Ajouter des documents</label>
-        <div class="doc-selected-list" id="new-group-docs-tags"></div>
-        <div class="doc-autocomplete-wrap">
-          <input type="text" class="doc-autocomplete-input" id="new-group-docs-search"
-            placeholder="Tapez un titre ou un auteur…"
-            oninput="onGroupDocSearch()" autocomplete="off" />
-          <div class="doc-autocomplete-dropdown" id="new-group-docs-dropdown"></div>
+          <div class="group-form">
+            <label class="group-form-label">Nom du groupe</label>
+            <input type="text" id="new-group-name" placeholder="ex: Phénoménologie, Stage 2026…" />
+            <label class="group-form-label">Mot de passe (optionnel)</label>
+            <input type="password" id="new-group-mdp" placeholder="Laisser vide pour un groupe ouvert…" />
+            <label class="group-form-label">Ajouter des documents</label>
+            <div class="doc-selected-list" id="new-group-docs-tags"></div>
+            <div class="doc-autocomplete-wrap">
+              <input type="text" class="doc-autocomplete-input" id="new-group-docs-search"
+                placeholder="Tapez un titre ou un auteur…"
+                oninput="onGroupDocSearch()" autocomplete="off" />
+              <div class="doc-autocomplete-dropdown" id="new-group-docs-dropdown"></div>
+            </div>
+            <div style="display:flex;gap:6px">
+              <button class="btn-group primary" onclick="createGroupe()">Créer</button>
+              <button class="btn-group" onclick="document.getElementById('myspace-create-form').style.display='none'">Annuler</button>
+            </div>
+          </div>
         </div>
-        <div style="display:flex;gap:6px">
-          <button class="btn-group primary" onclick="createGroupe()">Créer</button>
-          <button class="btn-group" onclick="document.getElementById('myspace-create-form').style.display='none'">Annuler</button>
+        <button class="btn-group" style="margin-top:8px" onclick="document.getElementById('myspace-create-form').style.display=document.getElementById('myspace-create-form').style.display==='none'?'block':'none'">+ Créer un groupe</button>
+        <div id="admin-indexation" style="margin-top:24px;padding-top:16px;border-top:1px solid var(--border);display:none">
+          <div class="myspace-section-title" style="margin-bottom:8px">Indexation fulltext</div>
+          <button class="btn-group" onclick="indexerTousLesDocsScaleway()">Indexer tous les PDFs Scaleway</button>
+          <span id="index-status" style="font-size:11px;color:var(--ink-faint);font-style:italic;margin-left:8px"></span>
         </div>
       </div>
     </div>
-    <button class="btn-group" style="margin-top:8px" onclick="document.getElementById('myspace-create-form').style.display=document.getElementById('myspace-create-form').style.display==='none'?'block':'none'">+ Créer un groupe</button>
-      <div id="admin-indexation" style="margin-top:24px;padding-top:16px;border-top:1px solid var(--border);display:none">
-  <div class="myspace-section-title" style="margin-bottom:8px">Indexation fulltext</div>
-  <button class="btn-group" onclick="indexerTousLesDocsScaleway()">Indexer tous les PDFs Scaleway</button>
-  <span id="index-status" style="font-size:11px;color:var(--ink-faint);font-style:italic;margin-left:8px"></span>
-</div>
+
+    <!-- Onglet 4 : Ateliers -->
+    <div class="myspace-tab-panel" id="ms-panel-ateliers"></div>
+
   </div>
-    </div>
-  </div>
-</div>
 
 <!-- PANNEAU GROUPE -->
 <div class="group-panel-overlay" id="groupPanelOverlay" onclick="closeGroupPanel()"></div>
