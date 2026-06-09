@@ -1809,10 +1809,7 @@ function setActiveTag(tag) {
 }
 
 async function showApp(nom) {
-  currentUser = nom;
-  window.docs = docs;
-  window.currentUser = currentUser;
-  window.SHEET_URL = SHEET_URL;   
+  currentUser = nom;  
   localStorage.setItem('ta_user', nom);
   document.getElementById('lockScreen').style.display = 'none';
   document.getElementById('app').style.display = 'block';
@@ -1836,6 +1833,9 @@ async function showApp(nom) {
   } catch(e) {
     console.warn("Impossible de charger docs.json", e);
   }
+  window.docs = docs;
+  window.currentUser = currentUser;
+  window.SHEET_URL = SHEET_URL; 
   const heroCount = document.getElementById('heroCount');
   if (heroCount) heroCount.textContent = docs.length;
   updateFilterCounts();
