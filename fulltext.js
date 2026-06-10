@@ -95,7 +95,8 @@ function renderFulltextPageResult(d, p, q) {
     + '<span style="font-size:10px;color:var(--accent);font-weight:500;letter-spacing:0.05em">PAGE ' + p.page + '</span>'
     + '<div style="font-size:12px;color:var(--ink-light);line-height:1.5;margin-top:3px">' + extrait + '</div>'
     + '</div>'
-    + '<button onclick="window._pdfSearchTerm=window._advQ||document.getElementById(\'adv-q\').value.trim();window.closeFulltextSearch();setTimeout(()=>window.openReader(' + d.id + ',' + p.page + '),50)"    + '</div>';
++ '<button onclick="window._pdfSearchTerm=window._advQ||document.getElementById(\'adv-q\').value.trim();window.closeFulltextSearch();setTimeout(()=>window.openReader(' + d.id + ',' + p.page + '),50)" style="font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-light);background:var(--accent-light);padding:3px 8px;cursor:pointer;font-family:\'DM Sans\',sans-serif;flex-shrink:0;white-space:nowrap">p.' + p.page + ' ↗</button>'
++ '</div>';
 }
 
 function normalizeText(v) {
