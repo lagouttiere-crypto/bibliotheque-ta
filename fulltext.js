@@ -95,7 +95,7 @@ function renderFulltextPageResult(d, p, q) {
     + '<span style="font-size:10px;color:var(--accent);font-weight:500;letter-spacing:0.05em">PAGE ' + p.page + '</span>'
     + '<div style="font-size:12px;color:var(--ink-light);line-height:1.5;margin-top:3px">' + extrait + '</div>'
     + '</div>'
-+ '<button onclick="window._pdfSearchTerm=window._advQ||document.getElementById(\'adv-q\').value.trim();window.closeFulltextSearch();setTimeout(()=>window.openReader(' + d.id + ',' + p.page + '),50)" style="font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-light);background:var(--accent-light);padding:3px 8px;cursor:pointer;font-family:\'DM Sans\',sans-serif;flex-shrink:0;white-space:nowrap">p.' + p.page + ' ↗</button>'
++ '<button onclick="var _id=' + d.id + ',_p=' + p.page + ',_q=window._advQ||document.getElementById(\'adv-q\').value.trim();window.closeFulltextSearch();window._pdfSearchTerm=_q;setTimeout(()=>window.openReader(_id,_p),50)" style="font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-light);background:var(--accent-light);padding:3px 8px;cursor:pointer;font-family:\'DM Sans\',sans-serif;flex-shrink:0;white-space:nowrap">p.' + p.page + ' ↗</button>'
 + '</div>';
 }
 
@@ -163,13 +163,14 @@ export function searchFulltext() {
         + '<div style="padding:10px 14px;background:var(--cream);border-bottom:1px solid var(--border)">'
         + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:16px;font-weight:400;color:var(--ink)">' + d.titre + '</div>'
         + '<div style="font-size:11px;color:var(--ink-faint);font-style:italic;margin-bottom:8px">' + (d.auteur || '') + ' · ' + label + '</div>'
-        + '<button onclick="window._pdfSearchTerm=document.getElementById(\'adv-q\').value.trim();window.closeFulltextSearch();setTimeout(()=>window.openReader(' + d.id + ',' + (pages[0] ? pages[0].page : 1) + '),50)"'        + ' style="font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-light);background:var(--accent-light);padding:4px 10px;cursor:pointer;font-family:\'DM Sans\',sans-serif">Ouvrir le document ↗</button>'
+        + '<button onclick="var _id=' + d.id + ',_p=' + (pages[0] ? pages[0].page : 1) + ',_q=document.getElementById(\'adv-q\').value.trim();window.closeFulltextSearch();window._pdfSearchTerm=_q;setTimeout(()=>window.openReader(_id,_p),50)"'
+        + ' style="font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-light);background:var(--accent-light);padding:4px 10px;cursor:pointer;font-family:\'DM Sans\',sans-serif">Ouvrir le document ↗</button>'
         + '</div>'
         + '<div style="padding:0 14px">' + pagesHtml + '</div>'
         + '</div>';
-    }).join('');
-  }, 300);
-}
+        }).join('');
+        }, 300);
+    }
 
 export async function indexerDocScaleway(docId, url) {
   if (!window.pdfjsLib) {
