@@ -111,8 +111,7 @@ function _initGraph(svg, nodes, edges, W, H) {
         d.fx = null; d.fy = null;
       })
     )
-    .on('click', (event, d) => { window.closeMySpace?.(); window.openReader?.(parseInt(d.id)); });
-
+    .on('click', (event, d) => { window.closeGraphModal?.(); window.closeMySpace?.(); window.openReader?.(parseInt(d.id)); });
   node.append('circle')
     .attr('r', 8)
     .attr('fill', 'var(--accent-light)')
