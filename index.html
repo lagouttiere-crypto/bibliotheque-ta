@@ -1856,7 +1856,7 @@ function updateFilterCounts() {
 function renderHeroLastDocs() {
   const el = document.getElementById('heroLastDocs');
   if (!el) return;
-  const mesGroupeIds = window.groupesState
+  const mesGroupeIds = (window.groupesState || [])
     .filter(g => g.membres.includes(currentUser))
     .map(g => g.id);
 
@@ -2471,7 +2471,7 @@ let advFilters = {};
 
 function getFiltered() {
   const q = normalizeText(document.getElementById('searchInput')?.value || '');
-  const mesGroupeIds = window.groupesState
+  const mesGroupeIds = (window.groupesState || [])
     .filter(g => g.membres.includes(currentUser))
     .map(g => g.id);
 
