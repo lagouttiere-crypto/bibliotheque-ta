@@ -2401,5 +2401,22 @@
     "duree": null,
     "groupe_id": "a1781102732216",
     "annotations": []
+  },
+  {
+    "id": 114,
+    "titre": "Vivre au présent",
+    "auteur": "Hella Linkmeyer",
+    "annee": 2000,
+    "type": "article",
+    "langue": "fr",
+    "themes": [],
+    "urlDrive": "https://bibliotheque-ati.s3.fr-par.scw.cloud/bibliotheque/documents/vivre-au-present.pdf",
+    "description": "Frank Sheldon interroge Hella Linkmeyer sur ses visites aux Bochimans !Kung du\ndésert du Kalahari, en Namibie.",
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": "a1781010897105",
+    "annotations": []
   }
 ]
