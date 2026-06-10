@@ -2384,5 +2384,22 @@
     "duree": null,
     "groupe_id": null,
     "annotations": []
+  },
+  {
+    "id": 113,
+    "titre": "Descendre du mât de cent pieds",
+    "auteur": "Daigaku Rummé",
+    "annee": 1998,
+    "type": "article",
+    "langue": "fr",
+    "themes": [],
+    "urlDrive": "https://bibliotheque-ati.s3.fr-par.scw.cloud/bibliotheque/documents/descendre-du-mat-de-cent-pieds.pdf",
+    "description": null,
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": "a1781102732216",
+    "annotations": []
   }
 ]
