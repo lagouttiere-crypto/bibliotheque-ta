@@ -19,6 +19,28 @@ export async function loadGroupes() {
       }));
     }
   } catch(e) { console.warn("Groupes non chargés", e); }
+
+  // Ajouter les ateliers de Matthieu à groupesState
+  if (window.currentUser === 'Matthieu') {
+    try {
+      const res2 = await fetch(`${window.SHEET_URL}?sheet=ateliers&owner=Matthieu&v=${Date.now()}`);
+      const ateliers = await res2.json();
+      if (Array.isArray(ateliers)) {
+        ateliers.forEach(a => {
+          groupesState.push({
+            id:       String(a.id    || '').trim(),
+            nom:      String(a.titre || '').trim(),
+            createur: 'Matthieu',
+            membres:  ['Matthieu'],
+            docs:     String(a.docs  || '').split(',').map(d => d.trim()).filter(Boolean),
+            mdp:      '',
+            date:     String(a.date  || '').trim(),
+          });
+        });
+      }
+    } catch(e) { console.warn("Ateliers non chargés dans groupesState", e); }
+  }
+
   window.groupesState = groupesState;
   renderMySpaceGroupes();
 }
