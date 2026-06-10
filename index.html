@@ -1218,6 +1218,73 @@
 }
 
 
+/* ── MODALE GRAPHE ── */
+.graph-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(28,26,23,0.55);
+  z-index: 500;
+  animation: fadeIn 0.2s ease;
+}
+.graph-modal-overlay.open {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.graph-modal-box {
+  background: var(--white);
+  border: 1px solid var(--border);
+  width: 92vw;
+  height: 88vh;
+  display: flex;
+  flex-direction: column;
+}
+.graph-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.25rem;
+  height: 44px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.graph-modal-title {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  font-weight: 500;
+}
+.graph-modal-body {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+.graph-zoom-btn {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--white);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--ink-faint);
+  z-index: 10;
+  transition: all 0.15s;
+  line-height: 1;
+}
+.graph-zoom-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+
 </style>
 </head>
 <body>
@@ -1445,6 +1512,17 @@
     <button onclick="closeFulltextSearch()" style="width:30px;height:30px;display:flex;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;color:var(--ink-faint);font-size:18px;flex-shrink:0">×</button>
   </div>
   <div id="fulltextResults" style="flex:1;overflow-y:auto;padding:1.25rem"></div>
+</div>
+
+<!-- MODALE GRAPHE -->
+<div class="graph-modal-overlay" id="graphModalOverlay" onclick="closeGraphModal(event)">
+  <div class="graph-modal-box" onclick="event.stopPropagation()">
+    <div class="graph-modal-header">
+      <span class="graph-modal-title">Carte de mes lectures</span>
+      <button onclick="closeGraphModal()" style="background:none;border:none;cursor:pointer;color:var(--ink-faint);font-size:18px;width:30px;height:30px;display:flex;align-items:center;justify-content:center">×</button>
+    </div>
+    <div class="graph-modal-body" id="graphModalBody"></div>
+  </div>
 </div>
 
 
@@ -2875,7 +2953,7 @@ function renderNotesPanel() {
 
 // Fermer avec Echap
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closeReader(); closeMySpace(); closeGroupPanel(); closeFulltextSearch(); }
+  if (e.key === 'Escape') { closeReader(); closeMySpace(); closeGroupPanel(); closeFulltextSearch(); closeGraphModal();}
 });
 
 async function loadFavoritesFromSheet() {
@@ -3326,8 +3404,10 @@ function renderMySpacePhrase() {
   }
 }
 /// graph 
-function renderNotesGraph() {
+function renderNotesGraph(targetContainerId) {
+  const graphId = targetContainerId || ('notes-graph-' + Date.now());
   const tagged = Object.entries(notesTagsState).filter(([id, tags]) => tags.length > 0);
+
   if (tagged.length < 2) {
     return `<span class="myspace-empty">Ajoute des #tags dans tes notes pour voir les connexions apparaître.</span>`;
   }
@@ -3346,32 +3426,68 @@ function renderNotesGraph() {
     });
   });
 
-  const graphId = 'notes-graph-' + Date.now();
+  if (!targetContainerId) {
+    setTimeout(() => _initNotesGraph(graphId), 50);
+    return `
+      <div style="position:relative">
+        <div id="${graphId}" style="width:100%;min-height:260px;border:1px solid var(--border);background:var(--cream)"></div>
+        <button class="graph-zoom-btn" onclick="openGraphModal()" title="Agrandir">⊕</button>
+      </div>`;
+  } else {
+    setTimeout(() => _initNotesGraph(graphId), 50);
+    return `<div id="${graphId}" style="width:100%;height:100%;background:var(--cream)"></div>`;
+  }
+}
 
-  setTimeout(() => {
-    const container = document.getElementById(graphId);
-    if (!container) return;
-    const W = container.offsetWidth || 300;
-    const H = 260;
+function _initNotesGraph(graphId) {
+  const container = document.getElementById(graphId);
+  if (!container) return;
+  const W = container.offsetWidth || 300;
+  const H = container.offsetHeight || 260;
 
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.setAttribute('width', W);
-    svg.setAttribute('height', H);
-    svg.style.display = 'block';
-    container.appendChild(svg);
+  const tagged = Object.entries(notesTagsState).filter(([id, tags]) => tags.length > 0);
+  const nodes = tagged.map(([id, tags]) => {
+    const d = docs.find(doc => String(doc.id) === id);
+    return { id, tags, title: d ? d.title : id, author: d ? d.author : '' };
+  });
+  const edges = [];
+  nodes.forEach((a, i) => {
+    nodes.forEach((b, j) => {
+      if (j <= i) return;
+      const shared = a.tags.filter(t => b.tags.includes(t));
+      if (shared.length > 0) edges.push({ source: a.id, target: b.id, shared });
+    });
+  });
 
-    // Charger D3 dynamiquement
-    if (!window.d3) {
-      const script = document.createElement('script');
-      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js';
-      script.onload = () => initGraph(svg, nodes, edges, W, H);
-      document.head.appendChild(script);
-    } else {
-      initGraph(svg, nodes, edges, W, H);
-    }
-  }, 50);
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('width', W);
+  svg.setAttribute('height', H);
+  svg.style.display = 'block';
+  container.appendChild(svg);
 
-  return `<div id="${graphId}" style="width:100%;min-height:260px;border:1px solid var(--border);background:var(--cream)"></div>`;
+  if (!window.d3) {
+    const script = document.createElement('script');
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js';
+    script.onload = () => initGraph(svg, nodes, edges, W, H);
+    document.head.appendChild(script);
+  } else {
+    initGraph(svg, nodes, edges, W, H);
+  }
+}
+
+function openGraphModal() {
+  const modal = document.getElementById('graphModalOverlay');
+  const body  = document.getElementById('graphModalBody');
+  body.innerHTML = renderNotesGraph('graph-modal-canvas');
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeGraphModal(e) {
+  if (e && e.type === 'click' && e.target !== document.getElementById('graphModalOverlay')) return;
+  document.getElementById('graphModalOverlay').classList.remove('open');
+  document.getElementById('graphModalBody').innerHTML = '';
+  document.body.style.overflow = '';
 }
 
 function initGraph(svg, nodes, edges, W, H) {
@@ -3465,7 +3581,7 @@ function switchMySpaceTab(tab) {
     
     const container = document.getElementById('ms-graph-container');
     if (container && !container.dataset.rendered) {
-      container.innerHTML = renderNotesGraph();
+      container.innerHTML = renderNotesGraph(null);
       container.dataset.rendered = '1';
     }
     renderMyCitations();
