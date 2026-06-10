@@ -1911,9 +1911,13 @@ async function showApp(nom) {
   window.docs = docs;
   window.currentUser = currentUser;
   window.SHEET_URL = SHEET_URL;
-  import('./fulltext.js'); // chargé pour tous
-  import('./notes.js');
+  import('./fulltext.js');
   import('./graph.js');
+  import('./notes.js').then(() => {
+  window.loadLocalNotes?.();
+  window.loadNotesFromSheet?.();
+  window.loadNotesTags?.();
+  });
   if (currentUser === 'Matthieu') {
   document.getElementById('ms-tab-btn-ateliers').style.display = 'block';
   import('./ateliers.js').then(m => { m.loadAteliers(); });
@@ -1924,13 +1928,10 @@ async function showApp(nom) {
   renderHeroLastDocs();
   docs.forEach(d => { annotationsState[d.id] = []; tagsState[d.id] = []; });
   loadLocalBiblio();
-  window.loadLocalNotes?.();
   renderDocs();
   loadEmprunts().then(() => renderDocs());
   loadAnnotations();
   loadBiblioFromSheet();
-  window.loadNotesFromSheet?.();
-  window.loadNotesTags?.();
   import('./groupes.js').then(m => { m.loadGroupes(); });
   loadFavoritesFromSheet();
 }
