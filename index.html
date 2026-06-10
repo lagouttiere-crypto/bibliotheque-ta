@@ -3176,7 +3176,6 @@ function renderMySpaceBody() {
     : rdDocs.map(d => docCardHtml(d, false)).join('');
 
   // ── Onglet Notes (liste seulement, graphe chargé à l'ouverture de l'onglet) ──
-  // ── Onglet Notes (liste seulement, graphe chargé à l'ouverture de l'onglet) ──
   const notesList = document.getElementById('ms-notes-list');
   if (currentUser === 'Matthieu') {
     const searchNotes = document.getElementById('ms-notes-search');
@@ -3201,8 +3200,16 @@ function renderMySpaceBody() {
   }
 
   // Réinitialiser le graphe pour forcer un re-rendu si on revient sur l'onglet
-  const gc = document.getElementById('ms-graph-container');
-  if (gc) { gc.innerHTML = ''; gc.dataset.rendered = ''; }
+ const gc = document.getElementById('ms-graph-container');
+if (gc) {
+  gc.innerHTML = '';
+  gc.dataset.rendered = '';
+  const notesPanel = document.getElementById('ms-panel-notes');
+  if (notesPanel && notesPanel.classList.contains('active')) {
+    gc.innerHTML = renderNotesGraph(null);
+    gc.dataset.rendered = '1';
+  }
+}
 }
 
 
