@@ -95,8 +95,7 @@ function renderFulltextPageResult(d, p, q) {
     + '<span style="font-size:10px;color:var(--accent);font-weight:500;letter-spacing:0.05em">PAGE ' + p.page + '</span>'
     + '<div style="font-size:12px;color:var(--ink-light);line-height:1.5;margin-top:3px">' + extrait + '</div>'
     + '</div>'
-    + '<button onclick="window._pdfSearchTerm=window._advQ||document.getElementById(\'adv-q\').value.trim();window.closeFulltextSearch();window.openReader(' + d.id + ',' + p.page + ')" style="font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-light);background:var(--accent-light);padding:3px 8px;cursor:pointer;font-family:\'DM Sans\',sans-serif;flex-shrink:0;white-space:nowrap">p.' + p.page + ' ↗</button>'
-    + '</div>';
+    + '<button onclick="window._pdfSearchTerm=window._advQ||document.getElementById(\'adv-q\').value.trim();window.closeFulltextSearch();setTimeout(()=>window.openReader(' + d.id + ',' + p.page + '),50)"    + '</div>';
 }
 
 function normalizeText(v) {
@@ -163,8 +162,7 @@ export function searchFulltext() {
         + '<div style="padding:10px 14px;background:var(--cream);border-bottom:1px solid var(--border)">'
         + '<div style="font-family:\'Cormorant Garamond\',serif;font-size:16px;font-weight:400;color:var(--ink)">' + d.titre + '</div>'
         + '<div style="font-size:11px;color:var(--ink-faint);font-style:italic;margin-bottom:8px">' + (d.auteur || '') + ' · ' + label + '</div>'
-        + '<button onclick="window._pdfSearchTerm=document.getElementById(\'adv-q\').value.trim();window.closeFulltextSearch();window.openReader(' + d.id + ',' + (pages[0] ? pages[0].page : 1) + ')"'
-        + ' style="font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-light);background:var(--accent-light);padding:4px 10px;cursor:pointer;font-family:\'DM Sans\',sans-serif">Ouvrir le document ↗</button>'
+        + '<button onclick="window._pdfSearchTerm=document.getElementById(\'adv-q\').value.trim();window.closeFulltextSearch();setTimeout(()=>window.openReader(' + d.id + ',' + (pages[0] ? pages[0].page : 1) + '),50)"'        + ' style="font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-light);background:var(--accent-light);padding:4px 10px;cursor:pointer;font-family:\'DM Sans\',sans-serif">Ouvrir le document ↗</button>'
         + '</div>'
         + '<div style="padding:0 14px">' + pagesHtml + '</div>'
         + '</div>';
