@@ -2710,7 +2710,7 @@ function renderNotesPanel() {
 
 // Fermer avec Echap
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closeReader(); closeMySpace(); closeGroupPanel(); closeFulltextSearch(); closeGraphModal();}
+  if (e.key === 'Escape') { closeReader(); closeMySpace(); closeGroupPanel(); window.closeFulltextSearch?.(); closeGraphModal();}
 });
 
 async function loadFavoritesFromSheet() {
@@ -3452,7 +3452,6 @@ window.onGroupDocSearch   = onGroupDocSearch;
 window.addGroupDocSelection     = addGroupDocSelection;
 window.removeGroupDocSelection  = removeGroupDocSelection;
 window.onNoteInput        = onNoteInput;
-window.closeFulltextSearch = closeFulltextSearch;
 window.openReader = openReader;
 
 </script>
