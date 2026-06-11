@@ -48,7 +48,7 @@ export function renderAssignationPanel() {
     } else if (groupIds.length > 0) {
       restreints.push({ d, state, groupIds, dateouverture });
     } else {
-      const dansProjet = projets.some(p => p.docs.includes(String(d.id)));
+      const dansProjet = projets.some(p => p.docs.map(x => String(x).replace(/"/g,'')).includes(String(d.id)));
       if (dansProjet) {
         enProjet.push({ d, state, groupIds, dateouverture });
       } else {
