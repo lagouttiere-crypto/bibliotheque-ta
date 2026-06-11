@@ -5,7 +5,6 @@ let assignationsState = {};
 
 export function loadAssignations() {
   const docs = window.docs || [];
-  console.log("loadAssignations appelé, docs:", docs.length, "groupes:", (window.groupesState||[]).length);
   assignationsState = {};
   docs.forEach(d => {
     assignationsState[d.id] = {
@@ -21,7 +20,6 @@ export function loadAssignations() {
 
 export function renderAssignationPanel() {
   const container = document.getElementById("ms-panel-assignation");
-  console.log("renderAssignationPanel, container:", container);
   if (!container) return;
   const docs = window.docs || [];
   const groupes = (window.groupesState || []).filter(g => !g.id.startsWith("a"));
