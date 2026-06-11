@@ -18,6 +18,7 @@ export function loadAssignations() {
 
 export function renderAssignationPanel() {
   const container = document.getElementById("ms-panel-assignation");
+  console.log("renderAssignationPanel v2, container:", container, "docs:", (window.docs||[]).length);
   if (!container) return;
   const docs   = window.docs || [];
   const groupes = (window.groupesState || []).filter(g => !g.id.startsWith("a"));
