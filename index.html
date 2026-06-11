@@ -2016,7 +2016,6 @@ async function showApp(nom) {
   document.getElementById('ms-tab-btn-ateliers').style.display = 'block';
   import('./ateliers.js').then(m => { m.loadAteliers(); });
   document.getElementById('ms-tab-btn-assignation').style.display = 'block';
-  import('./assignation.js').then(m => { m.loadAssignations(); });
   }
   const heroCount = document.getElementById('heroCount');
   if (heroCount) heroCount.textContent = docs.length;
@@ -2028,7 +2027,12 @@ async function showApp(nom) {
   loadEmprunts().then(() => renderDocs());
   loadAnnotations();
   loadBiblioFromSheet();
-  import('./groupes.js').then(m => { m.loadGroupes(); });
+  import('./groupes.js').then(m => {
+    m.loadGroupes();
+    if (isAdvancedUser()) {
+      import('./assignation.js').then(a => { a.loadAssignations(); });
+    }
+  });
   loadFavoritesFromSheet();
 }
 
