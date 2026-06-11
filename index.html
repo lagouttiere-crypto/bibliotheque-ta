@@ -2029,8 +2029,8 @@ async function showApp(nom) {
   loadBiblioFromSheet();
   import('./groupes.js').then(m => {
     m.loadGroupes();
-    if (isAdvancedUser()) {
-      import('./assignation.js').then(a => { a.loadAssignations(); });
+    if (window.currentUser === 'Matthieu' || window.currentUser === 'JulietteF') {
+    import('./assignation.js').then(a => { a.loadAssignations(); });
     }
   });
   loadFavoritesFromSheet();
