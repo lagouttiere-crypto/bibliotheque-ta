@@ -2028,10 +2028,11 @@ async function showApp(nom) {
   loadAnnotations();
   loadBiblioFromSheet();
   import('./groupes.js').then(m => {
-    m.loadGroupes();
-    if (window.currentUser === 'Matthieu' || window.currentUser === 'JulietteF') {
-    import('./assignation.js').then(a => { a.loadAssignations(); });
-    }
+    m.loadGroupes().then(() => {
+      if (window.currentUser === 'Matthieu') {
+        import('./assignation.js').then(a => { a.loadAssignations(); });
+      }
+    });
   });
   loadFavoritesFromSheet();
 }
