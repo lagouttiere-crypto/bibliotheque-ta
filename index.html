@@ -1371,7 +1371,32 @@
   color: #4F7A52;
   border: 1px solid #D8EBD8;
 }
-
+.statut-section {
+  margin-bottom: 20px;
+}
+.statut-section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.statut-count {
+  font-size: 11px;
+  color: var(--ink-faint);
+  font-style: italic;
+}
+.statut-section-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.statut-doc-row {
+  border: 1px solid var(--border);
+  background: var(--white);
+  padding: 10px 14px;
+}
 
 </style>
 </head>
@@ -1634,7 +1659,7 @@
     <button class="myspace-tab-btn" id="ms-tab-btn-groupes" onclick="switchMySpaceTab('groupes')">
       Groupes <span class="tab-count" id="ms-tab-count-groupes">0</span>
     </button>
-    <button class="myspace-tab-btn" id="ms-tab-btn-ateliers" onclick="switchMySpaceTab('ateliers')" style="display:none">
+    <button class="myspace-tab-btn" id="ms-tab-btn-ateliers" onclick="switchMySpaceTab('projets')" style="display:none">
       Ateliers
     </button>
     <button class="myspace-tab-btn" id="ms-tab-btn-assignation" onclick="switchMySpaceTab('statut')" style="display:none">
