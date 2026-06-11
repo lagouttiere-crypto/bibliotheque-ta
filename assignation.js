@@ -5,6 +5,7 @@ let assignationsState = {};
 
 export function loadAssignations() {
   const docs = window.docs || [];
+  console.log("loadAssignations appelé, docs:", docs.length, "groupes:", (window.groupesState||[]).length);
   assignationsState = {};
   docs.forEach(d => {
     assignationsState[d.id] = {
