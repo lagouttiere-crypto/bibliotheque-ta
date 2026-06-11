@@ -1284,6 +1284,94 @@
   color: var(--accent);
 }
 
+/* ── ASSIGNATION ── */
+.assignation-row {
+  border: 1px solid var(--border);
+  background: var(--white);
+  padding: 12px 14px;
+  margin-bottom: 8px;
+}
+.assignation-doc-info {
+  margin-bottom: 10px;
+}
+.assignation-doc-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.2;
+}
+.assignation-doc-author {
+  font-size: 11px;
+  color: var(--ink-faint);
+  font-style: italic;
+  margin-top: 2px;
+}
+.assignation-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.assignation-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--ink-light);
+  cursor: pointer;
+}
+.assignation-toggle input[type="checkbox"] {
+  accent-color: var(--accent);
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+}
+.assignation-groups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.assignation-date-wrap {
+  margin-left: auto;
+}
+.assignation-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.assignation-badge {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+}
+.badge-prive {
+  background: var(--cream);
+  color: var(--ink-faint);
+  border: 1px solid var(--border);
+}
+.badge-group {
+  background: var(--accent-light);
+  color: var(--accent);
+  border: 1px solid var(--accent-light);
+}
+.badge-date {
+  background: #FBF6F4;
+  color: var(--editorial);
+  border: 1px solid #F5E6E2;
+}
+.badge-open {
+  background: #F0F5F0;
+  color: #4F7A52;
+  border: 1px solid #D8EBD8;
+}
+
 
 </style>
 </head>
@@ -1548,6 +1636,9 @@
     </button>
     <button class="myspace-tab-btn" id="ms-tab-btn-ateliers" onclick="switchMySpaceTab('ateliers')" style="display:none">
       Ateliers
+    </button>
+    <button class="myspace-tab-btn" id="ms-tab-btn-assignation" onclick="switchMySpaceTab('assignation')" style="display:none">
+      Assignation
     </button>
   </div>
 
@@ -1904,6 +1995,9 @@ async function showApp(nom) {
       videoPassword: d.videoPassword || d.motDePasseVideo || "",
       duree:     d.duree || d.duration || "",
       groupe_id: d.groupe_id || null
+      statut:       d.statut       || "",
+      groupedoc:    d.groupedoc    || "",
+      dateouverture: d.dateouverture || ""
     }));
  } catch(e) {
     console.warn("Impossible de charger docs.json", e);
@@ -1921,6 +2015,8 @@ async function showApp(nom) {
   if (currentUser === 'Matthieu') {
   document.getElementById('ms-tab-btn-ateliers').style.display = 'block';
   import('./ateliers.js').then(m => { m.loadAteliers(); });
+  document.getElementById('ms-tab-btn-assignation').style.display = 'block';
+  import('./assignation.js').then(m => { m.loadAssignations(); });
   }
   const heroCount = document.getElementById('heroCount');
   if (heroCount) heroCount.textContent = docs.length;
@@ -2478,6 +2574,27 @@ function getFiltered() {
     .map(g => g.id);
 
   return docs.filter(d => {
+    // Docs masqués : invisibles sauf pour isAdvancedUser
+    if (d.statut === "prive" && !isAdvancedUser()) return false;
+
+    // Docs restreints à un groupe via assignation
+    if (d.groupedoc && d.groupedoc !== "") {
+      if (d.dateouverture) {
+        const now = new Date();
+        const ouverture = new Date(d.dateouverture);
+        if (now < ouverture) {
+          const groupIds = d.groupedoc.split("|").map(g => g.trim()).filter(Boolean);
+          const estMembre = groupIds.some(gid => mesGroupeIds.includes(gid));
+          if (!estMembre && !isAdvancedUser()) return false;
+        }
+      } else {
+        const groupIds = d.groupedoc.split("|").map(g => g.trim()).filter(Boolean);
+        const estMembre = groupIds.some(gid => mesGroupeIds.includes(gid));
+        if (!estMembre && !isAdvancedUser()) return false;
+      }
+    }
+
+    // Ancien système groupe_id
     if (d.groupe_id && d.groupe_id !== '') {
       if (!mesGroupeIds.includes(String(d.groupe_id).trim())) return false;
     }
@@ -2602,7 +2719,7 @@ function renderMySpacePhrase() {
 ========================================================= */
 
 function switchMySpaceTab(tab) {
-  ['docs','notes','groupes','ateliers'].forEach(t => {
+  ['docs','notes','groupes','ateliers','assignation'].forEach(t => {
     const btn = document.getElementById('ms-tab-btn-' + t);
     const panel = document.getElementById('ms-panel-' + t);
     if (btn) btn.classList.toggle('active', t === tab);
