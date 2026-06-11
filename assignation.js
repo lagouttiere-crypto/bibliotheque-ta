@@ -123,7 +123,7 @@ export function renderAssignationPanel() {
       ${renderSection('Restreints',         restreints, 'badge-group',  'Restreints')}
       ${renderSection('Ouverts',            ouverts,    'badge-open',   'Ouverts', false)}
     </div>`;
-
+  console.log("masqués:", masques.length, "enAttente:", enAttente.length, "restreints:", restreints.length, "ouverts:", ouverts.length);
   container.innerHTML = html;
 }
 
