@@ -27,7 +27,6 @@ export async function loadGroupes() {
       const ateliers = await res2.json();
       if (Array.isArray(ateliers)) {
         ateliers.forEach(a => {
-          console.log("atelier docs raw:", a.id, JSON.stringify(a.docs));
           groupesState.push({
             id:       String(a.id    || '').trim(),
             nom:      String(a.titre || '').trim(),

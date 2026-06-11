@@ -135,7 +135,6 @@ export function renderAssignationPanel() {
       ${renderSection('Projets',            enProjet,   'badge-prive',  'Projets',  false)}
       ${renderSection('Ouverts',            ouverts,    'badge-open',   'Ouverts',  true)}
     </div>`;
-  console.log("masqués:", masques.length, "enAttente:", enAttente.length, "restreints:", restreints.length, "ouverts:", ouverts.length);
   container.innerHTML = html;
 }
 
