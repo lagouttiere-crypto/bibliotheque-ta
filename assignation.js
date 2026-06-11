@@ -33,7 +33,7 @@ export function renderAssignationPanel() {
   docs.forEach(d => {
     const state = assignationsState[d.id] || {};
     const isPrive = state.statut === "prive";
-    const groupedoc = state.groupedoc || "";
+    const groupedoc = state.groupedoc || d.groupe_id || "";
     const dateouverture = state.dateouverture || "";
     const groupIds = groupedoc ? groupedoc.split("|").map(g => g.trim()).filter(Boolean) : [];
     const dateFuture = dateouverture && new Date(dateouverture) > now;
@@ -121,7 +121,7 @@ export function renderAssignationPanel() {
       ${renderSection('Masqués',            masques,    'badge-prive',  'Masqués')}
       ${renderSection('En attente',         enAttente,  'badge-date',   'En attente')}
       ${renderSection('Restreints',         restreints, 'badge-group',  'Restreints')}
-      ${renderSection('Ouverts',            ouverts,    'badge-open',   'Ouverts', false)}
+      ${renderSection('Ouverts',            ouverts,    'badge-open',   'Ouverts', true)}
     </div>`;
   console.log("masqués:", masques.length, "enAttente:", enAttente.length, "restreints:", restreints.length, "ouverts:", ouverts.length);
   container.innerHTML = html;
