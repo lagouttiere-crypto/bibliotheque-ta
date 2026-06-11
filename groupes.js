@@ -13,8 +13,7 @@ export async function loadGroupes() {
         nom:      String(r.nom      || '').trim(),
         createur: String(r.createur || '').trim(),
         membres:  String(r.membres  || '').split(',').map(m => m.trim()).filter(Boolean),
-        docs:     String(r.docs     || '').split(',').map(d => d.trim()).filter(Boolean),
-        mdp:      String(r.mdp      || '').trim(),
+        docs: String(a.docs  || '').split(',').map(d => d.trim()).filter(Boolean),        mdp:      String(r.mdp      || '').trim(),
         date:     String(r.date     || '').trim(),
       }));
     }
