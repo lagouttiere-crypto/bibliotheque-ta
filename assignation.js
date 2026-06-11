@@ -21,6 +21,7 @@ export function renderAssignationPanel() {
   if (!container) return;
   const docs   = window.docs || [];
   const groupes = (window.groupesState || []).filter(g => !g.id.startsWith("a"));
+  const projets = (window.groupesState || []).filter(g => g.id.startsWith("a"));
   const now    = new Date();
   console.log("groupes filtrés:", groupes.length, groupes.map(g => g.nom));
 
@@ -28,6 +29,7 @@ export function renderAssignationPanel() {
   const masques   = [];
   const restreints = [];
   const enAttente = [];
+  const enProjet   = [];
   const ouverts   = [];
 
   docs.forEach(d => {
@@ -45,7 +47,12 @@ export function renderAssignationPanel() {
     } else if (groupIds.length > 0) {
       restreints.push({ d, state, groupIds, dateouverture });
     } else {
-      ouverts.push({ d, state, groupIds, dateouverture });
+      const dansProjet = projets.some(p => p.docs.includes(String(d.id)));
+      if (dansProjet) {
+        enProjet.push({ d, state, groupIds, dateouverture });
+      } else {
+        ouverts.push({ d, state, groupIds, dateouverture });
+      }
     }
   });
 
@@ -121,7 +128,8 @@ export function renderAssignationPanel() {
       ${renderSection('Masqués',            masques,    'badge-prive',  'Masqués')}
       ${renderSection('En attente',         enAttente,  'badge-date',   'En attente')}
       ${renderSection('Restreints',         restreints, 'badge-group',  'Restreints')}
-      ${renderSection('Ouverts',            ouverts,    'badge-open',   'Ouverts', true)}
+      ${renderSection('Projets',            enProjet,   'badge-prive',  'Projets',  false)}
+      ${renderSection('Ouverts',            ouverts,    'badge-open',   'Ouverts',  true)}
     </div>`;
   console.log("masqués:", masques.length, "enAttente:", enAttente.length, "restreints:", restreints.length, "ouverts:", ouverts.length);
   container.innerHTML = html;
