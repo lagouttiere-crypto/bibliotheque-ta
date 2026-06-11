@@ -48,7 +48,10 @@ export function renderAssignationPanel() {
     } else if (groupIds.length > 0) {
       restreints.push({ d, state, groupIds, dateouverture });
     } else {
-      const dansProjet = projets.some(p => p.docs.map(x => String(x).replace(/"/g,'')).includes(String(d.id)));
+      const dansProjet = projets.some(p => {
+      const allDocs = p.docs.join(',').replace(/"/g,'').split(',').map(x => x.trim()).filter(Boolean);
+      return allDocs.includes(String(d.id));
+      });
       if (dansProjet) {
         enProjet.push({ d, state, groupIds, dateouverture });
       } else {
