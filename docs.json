@@ -2418,5 +2418,22 @@
     "duree": null,
     "groupe_id": "a1781010897105",
     "annotations": []
+  },
+  {
+    "id": 115,
+    "titre": "Rester fidèle à ses principes",
+    "auteur": "Glenna Batson",
+    "annee": 2000,
+    "type": "article",
+    "langue": "fr",
+    "themes": [],
+    "urlDrive": "https://bibliotheque-ati.s3.fr-par.scw.cloud/bibliotheque/documents/rester-fidele-a-ses-principes.pdf",
+    "description": "*Avec peu de distance émotionnelle entre les cours et la vie quotidienne, Glenna\nBatson en apprend davantage sur l’enseignement « con alma ».",
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": "a1781010897105",
+    "annotations": []
   }
 ]
