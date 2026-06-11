@@ -22,7 +22,6 @@ export function renderAssignationPanel() {
   const docs   = window.docs || [];
   const groupes = (window.groupesState || []).filter(g => !g.id.startsWith("a"));
   const projets = (window.groupesState || []).filter(g => g.id.startsWith("a"));
-  console.log("projets raw:", JSON.stringify(projets.map(p => ({nom: p.nom, docs: p.docs}))));
   const now = new Date();
   // Classer les docs en 4 catégories
   const masques   = [];
@@ -47,8 +46,11 @@ export function renderAssignationPanel() {
       restreints.push({ d, state, groupIds, dateouverture });
     } else {
       const dansProjet = projets.some(p => {
-      const allDocs = p.docs.join(',').replace(/"/g,'').split(',').map(x => x.trim()).filter(Boolean);
-      return allDocs.includes(String(d.id));
+      const ids = p.docs.flatMap(x => {
+          try { const parsed = JSON.parse(x); return Array.isArray(parsed) ? parsed.map(String) : [String(x)]; }
+          catch(e) { return [String(x).trim()]; }
+      });
+        return ids.includes(String(d.id));
       });
       if (dansProjet) {
         enProjet.push({ d, state, groupIds, dateouverture });
