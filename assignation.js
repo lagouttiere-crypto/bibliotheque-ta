@@ -22,6 +22,7 @@ export function renderAssignationPanel() {
   const docs   = window.docs || [];
   const groupes = (window.groupesState || []).filter(g => !g.id.startsWith("a"));
   const projets = (window.groupesState || []).filter(g => g.id.startsWith("a"));
+  console.log("projets docs:", projets.map(p => p.nom + ':' + JSON.stringify(p.docs)));
   const now    = new Date();
   console.log("groupes filtrés:", groupes.length, groupes.map(g => g.nom));
 
