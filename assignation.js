@@ -97,7 +97,7 @@ export function renderAssignationPanel() {
                     <input type="date" value="${dateouverture}"
                       onchange="window._setDateOuverture(${d.id}, this.value)"
                       style="border:1px solid var(--border);background:var(--white);padding:5px 8px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--ink);outline:none" />
-                    ${dateouverture ? `<button onclick="window._setDateOuverture(${d.id},'')"
+                    ${dateouverture ? `<button onclick="window._setDateOuverture(${d.id}, &quot;&quot;)"
                       style="background:none;border:none;cursor:pointer;font-size:13px;color:var(--ink-faint)">✕</button>` : ''}
                   </div>
                 </div>
