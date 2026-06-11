@@ -33,8 +33,7 @@ export async function loadGroupes() {
             nom:      String(a.titre || '').trim(),
             createur: 'Matthieu',
             membres:  ['Matthieu'],
-            docs:     String(a.docs  || '').split(',').map(d => d.trim()).filter(Boolean),
-            mdp:      '',
+            docs: (() => { try { const p = JSON.parse(a.docs); return Array.isArray(p) ? p.map(String) : String(a.docs||'').replace(/^'/,'').split(',').map(d=>d.trim()).filter(Boolean); } catch(e) { return String(a.docs||'').replace(/^'/,'').split(',').map(d=>d.trim()).filter(Boolean); } })(),
             date:     String(a.date  || '').trim(),
           });
         });
