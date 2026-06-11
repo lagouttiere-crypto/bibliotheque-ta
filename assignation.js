@@ -18,11 +18,11 @@ export function loadAssignations() {
 
 export function renderAssignationPanel() {
   const container = document.getElementById("ms-panel-assignation");
-  console.log("renderAssignationPanel v2, container:", container, "docs:", (window.docs||[]).length);
   if (!container) return;
   const docs   = window.docs || [];
   const groupes = (window.groupesState || []).filter(g => !g.id.startsWith("a"));
   const now    = new Date();
+  console.log("groupes filtrés:", groupes.length, groupes.map(g => g.nom));
 
   // Classer les docs en 4 catégories
   const masques   = [];
