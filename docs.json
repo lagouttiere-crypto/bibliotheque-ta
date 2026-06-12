@@ -2435,5 +2435,22 @@
     "duree": null,
     "groupe_id": "a1781010897105",
     "annotations": []
+  },
+  {
+    "id": 116,
+    "titre": "BLACK & WHITE",
+    "auteur": "Riki Alexander",
+    "annee": 2000,
+    "type": "article",
+    "langue": "fr",
+    "themes": [],
+    "urlDrive": "https://bibliotheque-ati.s3.fr-par.scw.cloud/bibliotheque/documents/black-white-fr.pdf",
+    "description": "Lorsque certains membres de la NASTAT ont tenté de dénoncer officiellement\ncertains passages du MSI, la réponse les a surpris et découragés. Avons-nous\nl’obligation de continuer à débattre de la question de la race et du racisme ?",
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": "g1780071211190",
+    "annotations": []
   }
 ]
