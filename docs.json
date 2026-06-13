@@ -2503,5 +2503,39 @@
     "duree": null,
     "groupe_id": "g1780071211190",
     "annotations": []
+  },
+  {
+    "id": 120,
+    "titre": "TRAVERSER LES HÉMISPHÈRES",
+    "auteur": "Robin Gilmore",
+    "annee": 2000,
+    "type": "article",
+    "langue": "fr",
+    "themes": [],
+    "urlDrive": "https://bibliotheque-ati.s3.fr-par.scw.cloud/bibliotheque/documents/traverser-les-hemispheres.pdf",
+    "description": null,
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": "g1780071211190",
+    "annotations": []
+  },
+  {
+    "id": 121,
+    "titre": "ZWEIMAL FRÜHSTUCK BITTE",
+    "auteur": "Rosa Luisa Rossi et Cathy Madden",
+    "annee": 2000,
+    "type": "article",
+    "langue": "fr",
+    "themes": [],
+    "urlDrive": "https://bibliotheque-ati.s3.fr-par.scw.cloud/bibliotheque/documents/zweimal-fruhstuck-bitte.pdf",
+    "description": null,
+    "physique": false,
+    "videoUrl": null,
+    "videoPassword": null,
+    "duree": null,
+    "groupe_id": "g1780071211190",
+    "annotations": []
   }
 ]
