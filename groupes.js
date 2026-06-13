@@ -2,6 +2,7 @@
 // Dépendances attendues sur window : docs, currentUser, SHEET_URL
 window.groupesState = [];
 let groupesState = window.groupesState;
+let groupNotesState = {};
 
 export async function loadGroupes() {
   try {
@@ -136,6 +137,31 @@ export async function leaveGroupe(groupeId) {
     await fetch(`${window.SHEET_URL}?sheet=groupes&action=leave&groupe_id=${groupeId}&auteur=${encodeURIComponent(window.currentUser)}`);
     await loadGroupes();
   } catch(e) { console.warn("Erreur quitter groupe", e); }
+}
+
+// suppression groupe 
+
+// État de confirmation par groupe (clé = groupeId, valeur = true si en attente)
+const deleteConfirmState = {};
+
+export async function deleteGroupe(groupeId) {
+  if (!deleteConfirmState[groupeId]) {
+    // Premier clic : passer en état de confirmation
+    deleteConfirmState[groupeId] = true;
+    renderMySpaceGroupes();
+    return;
+  }
+  // Deuxième clic : confirmer et supprimer
+  delete deleteConfirmState[groupeId];
+  try {
+    await fetch(`${window.SHEET_URL}?sheet=groupes&action=delete&groupe_id=${groupeId}`);
+    await loadGroupes();
+  } catch(e) { console.warn("Erreur suppression groupe", e); }
+}
+
+export function cancelDeleteGroupe(groupeId) {
+  delete deleteConfirmState[groupeId];
+  renderMySpaceGroupes();
 }
 
 export async function openGroupPanel(groupeId) {
@@ -355,13 +381,30 @@ export function renderMySpaceGroupes() {
             <div class="group-accordion-inner">
               ${groupDocHtml(g)}
               <div class="group-actions" style="margin-top:10px;padding-top:8px;border-top:1px solid var(--border)">
-                <button class="btn-group primary"
-                  onclick="event.stopPropagation();openGroupPanel('${g.id}')">Vue complète ↗</button>
-                ${g.createur !== currentUser
-                  ? `<button class="btn-group danger"
-                      onclick="event.stopPropagation();leaveGroupe('${g.id}')">Quitter</button>`
-                  : ''}
-              </div>
+  <button class="btn-group primary"
+    onclick="event.stopPropagation();openGroupPanel('${g.id}')">Vue complète ↗</button>
+  ${g.createur !== currentUser
+    ? `<button class="btn-group danger"
+        onclick="event.stopPropagation();leaveGroupe('${g.id}')">Quitter</button>`
+    : !g.id.startsWith('a')
+      ? deleteConfirmState[g.id]
+        ? `<span style="display:flex;align-items:center;gap:6px">
+            <button class="btn-group danger"
+              onclick="event.stopPropagation();deleteGroupe('${g.id}')"
+              style="border-color:#C0392B;color:#C0392B;background:#FBF6F4">
+              Confirmer la suppression
+            </button>
+            <button class="btn-group"
+              onclick="event.stopPropagation();cancelDeleteGroupe('${g.id}')">
+              Annuler
+            </button>
+          </span>`
+        : `<button class="btn-group danger"
+            onclick="event.stopPropagation();deleteGroupe('${g.id}')">
+            Supprimer
+          </button>`
+      : ''}
+</div>
             </div>
           </div>
         </div>`).join('');
@@ -405,3 +448,5 @@ window.deleteDocFromCatalogue   = deleteDocFromCatalogue;
 window.onGroupDocSearch         = onGroupDocSearch;
 window.addGroupDocSelection     = addGroupDocSelection;
 window.removeGroupDocSelection  = removeGroupDocSelection;
+window.deleteGroupe             = deleteGroupe;
+window.cancelDeleteGroupe       = cancelDeleteGroupe;
