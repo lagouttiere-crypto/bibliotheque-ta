@@ -146,12 +146,12 @@ const deleteConfirmState = {};
 
 export async function deleteGroupe(groupeId) {
   if (!deleteConfirmState[groupeId]) {
-    // Premier clic : passer en état de confirmation
     deleteConfirmState[groupeId] = true;
     renderMySpaceGroupes();
+    const card = document.getElementById('group-accord-' + groupeId);
+    if (card) card.classList.add('accordion-open');
     return;
   }
-  // Deuxième clic : confirmer et supprimer
   delete deleteConfirmState[groupeId];
   try {
     await fetch(`${window.SHEET_URL}?sheet=groupes&action=delete&groupe_id=${groupeId}`);
@@ -162,6 +162,8 @@ export async function deleteGroupe(groupeId) {
 export function cancelDeleteGroupe(groupeId) {
   delete deleteConfirmState[groupeId];
   renderMySpaceGroupes();
+  const card = document.getElementById('group-accord-' + groupeId);
+  if (card) card.classList.add('accordion-open');
 }
 
 export async function openGroupPanel(groupeId) {
